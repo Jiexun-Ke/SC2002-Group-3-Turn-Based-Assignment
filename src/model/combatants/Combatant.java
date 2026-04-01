@@ -1,4 +1,5 @@
 package model.combatants;
+import model.status_effects.*;
 
 public abstract class Combatant{
     private String name;
@@ -42,6 +43,10 @@ public abstract class Combatant{
 
     public void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    public int getSpeed(){
+        return this.speed;
     }
     ////////////////////
     
