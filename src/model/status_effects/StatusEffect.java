@@ -26,7 +26,9 @@ public abstract class StatusEffect {
 
     //}
 
-    public void reduceDuration(){}
+    public void reduceDuration(){
+        this.remainingTurns -= 1;
+    }
 
     public boolean isExpired(){
         if(this.remainingTurns == 0){
