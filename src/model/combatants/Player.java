@@ -1,3 +1,5 @@
+package model.combatants;
+
 public abstract class Player extends Combatant{
     private Item[] inventory;
     private int specialSkillCooldown;

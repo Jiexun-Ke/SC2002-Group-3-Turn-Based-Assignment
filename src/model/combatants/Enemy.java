@@ -1,3 +1,5 @@
+package model.combatants;
+
 public abstract class Enemy extends Combatant{
     private EnemyActionStrategy actionStrategy;
 

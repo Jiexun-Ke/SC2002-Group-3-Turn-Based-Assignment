@@ -1,3 +1,5 @@
+package model.combatants;
+
 public abstract class Combatant{
     private String name;
     private int maxHP;

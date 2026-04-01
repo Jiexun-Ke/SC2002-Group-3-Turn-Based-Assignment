@@ -1,3 +1,5 @@
+package model.combatants;
+
 public class Wizard extends Player {
     private int bonusAttack;
 
