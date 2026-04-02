@@ -31,11 +31,6 @@ public abstract class StatusEffect {
     }
 
     public boolean isExpired(){
-        if(this.remainingTurns == 0){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return this.remainingTurns == 0;
     }
 }

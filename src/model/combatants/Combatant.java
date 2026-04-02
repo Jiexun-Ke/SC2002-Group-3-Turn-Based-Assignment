@@ -21,6 +21,10 @@ public abstract class Combatant{
     }
 
     /////////////GETTERS AND SETTERS//////////////
+    public String getName(){
+        return this.name;
+    }
+    
     public int getCurrentHP() {
         return currentHP;
     }
@@ -70,6 +74,15 @@ public abstract class Combatant{
                 return;
             }
         }
+    }
+
+    public void updateStatusEffects() {
+    for (int i = 0; i < activeEffects.length; i++) {
+        if (activeEffects[i] != null) {
+            activeEffects[i].reduceDuration();
+        }
+    }
+    removeExpiredEffects();
     }
 
     public void removeExpiredEffects(){

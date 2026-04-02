@@ -1,4 +1,6 @@
 package model.combatants;
+import model.strategy.*;
+import model.actions.*;
 
 public abstract class Enemy extends Combatant{
     private EnemyActionStrategy actionStrategy;
