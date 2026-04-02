@@ -1,4 +1,6 @@
 package model.combatants;
+import model.actions.*;
+import model.items.Item;
 
 public abstract class Player extends Combatant{
     private Item[] inventory;
@@ -19,6 +21,11 @@ public abstract class Player extends Combatant{
         }
     }
 
+    
+    public Action chooseAction(Action choice){
+        return choice;
+    }
+
     public void removeItem(Item item){
         for(int i = 0; i < inventory.length; i++){
             if(inventory[i] != null && inventory[i] == item){
@@ -36,6 +43,6 @@ public abstract class Player extends Combatant{
         return inventory;
     }
 
-    public abstract void useSpecialSkill();
+    public abstract void useSpecialSkill(Combatant[] targets);
 }
 

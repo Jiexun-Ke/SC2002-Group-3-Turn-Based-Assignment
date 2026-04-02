@@ -4,6 +4,6 @@ import model.combatants.*;
 
 public class EnemyBasicStrategy implements EnemyActionStrategy {
     public Action chooseAction(Enemy user){
-        return BasicAttackAction();
+        return new BasicAttackAction();
     }
 }

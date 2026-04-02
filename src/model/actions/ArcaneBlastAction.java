@@ -1,9 +1,9 @@
 package model.actions;
-import model.combatants.Combatant;
+import model.combatants.*;
 
-public class BasicAttackAction extends Action{
-    public BasicAttackAction(){
-        super("BasicAttackAction");
+public class ArcaneBlastAction extends Action{
+    public ArcaneBlastAction(){
+        super("ArcaneBlastAction");
     }
 
     public void execute(Combatant user, Combatant[] targets){
@@ -15,5 +15,4 @@ public class BasicAttackAction extends Action{
     public String getDescription(){
         return " ";
     }
-
 }

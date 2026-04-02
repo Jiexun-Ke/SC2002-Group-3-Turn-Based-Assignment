@@ -1,4 +1,5 @@
 package model.combatants;
+import model.actions.*;
 
 public class Warrior extends Player {
     public Warrior(){
