@@ -3,9 +3,16 @@ import model.combatants.*;
 
 public class StunEffect extends StatusEffect {
     public StunEffect(){
-        super("Stun Effect", 1);
+        super("Stun Effect", 2);
     }
 
-    public void apply(Combatant target){}
-    public void remove(Combatant target){}
+    @Override
+    public void apply(Combatant target){
+        target.addStatusEffect(new StunEffect());
+    }
+
+    @Override
+    public void remove(Combatant target){
+        // No removal action needed for stun
+    }
 }

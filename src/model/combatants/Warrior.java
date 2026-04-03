@@ -6,7 +6,15 @@ public class Warrior extends Player {
         super("Warrior", 260, 40, 20, 30);
     }
 
+    @Override
     public void useSpecialSkill(Combatant[] target){
-        new ShieldBashAction.execute(this, target);
+        if(this.getSpecialSkillCooldown() != 0){
+            System.out.println("Shield Bash is on cooldown! Turns remaining: " + this.getSpecialSkillCooldown());
+        }
+
+        else{
+            this.setSpecialSkillCooldown(3);
+            new ShieldBashAction().execute(this, target);
+        }
     }
 }

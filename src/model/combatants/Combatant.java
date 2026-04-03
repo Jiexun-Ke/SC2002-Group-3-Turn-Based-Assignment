@@ -71,6 +71,7 @@ public abstract class Combatant{
         for(int i = 0; i < activeEffects.length; i++){
             if(activeEffects[i] == null){
                 activeEffects[i] = effect;
+                effect.apply(this);
                 return;
             }
         }
@@ -88,6 +89,7 @@ public abstract class Combatant{
     public void removeExpiredEffects(){
         for(int i = 0; i < activeEffects.length; i++){
             if (activeEffects[i] != null && activeEffects[i].isExpired()){
+                activeEffects[i].remove(this);
                 activeEffects[i] = null;
                 for(int j = i; j < activeEffects.length - 1; j++){
                     activeEffects[j] = activeEffects[j+1];

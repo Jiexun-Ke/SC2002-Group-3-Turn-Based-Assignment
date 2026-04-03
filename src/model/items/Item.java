@@ -8,7 +8,7 @@ public abstract class Item {
         this.name = name;
     }
 
-    public void use(Combatant user, Combatant[] targets){}
+    public abstract void use(Player user, Combatant[] targets);
 
     public String getName(){
         return this.name;

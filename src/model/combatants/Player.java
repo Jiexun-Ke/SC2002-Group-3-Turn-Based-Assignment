@@ -12,6 +12,23 @@ public abstract class Player extends Combatant{
         this.specialSkillCooldown = 0;
     }
 
+    /// GETTERS AND SETTERS ///
+    public int getSpecialSkillCooldown(){
+        return this.specialSkillCooldown;
+    }
+
+    public void setSpecialSkillCooldown(int turns){
+        this.specialSkillCooldown = turns;
+    }
+
+    public void updateSpecialSkillCooldown(){
+        this.specialSkillCooldown = Math.max(0, this.specialSkillCooldown - 1);
+    }
+
+    public Item[] getInventory(){
+        return inventory;
+    }
+
     public void addItem(Item item){
         for(int i = 0; i < inventory.length; i++){
             if(inventory[i] == null){
@@ -20,8 +37,8 @@ public abstract class Player extends Combatant{
             }
         }
     }
+    /////////////////////
 
-    
     public Action chooseAction(Action choice){
         return choice;
     }
@@ -37,10 +54,6 @@ public abstract class Player extends Combatant{
                 return;
             }
         }
-    }
-
-    public Item[] getInventory(){
-        return inventory;
     }
 
     public abstract void useSpecialSkill(Combatant[] targets);

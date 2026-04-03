@@ -17,22 +17,31 @@ public class Wizard extends Player {
         this.setAttack(50);
     }
 
+    @Override
     public void useSpecialSkill(Combatant[] targets){
-        boolean[] wasAlive = new boolean[targets.length];
 
-        for(int i = 0; i < targets.length; i++){
-            wasAlive[i] = targets[i].isAlive(); //Register Enemies that were alive before ArcaneBlast
+        if(this.getSpecialSkillCooldown() != 0){
+            System.err.println("Arcane blast is on cooldown! Turns remaining: " + this.getSpecialSkillCooldown());
         }
+        
+        else{
+            this.setSpecialSkillCooldown(3);
+            boolean[] wasAlive = new boolean[targets.length];
 
-        new ArcaneBlastAction().execute(this, targets);
-
-        for(int i = 0; i < targets.length; i++){
-            if(wasAlive[i] && !targets[i].isAlive()){ // if was killed by ArcaneBlast then increase ATK
-                this.bonusAttack += 10;
+            for(int i = 0; i < targets.length; i++){
+                wasAlive[i] = targets[i].isAlive(); //Register Enemies that were alive before ArcaneBlast
             }
-        }
 
-        this.increaseAttack();
+            new ArcaneBlastAction().execute(this, targets);
+
+            for(int i = 0; i < targets.length; i++){
+                if(wasAlive[i] && !targets[i].isAlive()){ // if was killed by ArcaneBlast then increase ATK
+                    this.bonusAttack += 10;
+                }
+            }
+
+            this.increaseAttack();
+        }
     }
 
 }

@@ -14,18 +14,6 @@ public abstract class StatusEffect {
         return this.name;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public void apply(Combatant target){
-        target.addStatusEffect(this);
-    }
-
-    //public void remove(Combatant target){
-
-    //}
-
     public void reduceDuration(){
         this.remainingTurns -= 1;
     }
@@ -33,4 +21,8 @@ public abstract class StatusEffect {
     public boolean isExpired(){
         return this.remainingTurns == 0;
     }
+
+    public abstract void apply(Combatant target);
+
+    public abstract void remove(Combatant target);
 }

@@ -8,11 +8,10 @@ public abstract class Action {
         this.name = name;
     }
 
-    public abstract void execute(Combatant user, Combatant[] targets);
-
     public String getName(){
         return this.name;
     }
-
     public abstract String getDescription();
+
+    public abstract void execute(Combatant user, Combatant[] targets);
 }

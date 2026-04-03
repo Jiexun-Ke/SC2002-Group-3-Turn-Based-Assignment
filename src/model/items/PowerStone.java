@@ -1,0 +1,22 @@
+package model.items;
+import model.combatants.*;
+
+public class PowerStone extends Item{
+    public PowerStone(){
+        super("Power Stone");
+    }
+
+    @Override
+    public String getDescription(){
+        return "Trigger the special skill effect once when used, but does not start or change the skill's cooldown timer. In short, free extra use of the skill";
+    }
+
+    @Override
+    public void use(Player user, Combatant[] targets){
+        int initial_cooldown = user.getSpecialSkillCooldown();
+
+        user.setSpecialSkillCooldown(0);
+        user.useSpecialSkill(targets);
+        user.setSpecialSkillCooldown(initial_cooldown);
+    }
+}
