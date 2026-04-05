@@ -1,4 +1,6 @@
 package model.turn_order;
+
+
 import model.combatants.*;
 
 public class SpeedBasedTurnStrategy implements TurnOrderStrategy{ //Bubble sort

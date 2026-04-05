@@ -52,6 +52,10 @@ public abstract class Combatant{
     public int getSpeed(){
         return this.speed;
     }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
     ////////////////////
     
     public boolean isAlive(){

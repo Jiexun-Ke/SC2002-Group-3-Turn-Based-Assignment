@@ -37,6 +37,8 @@ public abstract class Player extends Combatant{
             }
         }
     }
+
+    
     /////////////////////
 
     public Action chooseAction(Action choice){
