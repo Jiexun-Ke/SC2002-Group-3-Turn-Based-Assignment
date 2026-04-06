@@ -3,6 +3,9 @@ package control;
 import boundary.GameUI;
 import java.util.List;
 import java.util.Queue;
+
+import model.status_effects.*;
+import model.actions.Action;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
 import model.combatants.Player;
@@ -21,18 +24,78 @@ public class GameController {
     private Queue<List<Enemy>> remainingWaves;
     private TurnOrderStrategy strategy;
     private int rounds;
-    private int roundNumber;
-    private boolean battleEnded;
-
-    
-    
-    private void processTurn(Combatant combatant) { }
-    private void applyStartOfTurnEffects(Combatant combatant) { }
-    private void checkBackupSpawn() { }
-    private boolean isBattleOver() { return false; }
-    private void showBattleResult() { }
-
     private GameUI ui;
+
+
+    
+
+    
+    
+    private void processTurn(Combatant combatant) { 
+        if (combatant instanceof Player) {
+            Player player = (Player) combatant;
+            ui.showBattleStatus(player, enemies);
+            // get player action from UI
+            // execute action
+            // e.g. attack, use item, defend, etc.
+
+        } else if (combatant instanceof Enemy) {
+            // determine enemy action based on AI
+            // execute action
+            ui.showBattleStatus(player, enemies);
+            Enemy enemy = (Enemy) combatant;
+            Action enemyAction = enemy.chooseAction();
+            enemyAction.execute(enemy, new Combatant[]{player}); // assuming actions target the player for simplicity, can be expanded to support multi-target actions
+
+
+        }
+    }
+
+// Applies start of turn effects
+    private void applyStartOfTurnEffects(Combatant combatant) {
+        // apply status effects that trigger at the start of the turn
+        // also handle any effects that might prevent action (e.g. stun)
+        combatant.updateStatusEffects();
+
+
+    }
+
+// -----------------------------------------------
+
+    private void checkBackupSpawn() {
+        boolean AllEnemiesDefeated = enemies.stream().noneMatch(Enemy::isAlive);
+
+        for (Enemy enemy : enemies) {
+        if (enemy.isAlive()) {
+            AllEnemiesDefeated = false;
+            break;
+        }
+    }
+
+        if (enemies.stream().noneMatch(Enemy::isAlive) && !remainingWaves.isEmpty()) {
+            List<Enemy> nextWave = remainingWaves.poll();
+            enemies.addAll(nextWave);
+            ui.showNewWave(nextWave.size());
+            ui.showMessage("Backup spawn has triggered!"); 
+        }
+     }
+
+    private boolean isBattleOver() { 
+        if (!player.isAlive()) {
+        return true;
+    }
+
+        for (Enemy enemy : enemies) {
+            if (enemy.isAlive()) {
+                return false;
+            }
+        }
+
+        return true; 
+    }
+
+
+    
 
     public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy strategy, GameUI ui) {
         this.player = player;
@@ -42,6 +105,8 @@ public class GameController {
         this.ui = ui;
 
     }
+
+
 
 
     private void displayResult() {
@@ -61,55 +126,58 @@ public class GameController {
     public void startBattle() {
         while (!isBattleOver()) {
             rounds++;
+            ui.showRoundHeader(rounds);
+            ui.displayRoundInfo(rounds, player, enemies.toArray(new Enemy[0]));
             runRound();
         }
         displayResult();
     }
 
     private Combatant[] buildCombatantsArray() {
-    int aliveEnemies = 0;
-    for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            aliveEnemies++;
-        }
-    }
-
-    Combatant[] combatants = new Combatant[1 + aliveEnemies];
-    combatants[0] = player;
-
-    int index = 1;
-    for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            combatants[index] = enemy;
-            index++;
+        int aliveEnemies = 0;
+        for (Enemy enemy : enemies) {
+            if (enemy.isAlive()) {
+                aliveEnemies++;
             }
         }
 
-    return combatants;
-    }
+        Combatant[] combatants = new Combatant[1 + aliveEnemies];
+        combatants[0] = player;
+
+        int index = 1;
+        for (Enemy enemy : enemies) {
+            if (enemy.isAlive()) {
+                combatants[index] = enemy;
+                index++;
+                }
+            }
+
+        return combatants;
+        }
 
     private void runRound() {
-    Combatant[] combatants = buildCombatantsArray();
-    Combatant[] turnOrder = strategy.determineTurnOrder(combatants);
+        Combatant[] combatants = buildCombatantsArray();
+        Combatant[] turnOrder = strategy.determineTurnOrder(combatants);
 
-    for (Combatant combatant : turnOrder) {
-        if (!combatant.isAlive()) {
-            continue;
+        for (Combatant combatant : turnOrder) {
+            if (!combatant.isAlive()) {
+                continue;
+            }
+
+            applyStartOfTurnEffects(combatant);
+
+            if (!combatant.isAlive() || !combatant.canAct()) {
+                continue;
+            }
+
+            processTurn(combatant);
+
+            if (isBattleOver()) {
+                break;
+            }
         }
 
-        applyStartOfTurnEffects(combatant);
-
-        if (!combatant.isAlive() || !combatant.canAct()) {
-            continue;
-        }
-
-        processTurn(combatant);
-
-        if (isBattleOver()) {
-            break;
-        }
+        checkBackupSpawn();
+        ui.showBattleStatus(player, enemies);
     }
-
-    checkBackupSpawn();
-}
 }
