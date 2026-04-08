@@ -58,7 +58,7 @@ public class GameController {
             if (combatant instanceof Player)
             {
                 ui.showPlayerActions(player);
-                chooseAction();
+                Action action = chooseAction();
             }
 
             if (!combatant.isAlive()) {
