@@ -26,11 +26,6 @@ public class GameController {
     private int rounds;
     private GameUI ui;
 
-
-    
-
-    
-    
     private void processTurn(Combatant combatant) { 
         if (combatant instanceof Player) {
             Player player = (Player) combatant;
@@ -82,8 +77,8 @@ public class GameController {
 
     private boolean isBattleOver() { 
         if (!player.isAlive()) {
-        return true;
-    }
+            return true;
+        }
 
         for (Enemy enemy : enemies) {
             if (enemy.isAlive()) {
@@ -94,9 +89,6 @@ public class GameController {
         return true; 
     }
 
-
-    
-
     public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy strategy, GameUI ui) {
         this.player = player;
         this.enemies = enemies;
@@ -106,23 +98,21 @@ public class GameController {
 
     }
 
-
-
-
     private void displayResult() {
-    int enemiesRemaining = 0;
-    for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            enemiesRemaining++;
+        int enemiesRemaining = 0;
+        for (Enemy enemy : enemies) {
+            if (enemy.isAlive()) {
+                enemiesRemaining++;
+            }
+        }
+
+        if (player.isAlive()) {
+            ui.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
+        } else {
+            ui.showDefeat(enemiesRemaining, rounds);
         }
     }
 
-    if (player.isAlive()) {
-        ui.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
-    } else {
-        ui.showDefeat(enemiesRemaining, rounds);
-    }
-}
     public void startBattle() {
         while (!isBattleOver()) {
             rounds++;
@@ -153,7 +143,7 @@ public class GameController {
             }
 
         return combatants;
-        }
+    }
 
     private void runRound() {
         Combatant[] combatants = buildCombatantsArray();
