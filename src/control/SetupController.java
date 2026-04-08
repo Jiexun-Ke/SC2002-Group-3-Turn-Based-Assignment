@@ -38,20 +38,20 @@ public class SetupController {
         
         //Player Stuff
         ui.ShowPlayerStats();
-        delay(3000);
+        delay(1);
         Player player = choosePlayer();
-        delay(3000);
+        delay(1);
 
         //Item Stuff
         ui.ShowItemStats();
         player.addItem(chooseItem(1));
         player.addItem(chooseItem(2));
-        delay(3000);
+        delay(1);
 
         //Difficulty Stuff
         ui.ShowDifficultyStats();
         DIFFICULTY difficulty = chooseDifficulty();
-        delay(3000);
+        delay(1);
 
         //Creating Enemies
         List<Enemy> enemies = createEnemies(difficulty);

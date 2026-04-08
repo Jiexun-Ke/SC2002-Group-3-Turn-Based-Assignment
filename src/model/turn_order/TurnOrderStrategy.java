@@ -1,8 +1,7 @@
 package model.turn_order;
-
-
+import java.util.List;
 import model.combatants.*;
 
 public interface TurnOrderStrategy {
-     public Combatant[] determineTurnOrder(Combatant [] combatants);
+     public List<Combatant> determineTurnOrder(List<Combatant> combatants);
 }

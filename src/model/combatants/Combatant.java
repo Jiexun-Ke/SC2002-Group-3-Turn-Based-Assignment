@@ -82,12 +82,12 @@ public abstract class Combatant{
     }
 
     public void updateStatusEffects() {
-    for (int i = 0; i < activeEffects.length; i++) {
-        if (activeEffects[i] != null) {
-            activeEffects[i].reduceDuration();
+        for (int i = 0; i < activeEffects.length; i++) {
+            if (activeEffects[i] != null) {
+                activeEffects[i].reduceDuration();
+            }
         }
-    }
-    removeExpiredEffects();
+        removeExpiredEffects();
     }
 
     public void removeExpiredEffects(){
