@@ -11,6 +11,6 @@ public abstract class Enemy extends Combatant{
     }
     
     public Action chooseAction(){
-        return actionStrategy.chooseAction(this);
+        return actionStrategy.chooseAction(this); //basically returns new BasicAttackAction
     }
 }

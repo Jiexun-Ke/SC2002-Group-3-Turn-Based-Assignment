@@ -11,6 +11,7 @@ public abstract class Action {
     public String getName(){
         return this.name;
     }
+    
     public abstract String getDescription();
 
     public abstract void execute(Combatant user, Combatant[] targets);
