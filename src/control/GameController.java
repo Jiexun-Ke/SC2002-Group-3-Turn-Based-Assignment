@@ -74,7 +74,7 @@ public class GameController {
         }
     }
 
-        if (enemies.stream().noneMatch(Enemy::isAlive) && !remainingWaves.isEmpty()) {
+        if (AllEnemiesDefeated && !remainingWaves.isEmpty()) {
             List<Enemy> nextWave = remainingWaves.poll();
             enemies.addAll(nextWave);
             ui.showNewWave(nextWave.size());
