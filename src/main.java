@@ -2,7 +2,7 @@ import boundary.GameUI;
 import control.SetupController;
 import control.GameController;
 
-public class Main {
+public class main {
     public static void main(String[] args){
         GameUI ui = new GameUI();
 
