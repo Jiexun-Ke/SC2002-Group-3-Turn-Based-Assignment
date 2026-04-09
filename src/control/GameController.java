@@ -25,12 +25,16 @@ public class GameController {
     private TurnOrderStrategy strategy;
     private int rounds;
     private GameUI ui;
-
-
     
+    public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy strategy, GameUI ui) {
+        this.player = player;
+        this.enemies = enemies;
+        this.strategy = strategy;
+        this.rounds = 0;
+        this.ui = ui;
 
-    
-    
+    }
+
     private void processTurn(Combatant combatant) { 
         if (combatant instanceof Player) {
             Player player = (Player) combatant;
@@ -56,8 +60,6 @@ public class GameController {
         // apply status effects that trigger at the start of the turn
         // also handle any effects that might prevent action (e.g. stun)
         combatant.updateStatusEffects();
-
-
     }
 
 // -----------------------------------------------
@@ -95,20 +97,6 @@ public class GameController {
     }
 
 
-    
-
-    public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy strategy, GameUI ui) {
-        this.player = player;
-        this.enemies = enemies;
-        this.strategy = strategy;
-        this.rounds = 0;
-        this.ui = ui;
-
-    }
-
-
-
-
     private void displayResult() {
     int enemiesRemaining = 0;
     for (Enemy enemy : enemies) {
@@ -119,10 +107,13 @@ public class GameController {
 
     if (player.isAlive()) {
         ui.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
-    } else {
+        } 
+        
+        else {
         ui.showDefeat(enemiesRemaining, rounds);
+        }
     }
-}
+
     public void startBattle() {
         while (!isBattleOver()) {
             rounds++;
