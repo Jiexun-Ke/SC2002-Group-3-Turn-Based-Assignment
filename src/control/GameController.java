@@ -27,37 +27,37 @@ public class GameController {
     private Queue<List<Enemy>> remainingWaves;
     private TurnOrderStrategy turnOrderStrat;
     private int rounds;
-    private GameUI ui;
+    private GameUI UI;
 
-    public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy turnOrderStrat, GameUI ui) {
+    public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy turnOrderStrat, GameUI UI) {
         this.player = player;
         this.enemies = enemies;
         this.turnOrderStrat = turnOrderStrat;
         this.rounds = 0;
-        this.ui = ui;
+        this.UI = UI;
     }
 
     public void startBattle() {
         while (!isBattleOver()) {
             rounds++;
-            ui.showRoundHeader(rounds);
-            ui.displayRoundInfo(player, enemies);
+            UI.showRoundHeader(rounds);
+            UI.displayRoundInfo(player, enemies);
             runRound();
         }
         displayResult();
     }
 
     private void runRound() {
-        List<Combatant>combatants = buildCombatantsArray();
+        List<Combatant> combatants = buildCombatantsArray();
         List<Combatant> turnOrder = turnOrderStrat.determineTurnOrder(combatants);
 
         for (Combatant combatant : turnOrder) {
-            //Apply status effect
+            //Update status effect
             combatant.updateStatusEffects();
 
             if (combatant instanceof Player)
             {
-                ui.showPlayerActions(player);
+                UI.showPlayerActions(player);
                 Action action = chooseAction();
             }
 
@@ -79,7 +79,7 @@ public class GameController {
         }
 
         checkBackupSpawn();
-        ui.showBattleStatus(player, enemies);
+        UI.showBattleStatus(player, enemies);
     }
 
     private Action chooseAction()
@@ -118,7 +118,7 @@ public class GameController {
     private void processTurn(Combatant combatant) {
         if (combatant instanceof Player) {
             Player player = (Player) combatant;
-            ui.showBattleStatus(player, enemies);
+            UI.showBattleStatus(player, enemies);
             // get player action from UI
             // execute action
             // e.g. attack, use item, defend, etc.
@@ -126,7 +126,7 @@ public class GameController {
         } else if (combatant instanceof Enemy) {
             // determine enemy action based on AI
             // execute action
-            ui.showBattleStatus(player, enemies);
+            UI.showBattleStatus(player, enemies);
             Enemy enemy = (Enemy) combatant;
             Action enemyAction = enemy.chooseAction();
             enemyAction.execute(enemy, new Combatant[]{player}); // assuming actions target the player for simplicity, can be expanded to support multi-target actions
@@ -152,8 +152,8 @@ public class GameController {
         if (enemies.stream().noneMatch(Enemy::isAlive) && !remainingWaves.isEmpty()) {
             List<Enemy> nextWave = remainingWaves.poll();
             enemies.addAll(nextWave);
-            ui.showNewWave(nextWave.size());
-            ui.showMessage("Backup spawn has triggered!");
+            UI.showNewWave(nextWave.size());
+            UI.showMessage("Backup spawn has triggered!");
         }
     }
 
@@ -180,9 +180,9 @@ public class GameController {
         }
 
         if (player.isAlive()) {
-            ui.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
+            UI.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
         } else {
-            ui.showDefeat(enemiesRemaining, rounds);
+            UI.showDefeat(enemiesRemaining, rounds);
         }
     }
 }

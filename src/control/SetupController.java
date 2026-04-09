@@ -13,15 +13,15 @@ import model.turn_order.SpeedBasedTurnStrategy;
 import model.turn_order.TurnOrderStrategy;
 
 public class SetupController {
-    private GameUI ui;
+    private GameUI UI;
     enum DIFFICULTY {
         EASY,
         MEDIUM,
         HARD
     }
 
-    public SetupController(GameUI ui) {
-        this.ui = ui;
+    public SetupController(GameUI UI) {
+        this.UI = UI;
     }
 
     private void delay(int milliseconds) {
@@ -37,19 +37,19 @@ public class SetupController {
         TurnOrderStrategy strategy = new SpeedBasedTurnStrategy();
         
         //Player Stuff
-        ui.ShowPlayerStats();
+        UI.showClassInfo();
         delay(1);
         Player player = choosePlayer();
         delay(1);
 
         //Item Stuff
-        ui.ShowItemStats();
+        UI.showItemInfo();
         player.addItem(chooseItem(1));
         player.addItem(chooseItem(2));
         delay(1);
 
         //Difficulty Stuff
-        ui.ShowDifficultyStats();
+        UI.showDifficultyInfo();
         DIFFICULTY difficulty = chooseDifficulty();
         delay(1);
 
@@ -83,10 +83,8 @@ public class SetupController {
         for (int i = 0; i < enemies.size(); i++) {
             System.out.printf("%d. %s%n", i + 1, enemies.get(i).getName());
         }
-
-        System.out.println("========================================\n");
         
-        return new GameController(player, enemies, strategy, ui);
+        return new GameController(player, enemies, strategy, UI);
     }
 
     private List<Enemy> createEnemies(DIFFICULTY difficulty) {

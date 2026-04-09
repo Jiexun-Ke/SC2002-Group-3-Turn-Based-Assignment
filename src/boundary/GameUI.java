@@ -10,7 +10,7 @@ import model.items.*;
 public class GameUI {
 
     //Initiation
-    public void ShowPlayerStats() {
+    public void showClassInfo() {
         System.out.println("\n=================================");
         System.out.println("          CHARACTER LIST");
         System.out.println("=================================");
@@ -34,7 +34,7 @@ public class GameUI {
         System.out.println("---------------------------------");
     }
 
-    public void ShowItemStats() {
+    public void showItemInfo() {
         System.out.println("\n=================================");
         System.out.println("             ITEM LIST");
         System.out.println("=================================");
@@ -52,7 +52,7 @@ public class GameUI {
         System.out.println("---------------------------------");
     }
 
-    public void ShowDifficultyStats() {
+    public void showDifficultyInfo() {
         System.out.println("\n=================================");
         System.out.println("              LEVELS");
         System.out.println("=================================");
@@ -83,6 +83,7 @@ public class GameUI {
                 System.out.println(enemy.getName() + " HP: " + enemy.getCurrentHP() + "/" + enemy.getMaxHP());
             }
         }
+        System.out.println(" ");
     }
 
     public void showNewWave(int enemyCount) {
@@ -93,14 +94,14 @@ public class GameUI {
     {
         int skillCD = player.getSpecialSkillCooldown();
         System.out.println("Choose your attack:");
-        System.out.println("(1)Basic Attack\n(2)Defend\n(3)Item");
+        System.out.println("1. Basic Attack\n2. Defend\n3. Item");
         if (skillCD > 0)
         {
-            System.out.println("(4)Special Skill: (Cooldown: " + skillCD + ")");
+            System.out.println("4. Special Skill: (On Cooldown: " + skillCD + ")");
         }
         else
         {
-            System.out.println("(4)Special Skill");
+            System.out.println("4. Special Skill");
         }
     }
 
@@ -117,6 +118,7 @@ public class GameUI {
         for (Enemy enemy : enemies) {
             System.out.println(enemy.getName() + " HP: " + enemy.getCurrentHP());
         }
+        System.out.println(" ");
     }
 
     public void showVictory(int remainingHp, int maxHp, int rounds) {
