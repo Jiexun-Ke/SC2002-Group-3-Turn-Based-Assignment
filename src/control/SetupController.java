@@ -1,9 +1,7 @@
 package control;
 
 import boundary.GameUI;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import model.combatants.Enemy;
 import model.combatants.Player;
 import model.turn_order.SpeedBasedTurnStrategy;
