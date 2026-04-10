@@ -1,8 +1,8 @@
 package boundary;
 
 import java.util.List;
-import model.items.*;
 import model.combatants.*;
+import model.items.*;
 
 public class GameUI {
     private InputValidator validator;
@@ -68,11 +68,13 @@ public class GameUI {
     public int promptItemSelection(Item[] inventory){
         print("--- INVENTORY ---");
 
+        int[] validIndices = new int[inventory.length];
         int availItems = 0;
         for (int i = 0; i < inventory.length; i++){
             if (inventory[i] != null){
-                System.out.println((i+1) +". " + inventory[i].getName() + " - " + inventory[i].getDescription());
+                System.out.println((availItems +1) +". " + inventory[i].getName() + " - " + inventory[i].getDescription());
                 availItems++;
+                validIndices[availItems - 1] = i;
             }
         }
 
@@ -82,6 +84,11 @@ public class GameUI {
         }
 
         System.out.println((availItems + 1) + ". Cancel");
+        int choice = validator.getIntInRange("Choose an item: ", 1, availItems + 1);
+        if (choice == availItems + 1){
+            return -1; // Cancel
+        }
+        
         return validator.getIntInRange("Choose an item: ", 1, availItems + 1);
     }
    

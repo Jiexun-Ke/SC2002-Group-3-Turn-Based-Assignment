@@ -3,12 +3,11 @@ package control;
 import boundary.GameUI;
 import java.util.List;
 import java.util.Queue;
-
-import model.status_effects.*;
 import model.actions.Action;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
 import model.combatants.Player;
+import model.items.*;
 import model.turn_order.TurnOrderStrategy;
 
 public class GameController {
@@ -42,6 +41,28 @@ public class GameController {
             // get player action from UI
             // execute action
             // e.g. attack, use item, defend, etc.
+            int choice = ui.promptPlayerAction(player);
+
+            switch (choice) {
+                case 1: // Attack
+                    handlePlayerAttack(player);
+                    break;
+
+                case 2: // Defend
+                    handlePlayerDefend(player);
+                    break;
+
+                case 3: // Use Skill
+                    handlePlayerSkill(player);
+                    break;
+
+                case 4: // Use Item
+                    handlePlayerItem(player);
+                    break;
+
+                default:
+                    ui.showMessage("Invalid choice.");
+            }
 
         } else if (combatant instanceof Enemy) {
             // determine enemy action based on AI
@@ -54,16 +75,98 @@ public class GameController {
 
         }
     }
+    // All case methods used by processTurn() to handle player actions.
 
-// Applies start of turn effects
+    // Handles player attack --------------------------------------------------------------------------------
+
+    private void handlePlayerAttack(Player player) {
+        int targetIndex = ui.promptEnemyTargetSelection(enemies) - 1;
+        Enemy target = enemies.get(targetIndex);
+
+        if (!target.isAlive()) {
+            ui.showMessage("That enemy is already defeated.");
+            return;
+        }
+
+        target.takeDamage(player.getAttack());
+
+        ui.showMessage(player.getName() + " attacked " + target.getName() + "!");
+    }
+
+    // Handles player defense -----------------------------------------------------------------------------
+
+    private void handlePlayerDefend(Player player) {
+        player.setDefense(player.getDefense() + 10); // defense increases by 10 for the next turn 
+        ui.showMessage(player.getName() + " takes a defensive stance!");
+}
+
+    // Handles player skill ---- -----------------------------------------------------------------------------
+
+    private void handlePlayerSkill(Player player) {
+        int targetIndex = ui.promptEnemyTargetSelection(enemies) - 1;
+        Enemy target = enemies.get(targetIndex);
+
+        if (!target.isAlive()) {
+            ui.showMessage("That enemy is already defeated.");
+            return;
+        }
+
+        player.useSpecialSkill(new Combatant[]{target});
+        ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
+    }
+
+    // Handles player item  -------------------------------------------------------------------------------
+    private void handlePlayerItem(Player player) {
+        Item[] inventory = player.getInventory(); // assuming this exists
+        int itemChoice = ui.promptItemSelection(inventory);
+
+        if (itemChoice == -1) {
+            ui.showMessage("Item use cancelled.");
+            return;
+        }
+
+        int itemIndex = itemChoice - 1; // Converts itemIndex to 0-based index
+
+        if (itemIndex < 0 || itemIndex >= inventory.length || inventory[itemIndex] == null) {
+            ui.showMessage("Invalid item choice.");
+            return;
+        }
+
+        Item chosenItem = inventory[itemIndex];
+        Combatant[] targets;
+
+        // this is because offensive items like PowerStone and SmokeBomb should target enemies, while defensive items like HealthPotion should target the player
+        if (chosenItem instanceof PowerStone || chosenItem instanceof SmokeBomb) {
+            int targetIndex = ui.promptEnemyTargetSelection(enemies) - 1;
+            Enemy target = enemies.get(targetIndex);
+
+            if (!target.isAlive()) {
+                ui.showMessage("That enemy is already defeated.");
+                return;
+            }
+
+            targets = new Combatant[]{target};
+        } else {
+            targets = new Combatant[]{player};
+        }
+
+        chosenItem.use(player, targets);
+        ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+
+    // Applies start of turn effects
     private void applyStartOfTurnEffects(Combatant combatant) {
         // apply status effects that trigger at the start of the turn
         // also handle any effects that might prevent action (e.g. stun)
         combatant.updateStatusEffects();
     }
 
-// -----------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
 
+
+    // Checks if backup spawn should be triggered and spawns next wave if conditions are met
     private void checkBackupSpawn() {
         boolean AllEnemiesDefeated = enemies.stream().noneMatch(Enemy::isAlive);
 
@@ -82,6 +185,7 @@ public class GameController {
         }
      }
 
+    // returns true or false if battle is over based on if player is dead/enemies are all dead
     private boolean isBattleOver() { 
         if (!player.isAlive()) {
         return true;
@@ -96,7 +200,7 @@ public class GameController {
         return true; 
     }
 
-
+    // just displays victory or defeat screen based on ui.showDefeat() or ui.showVictory() in GameUI.
     private void displayResult() {
     int enemiesRemaining = 0;
     for (Enemy enemy : enemies) {
@@ -114,6 +218,7 @@ public class GameController {
         }
     }
 
+    // main game loop that runs until battle is over, tracks rounds and displays round info at the start of each round.
     public void startBattle() {
         while (!isBattleOver()) {
             rounds++;
@@ -146,6 +251,7 @@ public class GameController {
         return combatants;
         }
 
+    // runs through a full round of combat. 
     private void runRound() {
         Combatant[] combatants = buildCombatantsArray();
         Combatant[] turnOrder = strategy.determineTurnOrder(combatants);
