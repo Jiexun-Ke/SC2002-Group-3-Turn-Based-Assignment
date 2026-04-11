@@ -25,9 +25,10 @@ public class GameController {
     private int rounds;
     private GameUI ui;
     
-    public GameController(Player player, List<Enemy> enemies, TurnOrderStrategy strategy, GameUI ui) {
+    public GameController(Player player, List<Enemy> enemies, Queue<List<Enemy>> remainingWaves, TurnOrderStrategy strategy, GameUI ui) {
         this.player = player;
         this.enemies = enemies;
+        this.remainingWaves = remainingWaves;
         this.strategy = strategy;
         this.rounds = 0;
         this.ui = ui;
