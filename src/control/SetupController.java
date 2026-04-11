@@ -1,11 +1,13 @@
 package control;
 
+
 import boundary.GameUI;
 import java.util.List;
 import model.combatants.Enemy;
 import model.combatants.Player;
 import model.turn_order.SpeedBasedTurnStrategy;
 import model.turn_order.TurnOrderStrategy;
+import model.items.*;
 
 public class SetupController {
     private GameUI ui;
@@ -37,6 +39,28 @@ public class SetupController {
         // create Warrior or Wizard
         return null;
     }
+}   private Item[] chooseItems() {
+    Item[] items = new Item[2];
+
+    for (int i = 0; i < 2; i++) {
+        int choice = ui.promptItemChoice(i + 1);
+
+        switch (choice) {
+            case 1:
+                items[i] = new Potion();
+                break;
+            case 2:
+                items[i] = new PowerStone();
+                break;
+            case 3:
+                items[i] = new SmokeBomb();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid item choice.");
+        }
+    }
+
+    return items;
 }
 
 
