@@ -7,7 +7,7 @@ import model.combatants.Enemy;
 import model.combatants.Player;
 import model.turn_order.SpeedBasedTurnStrategy;
 import model.turn_order.TurnOrderStrategy;
-import model.items.*;
+import model.items.Item;
 
 public class SetupController {
     private GameUI ui;
