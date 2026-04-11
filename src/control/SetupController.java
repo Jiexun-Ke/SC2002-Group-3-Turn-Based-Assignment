@@ -2,7 +2,6 @@ package control;
 
 
 import boundary.GameUI;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class SetupController {
 
         List<Enemy> enemies = createEnemies();
         
-        Queue<List<Enemy>> remainingWaves = createBackupWaves();
+        Queue<List<Enemy>> remainingWaves = createBackupWaves(2); // Example difficulty
         return new GameController(player, enemies, remainingWaves, strategy, ui);
     }
 
@@ -76,6 +75,8 @@ public class SetupController {
 
     return remainingWaves;
     }   
+
+}
 
 
 
