@@ -1,8 +1,8 @@
 import boundary.GameUI;
-import control.SetupController;
 import control.GameController;
+import control.SetupController;
 
-public class main {
+public class Main {
     public static void main(String[] args){
         GameUI ui = new GameUI();
 
@@ -17,13 +17,10 @@ public class main {
         
         try {
             GameController game = setup.createGame();
-
-            if (game != null){
-                game.startBattle();
-            }
+            game.startBattle();
         }
         catch (UnsupportedOperationException e){
-            ui.showMessage("Finish game controllers before game commence");
+            ui.showMessage("Some parts of the game are not fully implemented yet.");
             ui.showMessage("Error details: " + e.getMessage());
 
         }
