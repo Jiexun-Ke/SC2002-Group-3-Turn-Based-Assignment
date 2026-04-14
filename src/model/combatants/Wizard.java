@@ -1,19 +1,16 @@
 package model.combatants;
 import model.actions.*;
 public class Wizard extends Player {
-    private int bonusAttack;
 
     public Wizard(){
         super("Wizard", 200, 50, 10, 20);
-        this.bonusAttack = 0;
     }
 
     public void increaseAttack(){
-        this.setAttack(this.getAttack() + bonusAttack);
+        this.setAttack(this.getAttack() + 10);
     }
 
-    public void resetAttackBonus(){
-        this.bonusAttack = 0;
+    public void resetAttack(){ //Likely redundant but just in case we want to reset the attack back to base value after a battle
         this.setAttack(50);
     }
 
@@ -38,11 +35,9 @@ public class Wizard extends Player {
 
             for(int i = 0; i < targets.length; i++){
                 if(wasAlive[i] && !targets[i].isAlive()){ // if was killed by ArcaneBlast then increase ATK
-                    this.bonusAttack += 10;
+                    this.increaseAttack();
                 }
             }
-
-            this.increaseAttack();
             return skillused;
         }
     }
