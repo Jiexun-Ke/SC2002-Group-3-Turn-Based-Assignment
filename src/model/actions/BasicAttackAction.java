@@ -16,22 +16,24 @@ public class BasicAttackAction extends Action{
     @Override
     public void execute(Combatant user, Combatant[] targets){
         for (Combatant target : targets){
-            for (StatusEffect effect : target.getStatusEffects()) {
-                if (effect instanceof SmokeBombEffect) {
-                    System.out.println("Smoke Bomb is active on " + target.getName() + "! No damage will be dealt to this target.");
-                    break; // No need to continue iterating if already see got SmokeBombEffect
-                }
+            boolean smokeBombActive = false;
 
-                else{
-                    target.takeDamage(user.getAttack());
-                    System.out.println(user.getName() + " attacks " + target.getName() + " for " + Math.max(0, user.getAttack() - target.getDefense()) + " damage!");
+            for (StatusEffect effect : target.getStatusEffects()) { //Check if target has smoke bomb effect, if have just exit loop
+                if (effect instanceof SmokeBombEffect) {
+                    smokeBombActive = true;
+                    break;
                 }
             }
-        }            
+
+            if (smokeBombActive) {
+                continue; //smoke bomb active, go straight to next combatant (if have)
+            }
+
+            target.takeDamage(user.getAttack());
+        }
     }
-
-
 }
+
 
 
 

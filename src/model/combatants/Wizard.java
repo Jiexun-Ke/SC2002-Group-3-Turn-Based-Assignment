@@ -15,11 +15,15 @@ public class Wizard extends Player {
     }
 
     @Override
+    public String getSpecialSkillName() {
+        return "Arcane Blast";
+    }
+
+    @Override
     public boolean useSpecialSkill(Combatant[] targets){
         boolean skillused = true;
 
         if(this.getSpecialSkillCooldown() != 0){
-            System.err.println("Arcane blast is on cooldown! Turns remaining: " + this.getSpecialSkillCooldown());
             return !skillused;
         }
         

@@ -9,7 +9,7 @@ public class SmokeBomb extends Item {
 
     @Override
     public String getDescription() {
-        return "When used, Enemy attacks do 0 damage in the current turn and the next turn";
+        return "When used, Enemy attacks do 0 damage to the user in the current turn and the next turn";
     }
 
     public void use(Player user, Combatant[] targets){

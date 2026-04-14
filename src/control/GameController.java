@@ -64,27 +64,29 @@ public class GameController {
             }
 
         } else if (combatant instanceof Enemy enemy) {
-            int hpBefore = player.getCurrentHP();
+            if(hasStatusEffect(player, SmokeBombEffect.class)){
+                ui.showMessage(enemy.getName() + " attacks " + player.getName() + ", but Smoke Bomb is active! No damage is dealt.");
+            } 
+            else {
+                int hpBefore = player.getCurrentHP();
 
-            Action enemyAction = enemy.chooseAction();
-            enemyAction.execute(enemy, new Combatant[]{player}); 
+                Action enemyAction = enemy.chooseAction();
+                enemyAction.execute(enemy, new Combatant[]{player}); 
 
-            int damageDealt = hpBefore - player.getCurrentHP();
+                int damageDealt = hpBefore - player.getCurrentHP();
             
-            if (hasStatusEffect(enemy, SmokeBombEffect.class)) {
-            ui.showMessage(enemy.getName() + "'s attack was nullified by Smoke Bomb! "
-                + "No damage dealt to " + player.getName() + ".");
-            } else if (damageDealt > 0) {
-                ui.showMessage(enemy.getName() + " attacked " + player.getName()
-                + " for " + damageDealt + " damage! "
-                + player.getName() + " HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
-            } else {
-                ui.showMessage(enemy.getName() + " attacked " + player.getName()
-                    + ", but dealt 0 damage.");
-            }
+                if (damageDealt > 0) {
+                    ui.showMessage(enemy.getName() + " attacked " + player.getName()
+                    + " for " + damageDealt + " damage! "
+                    + player.getName() + " HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
+                } else {
+                    ui.showMessage(enemy.getName() + " attacked " + player.getName()
+                        + ", but dealt 0 damage.");
                 }
+            }
+        }
     }
-    
+
     // hasStatusEffect helper method to check if enemy/player has a specific status effect active, used for things like smoke bomb nullifying enemy attacks.
     private boolean hasStatusEffect(Combatant combatant, Class<? extends model.status_effects.StatusEffect> effectType) {
     for (model.status_effects.StatusEffect effect : combatant.getStatusEffects()) {
@@ -170,7 +172,7 @@ public class GameController {
                 return false;
             }
 
-            ui.showMessage(player.getName() + " used Arcane Blast on all enemies!");
+            ui.showMessage(player.getName() + " used " + player.getSpecialSkillName() + " on all enemies!");
             return true;
         }
 
@@ -182,8 +184,6 @@ public class GameController {
         }
        
 
-        
-
         Enemy target = aliveEnemies.get(targetIndex);
 
         skillUsed = player.useSpecialSkill(new Combatant[]{target});
@@ -193,7 +193,7 @@ public class GameController {
             return false;
         }
 
-        ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
+        ui.showMessage(player.getName() + " used " + player.getSpecialSkillName() + " on " + target.getName() + "!");
         return true;
     }
 
@@ -220,45 +220,34 @@ public class GameController {
         if (chosenItem instanceof PowerStone) {
         List<Enemy> aliveEnemies = getAliveEnemies();
 
-        if (aliveEnemies.isEmpty()) {
-            ui.showMessage("There are no enemies to target.");
-            return false;
-        }
-
-        if (player instanceof Wizard) {
-            targets = aliveEnemies.toArray(new Combatant[0]);
-        } else {
-            int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
-
-            if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
-                ui.showMessage("Invalid target choice.");
+            if (aliveEnemies.isEmpty()) {
+                ui.showMessage("There are no enemies to target.");
                 return false;
             }
 
-        Enemy target = aliveEnemies.get(targetIndex);
-        targets = new Combatant[]{target};
+            if (player instanceof Wizard) {
+                targets = aliveEnemies.toArray(new Combatant[0]);
+            } else {
+                int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
+                if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
+                    ui.showMessage("Invalid target choice.");
+                    return false;
+                }
+
+            Enemy target = aliveEnemies.get(targetIndex);
+            targets = new Combatant[]{target};
+
+            }
+        } else {
+            targets = new Combatant[]{player};
         }
 
-    } else if (chosenItem instanceof SmokeBomb) {
-        List<Enemy> aliveEnemies = getAliveEnemies();
-
-        if (aliveEnemies.isEmpty()) {
-            ui.showMessage("There are no enemies to affect.");
-            return false;
-        }
-
-        targets = aliveEnemies.toArray(new Combatant[0]);
-
-    } else {
-        targets = new Combatant[]{player};
-    }  // Hi jiexun can you see this m8
-
-    chosenItem.use(player, targets);
-    player.removeItem(chosenItem);
-    ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
-    return true;
-}
+        chosenItem.use(player, targets);
+        player.removeItem(chosenItem);
+        ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
+        return true;
+    }
 
 // ------------------------------------------------------------------------------------------------------------
 
