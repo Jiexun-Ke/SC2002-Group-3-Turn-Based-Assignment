@@ -53,6 +53,8 @@ public class SetupController {
         ui.showMessage("You selected: " + player.getName());
         ui.showMessage("Difficulty selected: " + difficultyName);
         ui.showMessage("Battle setup complete. Prepare for combat!");
+        ui.showMessage(" ");
+        ui.showBattleStatus(player, enemies);
 
         return new GameController(player, enemies, remainingWaves, strategy, ui);
     }

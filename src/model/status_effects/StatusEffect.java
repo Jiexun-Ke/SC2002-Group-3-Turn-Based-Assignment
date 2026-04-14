@@ -10,6 +10,7 @@ public abstract class StatusEffect {
         this.remainingTurns = remainingTurns;
     }
 
+    
     public String getName(){
         return this.name;
     }

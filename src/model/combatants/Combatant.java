@@ -56,6 +56,10 @@ public abstract class Combatant{
     public int getMaxHP() {
         return maxHP;
     }
+
+    public StatusEffect[] getStatusEffects() {
+    return activeEffects;
+    }
     ////////////////////
     
     public boolean isAlive(){
@@ -103,6 +107,8 @@ public abstract class Combatant{
             }
         }
     }
+
+    
 
     public void takeDamage(int amount){
         int finalDamage = Math.max(0, (amount - this.defense));
