@@ -75,11 +75,21 @@ public class GameController {
             // determine enemy action based on AI
             // execute action
             ui.showBattleStatus(player, enemies);
+
+            int hpBefore = player.getCurrentHP();
+
             Action enemyAction = enemy.chooseAction();
             enemyAction.execute(enemy, new Combatant[]{player}); 
 
+            int damageDealt = hpBefore - player.getCurrentHP();
+            if (damageDealt < 0) {
+                damageDealt = 0;
+            }
 
-        }
+            ui.showMessage(enemy.getName() + " attacked " + player.getName()
+            + " for " + damageDealt + " damage! "
+            + player.getName() + " HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
+                }
     }
     
 
@@ -108,13 +118,18 @@ public class GameController {
             return false;
         }
         
-        
-
-        
-
         Enemy target = aliveEnemies.get(targetIndex);
+        int hpBefore = target.getCurrentHP();
+
         new BasicAttackAction().execute(player, new Combatant[]{target});
-        ui.showMessage(player.getName() + " attacked " + target.getName() + "!");
+
+        int damageDealt = hpBefore - target.getCurrentHP();
+
+        if (damageDealt < 0) {
+            damageDealt = 0;
+        }
+
+        ui.showMessage(player.getName() + " attacked " + target.getName() + " for " + damageDealt + " damage! " + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
         return true;
     }
 
