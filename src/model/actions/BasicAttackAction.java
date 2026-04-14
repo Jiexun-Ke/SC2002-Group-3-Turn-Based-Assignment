@@ -15,34 +15,22 @@ public class BasicAttackAction extends Action{
     
     @Override
     public void execute(Combatant user, Combatant[] targets){
-         boolean smokeBombActive = false;
-
         for (Combatant target : targets){
             for (StatusEffect effect : target.getStatusEffects()) {
                 if (effect instanceof SmokeBombEffect) {
-                    smokeBombActive = true;
-                    break;
+                    System.out.println("Smoke Bomb is active on " + target.getName() + "! No damage will be dealt to this target.");
+                }
+
+                else{
+                    target.takeDamage(user.getAttack());
+                    System.out.println(user.getName() + " attacks " + target.getName() + " for " + (user.getAttack() - target.getDefense()) + " damage!");
                 }
             }
-        }
-
-        int attackValue = smokeBombActive ? 0 : user.getAttack();
-
-        for (Combatant target : targets) {
-            target.takeDamage(attackValue);
-            
-
-            //for (int i = 0; i < targets.length; i++) {
-            //    targets[i].takeDamage(attackValue);
-            //     if (attackValue > 0) {
-            //        System.out.println(user.getName() + " attacked " + targets[i].getName() + " for " + attackValue + " damage! "
-            //        + targets[i].getName() + " HP: " + targets[i].getCurrentHP() + "/" + targets[i].getMaxHP());
-            //    } else {
-            //        System.out.println(user.getName() + "'s attack was evaded due to Smoke Bomb! No damage dealt to " + targets[i].getName() + ".");
-            //    }
-            
-        }
+        }            
     }
+
+
 }
+
 
 
