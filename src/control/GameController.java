@@ -173,11 +173,6 @@ public class GameController {
         return true;
     }
 
-
-        
-
-    
-
     // Handles player item  -------------------------------------------------------------------------------
     private boolean handlePlayerItem(Player player) {
         Item[] inventory = player.getInventory(); 
@@ -196,20 +191,19 @@ public class GameController {
         }
 
         Item chosenItem = inventory[itemIndex];
-        
-        
-        
         Combatant[] targets;
-
         
-        if (chosenItem instanceof PowerStone || chosenItem instanceof SmokeBomb) {
-            List<Enemy> aliveEnemies = getAliveEnemies();
+        if (chosenItem instanceof PowerStone) {
+        List<Enemy> aliveEnemies = getAliveEnemies();
 
-            if (aliveEnemies.isEmpty()) {
-                ui.showMessage("There are no enemies to attack.");
-                return false;
-            }
-            
+        if (aliveEnemies.isEmpty()) {
+            ui.showMessage("There are no enemies to target.");
+            return false;
+        }
+
+        if (player instanceof Wizard) {
+            targets = aliveEnemies.toArray(new Combatant[0]);
+        } else {
             int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
             if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
@@ -217,8 +211,21 @@ public class GameController {
                 return false;
             }
 
-            Enemy target = aliveEnemies.get(targetIndex);
-            targets = new Combatant[]{target};
+        Enemy target = aliveEnemies.get(targetIndex);
+        targets = new Combatant[]{target};
+
+        }
+        
+    } else if (chosenItem instanceof SmokeBomb) {
+        List<Enemy> aliveEnemies = getAliveEnemies();
+
+        if (aliveEnemies.isEmpty()) {
+            ui.showMessage("There are no enemies to affect.");
+            return false;
+        }
+
+        targets = aliveEnemies.toArray(new Combatant[0]);
+
     } else {
         targets = new Combatant[]{player};
     }
