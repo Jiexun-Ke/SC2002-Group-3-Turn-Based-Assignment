@@ -10,6 +10,7 @@ import model.actions.DefendAction;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
 import model.combatants.Player;
+import model.combatants.Wizard;
 import model.items.*;
 import model.turn_order.TurnOrderStrategy;
 
@@ -52,23 +53,23 @@ public class GameController {
 
                 switch (choice) {
                     case 1: // Attack
-                        handlePlayerAttack(player);
-                        validActionChosen = true;
+                        validActionChosen = handlePlayerAttack(player);
+            
                         break;
 
                     case 2: // Defend
-                        handlePlayerDefend(player);
-                        validActionChosen = true;
+                        validActionChosen = handlePlayerDefend(player);
+                        
                         break;
 
                     case 3: // Use Skill
-                        handlePlayerSkill(player);
-                        validActionChosen = true;
+                        validActionChosen = handlePlayerSkill(player);
+                        
                         break;
 
                     case 4: // Use Item
-                        handlePlayerItem(player);
-                        validActionChosen = true;
+                        validActionChosen = handlePlayerItem(player);
+                        
                         break;
 
                     default:
@@ -91,80 +92,96 @@ public class GameController {
 
     // Handles player attack --------------------------------------------------------------------------------
     private List<Enemy> getAliveEnemies() {
-    List<Enemy> aliveEnemies = new ArrayList<>();
-    for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            aliveEnemies.add(enemy);
+        List<Enemy> aliveEnemies = new ArrayList<>();
+        for (Enemy enemy : enemies) {
+            if (enemy.isAlive()) {
+                aliveEnemies.add(enemy);
+            }
         }
+        return aliveEnemies;
     }
-    return aliveEnemies;
-}
-    private void handlePlayerAttack(Player player) {
+    private boolean handlePlayerAttack(Player player) {
         List<Enemy> aliveEnemies = getAliveEnemies();
         int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
         if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
-        ui.showMessage("Invalid target choice.");
-        return;
+            ui.showMessage("Invalid target choice.");
+            return false;
         }
         
+        
+
+        
+
         Enemy target = aliveEnemies.get(targetIndex);
-
-        if (!target.isAlive()) {
-            ui.showMessage("That enemy is already defeated.");
-            return;
-        }
-
         new BasicAttackAction().execute(player, new Combatant[]{target});
-
         ui.showMessage(player.getName() + " attacked " + target.getName() + "!");
+        return true;
     }
 
     // Handles player defense -----------------------------------------------------------------------------
 
-    private void handlePlayerDefend(Player player) {
+    private boolean handlePlayerDefend(Player player) {
         new DefendAction().execute(player, new Combatant[0]);
         ui.showMessage(player.getName() + " takes a defensive stance!");
-}
+        return true;
+    }
 
     // Handles player skill ---- -----------------------------------------------------------------------------
 
-    private void handlePlayerSkill(Player player) {
+    private boolean handlePlayerSkill(Player player) {
         List<Enemy> aliveEnemies = getAliveEnemies();
-        int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
+        
+        
 
-        if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
-        ui.showMessage("Invalid target choice.");
-        return;
+        if (aliveEnemies.isEmpty()) {
+            ui.showMessage("No enemies to target with a skill.");
+            return false;
         }
 
-        Enemy target = aliveEnemies.get(targetIndex);
-
-        if (!target.isAlive()) {
-            ui.showMessage("That enemy is already defeated.");
-            return;
-        } else {
-
-        player.useSpecialSkill(new Combatant[]{target});
-        ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
-        }
+        if (player instanceof Wizard) {
+        Combatant[] targets = aliveEnemies.toArray(new Combatant[0]);
+        player.useSpecialSkill(targets);
+        ui.showMessage(player.getName() + " used Arcane Blast on all enemies!");
+        return true;
     }
 
+    int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
+
+        if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
+            ui.showMessage("Invalid target choice.");
+            return false;
+        }
+       
+
+        
+
+        Enemy target = aliveEnemies.get(targetIndex);
+        player.useSpecialSkill(new Combatant[]{target});
+        ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
+        return true;
+    }
+
+
+        
+
+    
+
     // Handles player item  -------------------------------------------------------------------------------
-    private void handlePlayerItem(Player player) {
-        Item[] inventory = player.getInventory(); // assuming this exists
+    private boolean handlePlayerItem(Player player) {
+        Item[] inventory = player.getInventory(); 
         int itemChoice = ui.promptItemSelection(inventory);
 
         if (itemChoice == -1) {
             ui.showMessage("Item use cancelled.");
-            return;
+            return false;
         }
 
         int itemIndex = itemChoice - 1; // Converts itemIndex to 0-based index
 
         if (itemIndex < 0 || itemIndex >= inventory.length || inventory[itemIndex] == null) {
             ui.showMessage("Invalid item choice.");
-            return;
+            return false;
         }
 
         Item chosenItem = inventory[itemIndex];
@@ -177,26 +194,24 @@ public class GameController {
 
             if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
                 ui.showMessage("Invalid target choice.");
-                return;
+                return false;
             }
 
             if (!aliveEnemies.get(targetIndex).isAlive()) {
                 ui.showMessage("That enemy is already defeated.");
-                return;
+                return false;
             }
 
             Enemy target = aliveEnemies.get(targetIndex);
             targets = new Combatant[]{target};
-        } else {
-            targets = new Combatant[]{player};
-        
-
-
-        chosenItem.use(player, targets);
-        player.removeItem(chosenItem);
-        ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
+    } else {
+        targets = new Combatant[]{player};
     }
 
+    chosenItem.use(player, targets);
+    player.removeItem(chosenItem);
+    ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
+    return true;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -213,9 +228,9 @@ public class GameController {
 
     // Checks if backup spawn should be triggered and spawns next wave if conditions are met
     private void checkBackupSpawn() {
-        boolean AllEnemiesDefeated = enemies.stream().noneMatch(Enemy::isAlive);
+        boolean allEnemiesDefeated = enemies.stream().noneMatch(Enemy::isAlive);
 
-        if (AllEnemiesDefeated && !remainingWaves.isEmpty()) {
+        if (allEnemiesDefeated && !remainingWaves.isEmpty()) {
             List<Enemy> nextWave = remainingWaves.poll();
             enemies.addAll(nextWave);
             ui.showNewWave(nextWave.size());
