@@ -85,7 +85,7 @@ public class GameUI {
         for (int i = 0; i < enemies.size(); i++){
             Enemy e = enemies.get(i);
             if (e.isAlive()){
-                System.out.println((i + 1) + ". " + e.getName() + e.getCurrentHP() + "/" + e.getMaxHP() + ")");
+                System.out.println((i + 1) + ". " + e.getName() + "(" + e.getCurrentHP() + "/" + e.getMaxHP() + ")");
             }
         }
         return validator.getIntInRange("Choose target: ", 1, enemies.size());
