@@ -35,7 +35,6 @@ public class GameController {
 
     private void processTurn(Combatant combatant) { 
         if (combatant instanceof Player playerCombatant) {
-            ui.showBattleStatus(playerCombatant, enemies);
             
             boolean validActionChosen = false;
             while (!validActionChosen) {
