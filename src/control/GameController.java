@@ -359,16 +359,27 @@ public class GameController {
                 continue;
             }
 
+            if (!combatant.canAct()) {
+                ui.showMessage(combatant.getName() + " is stunned and cannot act!");
+                combatant.updateStatusEffects(); // Update status effects to reduce stun duration
+                updatePerTurnState(combatant);
+                
+            
+
+            if (isBattleOver()) {
+                break;
+            }
+            continue; 
+            
+        }
+
             applyStartOfTurnEffects(combatant);
 
             if (!combatant.isAlive()) {
-        updatePerTurnState(combatant);
-        continue;
-            }
-
-            if (!combatant.canAct()) {
-                ui.showMessage(combatant.getName() + " is stunned and cannot act!");
                 updatePerTurnState(combatant);
+                if (isBattleOver()) {
+                    break;
+                }
                 continue;
             }
 
@@ -379,7 +390,6 @@ public class GameController {
                 break;
             }
         }
-
         checkBackupSpawn();
         ui.showBattleStatus(player, enemies);
     }
