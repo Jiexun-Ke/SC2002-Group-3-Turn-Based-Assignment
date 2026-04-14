@@ -16,13 +16,6 @@ import model.status_effects.SmokeBombEffect;
 import model.turn_order.TurnOrderStrategy;
 
 public class GameController {
-    // overall game flow
-    // should track rounds, turns and win/lose checking for both player and enemies
-    // apply start-of-turn and end-of-turn effects 
-    // invoke selected action
-    // remove dead combatants
-    // trigger backup spawn
-    // check battle end conditions
     private final Player player;
     private final List<Enemy> enemies;
     private final Queue<List<Enemy>> remainingWaves;
@@ -43,9 +36,7 @@ public class GameController {
     private void processTurn(Combatant combatant) { 
         if (combatant instanceof Player playerCombatant) {
             ui.showBattleStatus(playerCombatant, enemies);
-            // get player action from UI
-            // execute action
-            // e.g. attack, use item, defend, etc.
+            
             boolean validActionChosen = false;
             while (!validActionChosen) {
 
@@ -73,10 +64,6 @@ public class GameController {
             }
 
         } else if (combatant instanceof Enemy enemy) {
-            // determine enemy action based on AI
-            // execute action
-            ui.showBattleStatus(player, enemies);
-
             int hpBefore = player.getCurrentHP();
 
             Action enemyAction = enemy.chooseAction();
@@ -84,7 +71,7 @@ public class GameController {
 
             int damageDealt = hpBefore - player.getCurrentHP();
             
-            if (enemy.hasStatusEffect(SmokeBombEffect.class)) {
+            if (hasStatusEffect(enemy, SmokeBombEffect.class)) {
             ui.showMessage(enemy.getName() + "'s attack was nullified by Smoke Bomb! "
                 + "No damage dealt to " + player.getName() + ".");
             } else if (damageDealt > 0) {
@@ -98,6 +85,15 @@ public class GameController {
                 }
     }
     
+    // hasStatusEffect helper method to check if enemy/player has a specific status effect active, used for things like smoke bomb nullifying enemy attacks.
+    private boolean hasStatusEffect(Combatant combatant, Class<? extends model.status_effects.StatusEffect> effectType) {
+    for (model.status_effects.StatusEffect effect : combatant.getStatusEffects()) {
+        if (effect != null && effectType.isInstance(effect)) {
+            return true;
+        }
+    }
+    return false;
+}
 
     // Handles player attack --------------------------------------------------------------------------------
     private List<Enemy> getAliveEnemies() {
@@ -365,7 +361,13 @@ public class GameController {
 
             applyStartOfTurnEffects(combatant);
 
-            if (!combatant.isAlive() || !combatant.canAct()) {
+            if (!combatant.isAlive()) {
+        updatePerTurnState(combatant);
+        continue;
+            }
+
+            if (!combatant.canAct()) {
+                ui.showMessage(combatant.getName() + " is stunned and cannot act!");
                 updatePerTurnState(combatant);
                 continue;
             }

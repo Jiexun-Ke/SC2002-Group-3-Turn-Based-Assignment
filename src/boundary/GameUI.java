@@ -85,7 +85,8 @@ public class GameUI {
         for (int i = 0; i < enemies.size(); i++){
             Enemy e = enemies.get(i);
             if (e.isAlive()){
-                System.out.println((i + 1) + ". " + e.getName() + "(" + e.getCurrentHP() + "/" + e.getMaxHP() + ")");
+                System.out.println((i + 1) + ". " + e.getName() + " HP: " 
+        + e.getCurrentHP() + "/" + e.getMaxHP());
             }
         }
         return validator.getIntInRange("Choose target: ", 1, enemies.size());
@@ -161,7 +162,9 @@ public class GameUI {
     public void showBattleStatus(Player player, List<Enemy> enemies) {
     System.out.println("Player HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
     for (Enemy enemy : enemies) {
-        System.out.println(enemy.getName() + " HP: " + enemy.getCurrentHP());
+        if (enemy.isAlive()) {
+            System.out.println(enemy.getName() + " HP: " + enemy.getCurrentHP() + "/" + enemy.getMaxHP());
+        }
     }
 }
 
