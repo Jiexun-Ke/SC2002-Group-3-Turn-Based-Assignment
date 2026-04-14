@@ -17,10 +17,12 @@ public class BasicAttackAction extends Action{
     public void execute(Combatant user, Combatant[] targets){
          boolean smokeBombActive = false;
 
-        for (StatusEffect effect : user.getStatusEffects()) {
-            if (effect instanceof SmokeBombEffect) {
-            smokeBombActive = true;
-            break;
+        for (Combatant target : targets){
+            for (StatusEffect effect : target.getStatusEffects()) {
+                if (effect instanceof SmokeBombEffect) {
+                    smokeBombActive = true;
+                    break;
+                }
             }
         }
 
