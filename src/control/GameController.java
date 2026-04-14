@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import model.actions.Action;
+import model.actions.BasicAttackAction;
 import model.actions.DefendAction;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
@@ -52,18 +53,22 @@ public class GameController {
                 switch (choice) {
                     case 1: // Attack
                         handlePlayerAttack(player);
+                        validActionChosen = true;
                         break;
 
                     case 2: // Defend
                         handlePlayerDefend(player);
+                        validActionChosen = true;
                         break;
 
                     case 3: // Use Skill
                         handlePlayerSkill(player);
+                        validActionChosen = true;
                         break;
 
                     case 4: // Use Item
                         handlePlayerItem(player);
+                        validActionChosen = true;
                         break;
 
                     default:
@@ -110,7 +115,7 @@ public class GameController {
             return;
         }
 
-        target.takeDamage(player.getAttack());
+        new BasicAttackAction().execute(player, new Combatant[]{target});
 
         ui.showMessage(player.getName() + " attacked " + target.getName() + "!");
     }
@@ -125,16 +130,24 @@ public class GameController {
     // Handles player skill ---- -----------------------------------------------------------------------------
 
     private void handlePlayerSkill(Player player) {
-        int targetIndex = ui.promptEnemyTargetSelection(enemies) - 1;
-        Enemy target = enemies.get(targetIndex);
+        List<Enemy> aliveEnemies = getAliveEnemies();
+        int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
+
+        if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
+        ui.showMessage("Invalid target choice.");
+        return;
+        }
+
+        Enemy target = aliveEnemies.get(targetIndex);
 
         if (!target.isAlive()) {
             ui.showMessage("That enemy is already defeated.");
             return;
-        }
+        } else {
 
         player.useSpecialSkill(new Combatant[]{target});
         ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
+        }
     }
 
     // Handles player item  -------------------------------------------------------------------------------
@@ -159,23 +172,32 @@ public class GameController {
 
         // this is because offensive items like PowerStone and SmokeBomb should target enemies, while defensive items like HealthPotion should target the player
         if (chosenItem instanceof PowerStone || chosenItem instanceof SmokeBomb) {
-            int targetIndex = ui.promptEnemyTargetSelection(enemies) - 1;
-            Enemy target = enemies.get(targetIndex);
+            List<Enemy> aliveEnemies = getAliveEnemies();
+            int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
-            if (!target.isAlive()) {
+            if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
+                ui.showMessage("Invalid target choice.");
+                return;
+            }
+
+            if (!aliveEnemies.get(targetIndex).isAlive()) {
                 ui.showMessage("That enemy is already defeated.");
                 return;
             }
 
+            Enemy target = aliveEnemies.get(targetIndex);
             targets = new Combatant[]{target};
         } else {
             targets = new Combatant[]{player};
-        }
+        
+
 
         chosenItem.use(player, targets);
         player.removeItem(chosenItem);
         ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
     }
+
+}
 
 // ------------------------------------------------------------------------------------------------------------
 
@@ -192,13 +214,6 @@ public class GameController {
     // Checks if backup spawn should be triggered and spawns next wave if conditions are met
     private void checkBackupSpawn() {
         boolean AllEnemiesDefeated = enemies.stream().noneMatch(Enemy::isAlive);
-
-        for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            AllEnemiesDefeated = false;
-            break;
-        }
-    }
 
         if (AllEnemiesDefeated && !remainingWaves.isEmpty()) {
             List<Enemy> nextWave = remainingWaves.poll();
