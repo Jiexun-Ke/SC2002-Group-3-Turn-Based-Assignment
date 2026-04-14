@@ -251,7 +251,7 @@ public class GameController {
 
     } else {
         targets = new Combatant[]{player};
-    }
+    } //random
 
     chosenItem.use(player, targets);
     player.removeItem(chosenItem);
