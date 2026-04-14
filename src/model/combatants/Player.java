@@ -58,6 +58,6 @@ public abstract class Player extends Combatant{
         }
     }
 
-    public abstract void useSpecialSkill(Combatant[] targets);
+    public abstract boolean useSpecialSkill(Combatant[] targets);
 }
 

@@ -139,9 +139,17 @@ public class GameController {
             return false;
         }
 
+        boolean skillUsed;
+
         if (player instanceof Wizard) {
         Combatant[] targets = aliveEnemies.toArray(new Combatant[0]);
-        player.useSpecialSkill(targets);
+        skillUsed = player.useSpecialSkill(targets);
+
+        if (!skillUsed) {
+            ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
+            return false;
+        }
+
         ui.showMessage(player.getName() + " used Arcane Blast on all enemies!");
         return true;
     }
@@ -157,7 +165,13 @@ public class GameController {
         
 
         Enemy target = aliveEnemies.get(targetIndex);
-        player.useSpecialSkill(new Combatant[]{target});
+        skillUsed = player.useSpecialSkill(new Combatant[]{target});
+
+        if (!skillUsed) {
+        ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
+        return false;
+    }
+
         ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
         return true;
     }
