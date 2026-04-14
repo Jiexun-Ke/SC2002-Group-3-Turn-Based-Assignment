@@ -22,12 +22,12 @@ public class GameController {
     // remove dead combatants
     // trigger backup spawn
     // check battle end conditions
-    private Player player;
-    private List<Enemy> enemies;
-    private Queue<List<Enemy>> remainingWaves;
-    private TurnOrderStrategy strategy;
+    private final Player player;
+    private final List<Enemy> enemies;
+    private final Queue<List<Enemy>> remainingWaves;
+    private final TurnOrderStrategy strategy;
     private int rounds;
-    private GameUI ui;
+    private final GameUI ui;
     
     public GameController(Player player, List<Enemy> enemies, Queue<List<Enemy>> remainingWaves, TurnOrderStrategy strategy, GameUI ui) {
         this.player = player;
@@ -40,48 +40,37 @@ public class GameController {
     }
 
     private void processTurn(Combatant combatant) { 
-        if (combatant instanceof Player) {
-            Player player = (Player) combatant;
-            ui.showBattleStatus(player, enemies);
+        if (combatant instanceof Player playerCombatant) {
+            ui.showBattleStatus(playerCombatant, enemies);
             // get player action from UI
             // execute action
             // e.g. attack, use item, defend, etc.
             boolean validActionChosen = false;
             while (!validActionChosen) {
 
-            int choice = ui.promptPlayerAction(player);
+            int choice = ui.promptPlayerAction(playerCombatant);
 
                 switch (choice) {
-                    case 1: // Attack
-                        validActionChosen = handlePlayerAttack(player);
-            
-                        break;
+                    case 1 -> // Attack
+                        validActionChosen = handlePlayerAttack(playerCombatant);
 
-                    case 2: // Defend
-                        validActionChosen = handlePlayerDefend(player);
-                        
-                        break;
+                    case 2 -> // Defend
+                        validActionChosen = handlePlayerDefend(playerCombatant);
 
-                    case 3: // Use Skill
-                        validActionChosen = handlePlayerSkill(player);
-                        
-                        break;
+                    case 3 -> // Use Skill
+                        validActionChosen = handlePlayerSkill(playerCombatant);
 
-                    case 4: // Use Item
-                        validActionChosen = handlePlayerItem(player);
-                        
-                        break;
+                    case 4 -> // Use Item
+                        validActionChosen = handlePlayerItem(playerCombatant);
 
-                    default:
-                        ui.showMessage("Invalid choice.");
+                    default -> ui.showMessage("Invalid choice.");
                 }
             }
 
-        } else if (combatant instanceof Enemy) {
+        } else if (combatant instanceof Enemy enemy) {
             // determine enemy action based on AI
             // execute action
             ui.showBattleStatus(player, enemies);
-            Enemy enemy = (Enemy) combatant;
             Action enemyAction = enemy.chooseAction();
             enemyAction.execute(enemy, new Combatant[]{player}); 
 
@@ -148,19 +137,20 @@ public class GameController {
         boolean skillUsed;
 
         if (player instanceof Wizard) {
-        Combatant[] targets = aliveEnemies.toArray(new Combatant[0]);
-        skillUsed = player.useSpecialSkill(targets);
+            @SuppressWarnings("CollectionsToArray")
+            Combatant[] targets = aliveEnemies.toArray(new Combatant[aliveEnemies.size()]);
+            skillUsed = player.useSpecialSkill(targets);
 
-        if (!skillUsed) {
-            ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
-            return false;
+            if (!skillUsed) {
+                ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
+                return false;
+            }
+
+            ui.showMessage(player.getName() + " used Arcane Blast on all enemies!");
+            return true;
         }
 
-        ui.showMessage(player.getName() + " used Arcane Blast on all enemies!");
-        return true;
-    }
-
-    int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
+        int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
         if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
             ui.showMessage("Invalid target choice.");
@@ -171,12 +161,13 @@ public class GameController {
         
 
         Enemy target = aliveEnemies.get(targetIndex);
+
         skillUsed = player.useSpecialSkill(new Combatant[]{target});
 
         if (!skillUsed) {
-        ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
-        return false;
-    }
+            ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
+            return false;
+        }
 
         ui.showMessage(player.getName() + " used a skill on " + target.getName() + "!");
         return true;
@@ -205,6 +196,9 @@ public class GameController {
         }
 
         Item chosenItem = inventory[itemIndex];
+        
+        
+        
         Combatant[] targets;
 
         
@@ -296,7 +290,7 @@ public class GameController {
         while (!isBattleOver()) {
             rounds++;
             ui.showRoundHeader(rounds);
-            ui.displayRoundInfo(rounds, player, enemies.toArray(new Enemy[0]));
+            ui.displayRoundInfo(rounds, player, enemies.toArray(Enemy[]::new));
             runRound();
         }
         displayResult();
@@ -354,8 +348,7 @@ public class GameController {
     }
 
     private void updatePerTurnState(Combatant combatant) {
-        if (combatant instanceof Player) {
-            Player p = (Player) combatant;
+        if (combatant instanceof Player p) {
             p.updateSpecialSkillCooldown();
         }
     }
