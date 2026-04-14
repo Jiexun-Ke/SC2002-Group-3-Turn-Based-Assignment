@@ -12,6 +12,7 @@ import model.combatants.Enemy;
 import model.combatants.Player;
 import model.combatants.Wizard;
 import model.items.*;
+import model.status_effects.SmokeBombEffect;
 import model.turn_order.TurnOrderStrategy;
 
 public class GameController {
@@ -82,13 +83,18 @@ public class GameController {
             enemyAction.execute(enemy, new Combatant[]{player}); 
 
             int damageDealt = hpBefore - player.getCurrentHP();
-            if (damageDealt < 0) {
-                damageDealt = 0;
+            
+            if (enemy.hasStatusEffect(SmokeBombEffect.class)) {
+            ui.showMessage(enemy.getName() + "'s attack was nullified by Smoke Bomb! "
+                + "No damage dealt to " + player.getName() + ".");
+            } else if (damageDealt > 0) {
+                ui.showMessage(enemy.getName() + " attacked " + player.getName()
+                + " for " + damageDealt + " damage! "
+                + player.getName() + " HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
+            } else {
+                ui.showMessage(enemy.getName() + " attacked " + player.getName()
+                    + ", but dealt 0 damage.");
             }
-
-            ui.showMessage(enemy.getName() + " attacked " + player.getName()
-            + " for " + damageDealt + " damage! "
-            + player.getName() + " HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
                 }
     }
     
@@ -125,11 +131,14 @@ public class GameController {
 
         int damageDealt = hpBefore - target.getCurrentHP();
 
-        if (damageDealt < 0) {
-            damageDealt = 0;
+        if (damageDealt > 0) {
+        ui.showMessage(player.getName() + " attacked " + target.getName()
+                + " for " + damageDealt + " damage! "
+                + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
+        } else {
+        ui.showMessage(player.getName() + " attacked " + target.getName()
+                + ", but dealt 0 damage.");
         }
-
-        ui.showMessage(player.getName() + " attacked " + target.getName() + " for " + damageDealt + " damage! " + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
         return true;
     }
 
