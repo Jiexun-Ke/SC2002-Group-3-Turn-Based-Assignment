@@ -19,11 +19,12 @@ public class BasicAttackAction extends Action{
             for (StatusEffect effect : target.getStatusEffects()) {
                 if (effect instanceof SmokeBombEffect) {
                     System.out.println("Smoke Bomb is active on " + target.getName() + "! No damage will be dealt to this target.");
+                    break; // No need to continue iterating if already see got SmokeBombEffect
                 }
 
                 else{
                     target.takeDamage(user.getAttack());
-                    System.out.println(user.getName() + " attacks " + target.getName() + " for " + (user.getAttack() - target.getDefense()) + " damage!");
+                    System.out.println(user.getName() + " attacks " + target.getName() + " for " + Math.max(0, user.getAttack() - target.getDefense()) + " damage!");
                 }
             }
         }            
