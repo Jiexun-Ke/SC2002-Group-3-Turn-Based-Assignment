@@ -1,9 +1,11 @@
 package control;
 
 import boundary.GameUI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import model.actions.Action;
+import model.actions.DefendAction;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
 import model.combatants.Player;
@@ -42,27 +44,31 @@ public class GameController {
             // get player action from UI
             // execute action
             // e.g. attack, use item, defend, etc.
+            boolean validActionChosen = false;
+            while (!validActionChosen) {
+
             int choice = ui.promptPlayerAction(player);
 
-            switch (choice) {
-                case 1: // Attack
-                    handlePlayerAttack(player);
-                    break;
+                switch (choice) {
+                    case 1: // Attack
+                        handlePlayerAttack(player);
+                        break;
 
-                case 2: // Defend
-                    handlePlayerDefend(player);
-                    break;
+                    case 2: // Defend
+                        handlePlayerDefend(player);
+                        break;
 
-                case 3: // Use Skill
-                    handlePlayerSkill(player);
-                    break;
+                    case 3: // Use Skill
+                        handlePlayerSkill(player);
+                        break;
 
-                case 4: // Use Item
-                    handlePlayerItem(player);
-                    break;
+                    case 4: // Use Item
+                        handlePlayerItem(player);
+                        break;
 
-                default:
-                    ui.showMessage("Invalid choice.");
+                    default:
+                        ui.showMessage("Invalid choice.");
+                }
             }
 
         } else if (combatant instanceof Enemy) {
@@ -79,10 +85,25 @@ public class GameController {
     // All case methods used by processTurn() to handle player actions.
 
     // Handles player attack --------------------------------------------------------------------------------
-
+    private List<Enemy> getAliveEnemies() {
+    List<Enemy> aliveEnemies = new ArrayList<>();
+    for (Enemy enemy : enemies) {
+        if (enemy.isAlive()) {
+            aliveEnemies.add(enemy);
+        }
+    }
+    return aliveEnemies;
+}
     private void handlePlayerAttack(Player player) {
-        int targetIndex = ui.promptEnemyTargetSelection(enemies) - 1;
-        Enemy target = enemies.get(targetIndex);
+        List<Enemy> aliveEnemies = getAliveEnemies();
+        int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
+
+        if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
+        ui.showMessage("Invalid target choice.");
+        return;
+        }
+        
+        Enemy target = aliveEnemies.get(targetIndex);
 
         if (!target.isAlive()) {
             ui.showMessage("That enemy is already defeated.");
@@ -97,7 +118,7 @@ public class GameController {
     // Handles player defense -----------------------------------------------------------------------------
 
     private void handlePlayerDefend(Player player) {
-        player.setDefense(player.getDefense() + 10); // defense increases by 10 for the next turn 
+        new DefendAction().execute(player, new Combatant[0]);
         ui.showMessage(player.getName() + " takes a defensive stance!");
 }
 
@@ -152,6 +173,7 @@ public class GameController {
         }
 
         chosenItem.use(player, targets);
+        player.removeItem(chosenItem);
         ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
     }
 
@@ -265,10 +287,12 @@ public class GameController {
             applyStartOfTurnEffects(combatant);
 
             if (!combatant.isAlive() || !combatant.canAct()) {
+                updatePerTurnState(combatant);
                 continue;
             }
 
             processTurn(combatant);
+            updatePerTurnState(combatant);
 
             if (isBattleOver()) {
                 break;
@@ -278,4 +302,12 @@ public class GameController {
         checkBackupSpawn();
         ui.showBattleStatus(player, enemies);
     }
+
+    private void updatePerTurnState(Combatant combatant) {
+        if (combatant instanceof Player) {
+            Player p = (Player) combatant;
+            p.updateSpecialSkillCooldown();
+        }
+    }
 }
+
