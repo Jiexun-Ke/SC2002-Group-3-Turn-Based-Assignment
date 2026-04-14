@@ -125,11 +125,14 @@ public class GameController {
 
         int damageDealt = hpBefore - target.getCurrentHP();
 
-        if (damageDealt < 0) {
-            damageDealt = 0;
+        if (damageDealt > 0) {
+        ui.showMessage(player.getName() + " attacked " + target.getName()
+                + " for " + damageDealt + " damage! "
+                + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
+        } else {
+        ui.showMessage(player.getName() + " attacked " + target.getName()
+                + ", but dealt 0 damage.");
         }
-
-        ui.showMessage(player.getName() + " attacked " + target.getName() + " for " + damageDealt + " damage! " + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
         return true;
     }
 
