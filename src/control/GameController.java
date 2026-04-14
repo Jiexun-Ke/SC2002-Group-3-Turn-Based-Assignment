@@ -251,7 +251,7 @@ public class GameController {
 
     } else {
         targets = new Combatant[]{player};
-    } //random
+    }  // Hi jiexun can you see this m8
 
     chosenItem.use(player, targets);
     player.removeItem(chosenItem);
