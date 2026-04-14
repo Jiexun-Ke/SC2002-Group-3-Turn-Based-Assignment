@@ -51,19 +51,23 @@ public class GameController {
             int choice = ui.promptPlayerAction(playerCombatant);
 
                 switch (choice) {
-                    case 1 -> // Attack
+                    case 1: // Attack
                         validActionChosen = handlePlayerAttack(playerCombatant);
+                        break;
 
-                    case 2 -> // Defend
+                    case 2: // Defend
                         validActionChosen = handlePlayerDefend(playerCombatant);
+                        break;
 
-                    case 3 -> // Use Skill
+                    case 3: // Use Skill
                         validActionChosen = handlePlayerSkill(playerCombatant);
+                        break;
 
-                    case 4 -> // Use Item
+                    case 4: // Use Item
                         validActionChosen = handlePlayerItem(playerCombatant);
-
-                    default -> ui.showMessage("Invalid choice.");
+                        break;
+                        
+                    default: ui.showMessage("Invalid choice.");
                 }
             }
 
@@ -215,7 +219,7 @@ public class GameController {
         targets = new Combatant[]{target};
 
         }
-        
+
     } else if (chosenItem instanceof SmokeBomb) {
         List<Enemy> aliveEnemies = getAliveEnemies();
 

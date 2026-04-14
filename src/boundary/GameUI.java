@@ -5,7 +5,7 @@ import model.combatants.*;
 import model.items.*;
 
 public class GameUI {
-    private InputValidator validator;
+    private final InputValidator validator;
 
     public void print(String a){
          System.out.println(a);
@@ -26,6 +26,32 @@ public class GameUI {
         print("2. Exit");
 
         return validator.getIntInRange("Select an option: ", 1, 2);
+    }
+
+    public int promptDifficultySelection() {
+        print(" ");
+        print("--- ENEMY TYPES ---");
+        print("Goblin");
+        print("   STATS: HP: 55, ATK: 35, DEF: 15, SPD: 25");
+        print("Wolf");
+        print("   STATS: HP: 40, ATK: 45, DEF: 5, SPD: 35");
+
+        print(" ");
+        print("--- SELECT DIFFICULTY ---");
+        print("1. Easy   (3 Goblins)");
+        print("2. Medium (1 Goblin, 1 Wolf + backup: 2 Wolves)");
+        print("3. Hard   (2 Goblins + backup: 1 Goblin, 2 Wolves)");
+
+        return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
+    }
+
+    public int promptStartingItemSelection(int itemNumber) {
+        print("--- SELECT ITEM " + itemNumber + " ---");
+        print("1. Potion");
+        print("2. Power Stone");
+        print("3. Smoke Bomb");
+
+        return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
     }
 
     public int promptPlayerSelection(){
@@ -49,7 +75,7 @@ public class GameUI {
         print("1. Attack");
         print("2. Defend");
         print("3. Use Skill");
-        print("3. Use Item");
+        print("4. Use Item");
 
         return validator.getIntInRange("Choose your action (1-4): ",1, 4 );
     }
