@@ -83,12 +83,12 @@ public class GameController {
             ui.showBattleStatus(player, enemies);
             Enemy enemy = (Enemy) combatant;
             Action enemyAction = enemy.chooseAction();
-            enemyAction.execute(enemy, new Combatant[]{player}); // assuming actions target the player for simplicity, can be expanded to support multi-target actions
+            enemyAction.execute(enemy, new Combatant[]{player}); 
 
 
         }
     }
-    // All case methods used by processTurn() to handle player actions.
+    
 
     // Handles player attack --------------------------------------------------------------------------------
     private List<Enemy> getAliveEnemies() {
@@ -102,6 +102,12 @@ public class GameController {
     }
     private boolean handlePlayerAttack(Player player) {
         List<Enemy> aliveEnemies = getAliveEnemies();
+
+        if (aliveEnemies.isEmpty()) {
+        ui.showMessage("There are no enemies to attack.");
+        return false;
+    }
+
         int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
         if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
@@ -201,18 +207,19 @@ public class GameController {
         Item chosenItem = inventory[itemIndex];
         Combatant[] targets;
 
-        // this is because offensive items like PowerStone and SmokeBomb should target enemies, while defensive items like HealthPotion should target the player
+        
         if (chosenItem instanceof PowerStone || chosenItem instanceof SmokeBomb) {
             List<Enemy> aliveEnemies = getAliveEnemies();
+
+            if (aliveEnemies.isEmpty()) {
+                ui.showMessage("There are no enemies to attack.");
+                return false;
+            }
+            
             int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
 
             if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
                 ui.showMessage("Invalid target choice.");
-                return false;
-            }
-
-            if (!aliveEnemies.get(targetIndex).isAlive()) {
-                ui.showMessage("That enemy is already defeated.");
                 return false;
             }
 
@@ -232,8 +239,7 @@ public class GameController {
 
     // Applies start of turn effects
     private void applyStartOfTurnEffects(Combatant combatant) {
-        // apply status effects that trigger at the start of the turn
-        // also handle any effects that might prevent action (e.g. stun)
+        
         combatant.updateStatusEffects();
     }
 
