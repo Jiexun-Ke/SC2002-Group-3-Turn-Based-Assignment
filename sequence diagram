@@ -1,0 +1,288 @@
+<mxfile host="app.diagrams.net" agent="Claude Code" version="29.6.4">
+  <diagram name="Sequence Diagram" id="seq-main-flow">
+    <mxGraphModel dx="1800" dy="1500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- PARTICIPANT HEADERS -->
+        <mxCell id="h1" value="main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h2" value="GameUI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h3" value="SetupController" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h4" value="GameController" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="600" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h5" value="SpeedBasedTurnStrategy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="815" y="20" width="170" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h6" value="Player" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h7" value="Enemy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h8" value="EnemyBasicStrategy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1375" y="20" width="170" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="h9" value="Action" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="20" width="160" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- LIFELINES (cx: main=100, GameUI=280, Setup=480, Game=680, Speed=900, Player=1100, Enemy=1270, EnemyStrat=1460, Action=1650) -->
+        <mxCell id="ll1" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#6c8ebf;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="60" as="sourcePoint"/><mxPoint x="100" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll2" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#82b366;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="280" y="60" as="sourcePoint"/><mxPoint x="280" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll3" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#d6b656;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="480" y="60" as="sourcePoint"/><mxPoint x="480" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll4" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#d6b656;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="60" as="sourcePoint"/><mxPoint x="680" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll5" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="900" y="60" as="sourcePoint"/><mxPoint x="900" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll6" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#9673a6;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1100" y="60" as="sourcePoint"/><mxPoint x="1100" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll7" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1270" y="60" as="sourcePoint"/><mxPoint x="1270" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll8" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1460" y="60" as="sourcePoint"/><mxPoint x="1460" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="ll9" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#d79b00;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1650" y="60" as="sourcePoint"/><mxPoint x="1650" y="1460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- ===== FRAGMENT BOXES (drawn first, so messages appear on top) ===== -->
+
+        <!-- loop [!isBattleOver()] -->
+        <mxCell id="f_loop_battle" value="loop [!isBattleOver()]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;strokeWidth=2;fontSize=11;fontStyle=1;align=left;verticalAlign=top;spacingLeft=5;spacingTop=3;" vertex="1" parent="1">
+          <mxGeometry x="110" y="400" width="1580" height="750" as="geometry"/>
+        </mxCell>
+
+        <!-- loop [for each combatant in turnOrder] -->
+        <mxCell id="f_loop_turn" value="loop [for each combatant in turnOrder]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1;fontSize=11;fontStyle=1;align=left;verticalAlign=top;spacingLeft=5;spacingTop=3;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="528" width="1560" height="510" as="geometry"/>
+        </mxCell>
+
+        <!-- alt [Player's Turn] / else [Enemy's Turn] -->
+        <mxCell id="f_alt_turn" value="alt [Player&apos;s Turn]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0066cc;strokeWidth=1;fontSize=11;fontStyle=1;align=left;verticalAlign=top;spacingLeft=5;spacingTop=3;" vertex="1" parent="1">
+          <mxGeometry x="130" y="602" width="1540" height="380" as="geometry"/>
+        </mxCell>
+
+        <!-- alt [player.isAlive()] for result -->
+        <mxCell id="f_alt_result" value="alt [player.isAlive()]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0066cc;strokeWidth=1;fontSize=11;fontStyle=1;align=left;verticalAlign=top;spacingLeft=5;spacingTop=3;" vertex="1" parent="1">
+          <mxGeometry x="110" y="1170" width="630" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== SECTION LABEL: GAME INITIALIZATION ===== -->
+        <mxCell id="sec1" value="[ Game Initialization ]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=3;fontColor=#1e4d78;" vertex="1" parent="1">
+          <mxGeometry x="10" y="72" width="200" height="18" as="geometry"/>
+        </mxCell>
+
+        <!-- MSG 1: main → GameUI: showMainMenu() -->
+        <mxCell id="m1" value="showMainMenu()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="100" as="sourcePoint"/><mxPoint x="280" y="100" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 2: GameUI → main: return 1 (Start Game) -->
+        <mxCell id="m2" value="return 1 (Start Game)" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="280" y="122" as="sourcePoint"/><mxPoint x="100" y="122" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 3: main → SetupController: new SetupController(ui) -->
+        <mxCell id="m3" value="new SetupController(ui)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="150" as="sourcePoint"/><mxPoint x="480" y="150" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 4: main → SetupController: createGame() -->
+        <mxCell id="m4" value="createGame()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="178" as="sourcePoint"/><mxPoint x="480" y="178" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 5: SetupController → GameUI: promptPlayerSelection() -->
+        <mxCell id="m5" value="promptPlayerSelection()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="480" y="206" as="sourcePoint"/><mxPoint x="280" y="206" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 6: GameUI → SetupController: return playerChoice -->
+        <mxCell id="m6" value="return playerChoice (1=Warrior / 2=Wizard)" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="280" y="228" as="sourcePoint"/><mxPoint x="480" y="228" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 7: SetupController → Player: new Warrior() / new Wizard() -->
+        <mxCell id="m7" value="new Warrior() / new Wizard()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="480" y="256" as="sourcePoint"/><mxPoint x="1100" y="256" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 8: SetupController → Enemy: new Wolf() / new Goblin() -->
+        <mxCell id="m8" value="new Wolf() / new Goblin()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="480" y="284" as="sourcePoint"/><mxPoint x="1270" y="284" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 9: SetupController → GameController: new GameController(...) -->
+        <mxCell id="m9" value="new GameController(player, enemies, strategy, ui)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="480" y="312" as="sourcePoint"/><mxPoint x="680" y="312" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 10: SetupController → main: return GameController -->
+        <mxCell id="m10" value="return GameController" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="480" y="338" as="sourcePoint"/><mxPoint x="100" y="338" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- ===== SECTION LABEL: BATTLE ===== -->
+        <mxCell id="sec2" value="[ Battle ]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=3;fontColor=#1e4d78;" vertex="1" parent="1">
+          <mxGeometry x="10" y="358" width="100" height="18" as="geometry"/>
+        </mxCell>
+
+        <!-- MSG 11: main → GameController: startBattle() -->
+        <mxCell id="m11" value="startBattle()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="382" as="sourcePoint"/><mxPoint x="680" y="382" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- Inside loop_battle -->
+        <!-- MSG 12: GameController → GameUI: showRoundHeader(rounds) -->
+        <mxCell id="m12" value="showRoundHeader(rounds)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="435" as="sourcePoint"/><mxPoint x="280" y="435" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 13: GameController → GameUI: displayRoundInfo() -->
+        <mxCell id="m13" value="displayRoundInfo(rounds, player, enemies)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="460" as="sourcePoint"/><mxPoint x="280" y="460" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 14: GameController → SpeedBasedTurnStrategy: determineTurnOrder() -->
+        <mxCell id="m14" value="determineTurnOrder(combatants[])" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="488" as="sourcePoint"/><mxPoint x="900" y="488" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 15: SpeedBasedTurnStrategy → GameController: return turnOrder[] -->
+        <mxCell id="m15" value="return turnOrder[]" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="900" y="510" as="sourcePoint"/><mxPoint x="680" y="510" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- Inside loop_turn -->
+        <!-- MSG 16: GameController → combatant: updateStatusEffects() -->
+        <mxCell id="m16" value="updateStatusEffects() [applyStartOfTurnEffects]" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="562" as="sourcePoint"/><mxPoint x="1100" y="562" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 17: GameController → combatant: canAct() -->
+        <mxCell id="m17" value="canAct()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="584" as="sourcePoint"/><mxPoint x="1100" y="584" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- Inside alt_turn: Player's Turn -->
+        <!-- MSG 18: GameController → GameUI: showBattleStatus -->
+        <mxCell id="m18" value="showBattleStatus(player, enemies)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="638" as="sourcePoint"/><mxPoint x="280" y="638" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 19: GameController → GameUI: promptPlayerAction() -->
+        <mxCell id="m19" value="promptPlayerAction(player)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="662" as="sourcePoint"/><mxPoint x="280" y="662" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 20: GameUI → GameController: return actionChoice -->
+        <mxCell id="m20" value="return actionChoice" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="280" y="684" as="sourcePoint"/><mxPoint x="680" y="684" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 21: GameController → Action: execute(player, targets) -->
+        <mxCell id="m21" value="execute(player, targets)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="712" as="sourcePoint"/><mxPoint x="1650" y="712" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 22: Action → Enemy: takeDamage(attack) -->
+        <mxCell id="m22" value="takeDamage(attack)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1650" y="738" as="sourcePoint"/><mxPoint x="1270" y="738" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- ALT DIVIDER LINE -->
+        <mxCell id="f_alt_div" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#0066cc;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="130" y="768" as="sourcePoint"/><mxPoint x="1670" y="768" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="f_alt_else_lbl" value="else [Enemy&apos;s Turn]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="134" y="768" width="170" height="18" as="geometry"/>
+        </mxCell>
+
+        <!-- Inside alt_turn: Enemy's Turn -->
+        <!-- MSG 23: GameController → GameUI: showBattleStatus -->
+        <mxCell id="m23" value="showBattleStatus(player, enemies)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="796" as="sourcePoint"/><mxPoint x="280" y="796" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 24: GameController → Enemy: chooseAction() -->
+        <mxCell id="m24" value="chooseAction()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="824" as="sourcePoint"/><mxPoint x="1270" y="824" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 25: Enemy → EnemyBasicStrategy: chooseAction(enemy) -->
+        <mxCell id="m25" value="chooseAction(enemy)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1270" y="852" as="sourcePoint"/><mxPoint x="1460" y="852" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 26: EnemyBasicStrategy → Enemy: return new BasicAttackAction() -->
+        <mxCell id="m26" value="return new BasicAttackAction()" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1460" y="874" as="sourcePoint"/><mxPoint x="1270" y="874" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 27: Enemy → GameController: return action -->
+        <mxCell id="m27" value="return action" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1270" y="898" as="sourcePoint"/><mxPoint x="680" y="898" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 28: GameController → Action: execute(enemy, [player]) -->
+        <mxCell id="m28" value="execute(enemy, [player])" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="926" as="sourcePoint"/><mxPoint x="1650" y="926" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <!-- MSG 29: Action → Player: takeDamage(attack) -->
+        <mxCell id="m29" value="takeDamage(attack)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1650" y="952" as="sourcePoint"/><mxPoint x="1100" y="952" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- MSG 30: GameController self-call: isBattleOver() (inside loop_turn, after alt) -->
+        <mxCell id="m30" value="isBattleOver() → break if true" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="992" as="sourcePoint"/>
+            <mxPoint x="680" y="1014" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="740" y="992"/>
+              <mxPoint x="740" y="1014"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- MSG 31: GameController self-call: checkBackupSpawn() (inside loop_battle, after loop_turn) -->
+        <mxCell id="m31" value="checkBackupSpawn()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="1060" as="sourcePoint"/>
+            <mxPoint x="680" y="1082" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="740" y="1060"/>
+              <mxPoint x="740" y="1082"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- MSG 32: GameController → GameUI: showBattleStatus (end of round) -->
+        <mxCell id="m32" value="showBattleStatus(player, enemies)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="1112" as="sourcePoint"/><mxPoint x="280" y="1112" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- Inside alt_result: showVictory -->
+        <!-- MSG 33: GameController → GameUI: showVictory -->
+        <mxCell id="m33" value="showVictory(currentHP, maxHP, rounds)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="1200" as="sourcePoint"/><mxPoint x="280" y="1200" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- ALT RESULT DIVIDER -->
+        <mxCell id="f_alt_res_div" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#0066cc;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="110" y="1232" as="sourcePoint"/><mxPoint x="740" y="1232" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="f_alt_res_else_lbl" value="else [!player.isAlive()]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="114" y="1232" width="160" height="18" as="geometry"/>
+        </mxCell>
+
+        <!-- MSG 34: GameController → GameUI: showDefeat -->
+        <mxCell id="m34" value="showDefeat(enemiesRemaining, rounds)" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="1260" as="sourcePoint"/><mxPoint x="280" y="1260" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- MSG 35: main → GameUI: closeUI() -->
+        <mxCell id="m35" value="closeUI()" style="endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="1360" as="sourcePoint"/><mxPoint x="280" y="1360" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
