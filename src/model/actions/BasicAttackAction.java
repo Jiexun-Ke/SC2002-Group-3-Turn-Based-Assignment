@@ -27,9 +27,8 @@ public class BasicAttackAction extends Action{
         int attackValue = smokeBombActive ? 0 : user.getAttack();
 
         for (Combatant target : targets) {
-            int hpBefore = target.getCurrentHP();
             target.takeDamage(attackValue);
-            int damageDealt = hpBefore - target.getCurrentHP();
+            
 
             //for (int i = 0; i < targets.length; i++) {
             //    targets[i].takeDamage(attackValue);
@@ -39,17 +38,7 @@ public class BasicAttackAction extends Action{
             //    } else {
             //        System.out.println(user.getName() + "'s attack was evaded due to Smoke Bomb! No damage dealt to " + targets[i].getName() + ".");
             //    }
-            if (damageDealt > 0) {
-                System.out.println(user.getName() + " attacked " + target.getName()
-                        + " for " + damageDealt + " damage! "
-                        + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
-            } else if (smokeBombActive) {
-                System.out.println(user.getName() + "'s attack was nullified by Smoke Bomb! No damage dealt to "
-                        + target.getName() + ".");
-            } else {
-                System.out.println(user.getName() + " attacked " + target.getName()
-                        + ", but dealt 0 damage.");
-            }
+            
         }
     }
 }
