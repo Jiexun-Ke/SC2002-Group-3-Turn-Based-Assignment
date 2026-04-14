@@ -13,8 +13,8 @@ public class SmokeBomb extends Item {
     }
 
     public void use(Player user, Combatant[] targets){
-        for(int i=0; i < targets.length; i++){
-            targets[i].addStatusEffect(new SmokeBombEffect());
+        for(Combatant target : targets){
+            target.addStatusEffect(new SmokeBombEffect());
         }
     }
 }
