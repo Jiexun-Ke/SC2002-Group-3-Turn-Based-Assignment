@@ -148,7 +148,7 @@ public class GameUI {
     }
 
     public void showNewWave(int enemyCount) {
-        System.out.println("WARNING: A new wave of enemies approaches! ("+ enemyCount + "enemies)");
+        System.out.println("WARNING: A new wave of enemies approaches! ("+ enemyCount + " enemies)");
     }
 
     public void showMessage(String message) {
@@ -157,15 +157,6 @@ public class GameUI {
 
     public void showRoundHeader(int roundNumber) {
     System.out.println("========== ROUND " + roundNumber + " ==========");
-}
-
-    public void showBattleStatus(Player player, List<Enemy> enemies) {
-    System.out.println("Player HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
-    for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            System.out.println(enemy.getName() + " HP: " + enemy.getCurrentHP() + "/" + enemy.getMaxHP());
-        }
-    }
 }
 
 // call when exit game

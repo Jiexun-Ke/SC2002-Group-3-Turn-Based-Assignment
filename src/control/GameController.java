@@ -366,21 +366,21 @@ public class GameController {
 
             if (!combatant.isAlive()) {
                 updatePerTurnState(combatant);
-                if (isBattleOver()) {
-                    break;
-                }
                 continue;
             }
 
             processTurn(combatant);
             updatePerTurnState(combatant);
 
-            if (isBattleOver()) {
-                break;
+            if (!player.isAlive()) {
+            break;
+        }
+
+            if (enemies.stream().noneMatch(Enemy::isAlive)) {
+            checkBackupSpawn();
+            break;
             }
         }
-        checkBackupSpawn();
-
     }
 
     private void updatePerTurnState(Combatant combatant) {
