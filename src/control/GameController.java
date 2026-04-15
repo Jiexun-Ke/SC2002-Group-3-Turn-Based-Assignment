@@ -380,7 +380,7 @@ public class GameController {
             }
         }
         checkBackupSpawn();
-        ui.showBattleStatus(player, enemies);
+
     }
 
     private void updatePerTurnState(Combatant combatant) {
