@@ -57,7 +57,7 @@ public void section(String title) {
     public int promptDifficultySelection() {
         pause(200);
         print(" ");
-        section("ENEMY TYPES");
+        section("           ENEMY TYPES");
 
         print("Goblin");
         print("-> STATS: HP: 55, ATK: 35, DEF: 15, SPD: 25");
@@ -185,7 +185,6 @@ public void section(String title) {
                 System.out.println("- " + enemy.getName() + " HP: " + enemy.getCurrentHP() + "/" + enemy.getMaxHP());
             }
         }
-        divider();
     }
 
     public void showNewWave(int enemyCount) {
