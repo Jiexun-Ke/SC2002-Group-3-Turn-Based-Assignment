@@ -37,7 +37,7 @@ public void divider(){
 
 public void section(String title) {
     divider();
-    System.out.println("    " + title);
+    System.out.println(" " + title);
     divider();
 }
 
@@ -45,12 +45,14 @@ public void section(String title) {
 
     public int showMainMenu(){
         pause(300);
+        divider();
         print("       TURN-BASED COMBAT RPG      ");
+        divider();
         print("1. Start New Game");
         print("2. Exit");
         divider();
 
-        return validator.getIntInRange("➤ Select an option: ", 1, 2);
+        return validator.getIntInRange("Select an option: ", 1, 2);
     }
 
     public int promptDifficultySelection() {
@@ -58,27 +60,27 @@ public void section(String title) {
         section("ENEMY TYPES");
 
         print("Goblin");
-        print("➤ STATS: HP: 55, ATK: 35, DEF: 15, SPD: 25");
+        print("-> STATS: HP: 55, ATK: 35, DEF: 15, SPD: 25");
         print("Wolf");
-        print("➤ STATS: HP: 40, ATK: 45, DEF: 5, SPD: 35");
+        print("-> STATS: HP: 40, ATK: 45, DEF: 5, SPD: 35");
 
         pause(200);
         print(" ");
         print("--- SELECT DIFFICULTY ---");
-        print("1. Easy   ➤ 3 Goblins");
-        print("2. Medium ➤ 1 Goblin, 1 Wolf (Backup: 2 Wolves)");
-        print("3. Hard   ➤ 2 Goblins (Backup: 1 Goblin, 2 Wolves)");
+        print("1. Easy   -> 3 Goblins");
+        print("2. Medium -> 1 Goblin, 1 Wolf (Backup: 2 Wolves)");
+        print("3. Hard   -> 2 Goblins (Backup: 1 Goblin, 2 Wolves)");
 
         divider();
-        return validator.getIntInRange("➤ Enter choice (1-3): ", 1, 3);
+        return validator.getIntInRange("-> Enter choice (1-3): ", 1, 3);
     }
 
     public int promptStartingItemSelection(int itemNumber) {
         section("SELECT ITEM " + itemNumber);
 
-        print("1. Potion      ➤ Heal");
-        print("2. Power Stone ➤ Boost Attack");
-        print("3. Smoke Bomb  ➤ Escape utility");
+        print("1. Potion      -> Heal");
+        print("2. Power Stone -> Boost Attack");
+        print("3. Smoke Bomb  -> Escape utility");
 
         divider();
         return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
@@ -90,12 +92,12 @@ public void section(String title) {
         print("--- SELECT YOUR CHAMPION ---");
         print("1. Warrior");
         print("   STATS: HP: 260  ATK: 40  DEF: 20  SPD: 30");
-        print("   ABILITY ➤ Shield Bash: Stun enemy chosen. Last for 2 rounds.");
+        print("   ABILITY -> Shield Bash: Stun enemy chosen. Last for 2 rounds.");
         print("2. Wizard");
         print("   STATS: HP: 200  ATK: 50  DEF: 10  SPD: 20");
-        print("   ABILITY ➤  Arcane Blast: AOE. Scaling ATK with enemies defeated.");
+        print("   ABILITY ->  Arcane Blast: AOE. Scaling ATK with enemies defeated.");
 
-        return validator.getIntInRange("➤ Choose your champion (1-2): ", 1, 2);
+        return validator.getIntInRange("-> Choose your champion (1-2): ", 1, 2);
     }
 
     public int promptPlayerAction(Player player){
@@ -106,7 +108,7 @@ public void section(String title) {
         print("4. Use Item");
 
         divider();
-        return validator.getIntInRange("➤ Choose action (1-4): ",1, 4 );
+        return validator.getIntInRange("-> Choose action (1-4): ",1, 4 );
     }
 
     public int promptEnemyTargetSelection(List<Enemy> enemies){
@@ -131,7 +133,7 @@ public void section(String title) {
         int availItems = 0;
         for (int i = 0; i < inventory.length; i++){
             if (inventory[i] != null){
-                System.out.println((availItems +1) +". " + inventory[i].getName() + " ➤ " + inventory[i].getDescription());
+                System.out.println((availItems +1) +". " + inventory[i].getName() + " -> " + inventory[i].getDescription());
                 availItems++;
             }
         }
@@ -144,7 +146,7 @@ public void section(String title) {
         System.out.println((availItems + 1) + ". Cancel");
         divider();
 
-        int choice = validator.getIntInRange("➤ Choose item: ", 1, availItems + 1);
+        int choice = validator.getIntInRange("-> Choose item: ", 1, availItems + 1);
 
         if (choice == availItems + 1){
             return -1; // Cancel
@@ -160,8 +162,8 @@ public void section(String title) {
         section("VICTORY");
 
         print("Congratulations, you have defeated all your enemies.");
-        System.out.println("HP Remaining ➤ " + remainingHp + "/" + maxHp);
-        System.out.println("Rounds Taken ➤ " + rounds);
+        System.out.println("HP Remaining -> " + remainingHp + "/" + maxHp);
+        System.out.println("Rounds Taken -> " + rounds);
         divider();
     }
 
@@ -169,15 +171,15 @@ public void section(String title) {
         section("DEFEATED");
 
         print("You fought bravely..");
-        System.out.println("Enemies left standing ➤ " + enemiesRemaining);
-        System.out.println("Rounds Survived ➤ " + rounds);
+        System.out.println("Enemies left standing -> " + enemiesRemaining);
+        System.out.println("Rounds Survived -> " + rounds);
         divider();
     }
 
     public void displayRoundInfo(int round, Player player, Enemy[] enemies) {
         section("ROUND" + round);
 
-        System.out.println("Player HP ➤ " + player.getCurrentHP() + "/" + player.getMaxHP());
+        System.out.println("Player HP -> " + player.getCurrentHP() + "/" + player.getMaxHP());
         print("Enemies");
         for (Enemy enemy : enemies) {
             if (enemy.isAlive()) {
