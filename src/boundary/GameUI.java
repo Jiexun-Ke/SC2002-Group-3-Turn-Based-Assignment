@@ -100,17 +100,18 @@ public void section(String title) {
     }
 
     public int promptPlayerAction(Player player){
+        print("");
         section("YOUR TURN");
         print("1. Attack");
         print("2. Defend");
         print("3. Use Skill");
         print("4. Use Item");
 
-        divider();
         return validator.getIntInRange("-> Choose action (1-4): ",1, 4 );
     }
 
     public int promptEnemyTargetSelection(List<Enemy> enemies){
+        print(" ");
         section("SELECT TARGET");
 
         for (int i = 0; i < enemies.size(); i++){
@@ -159,7 +160,8 @@ public void section(String title) {
     // DISPLAY OUTPUTS (DATA COLLECTED FROM CONTROL)
 
     public void showVictory(int remainingHp, int maxHp, int rounds) {
-        section("VICTORY");
+        print(" ");
+        section("        VICTORY");
 
         print("Congratulations, you have defeated all your enemies.");
         System.out.println("HP Remaining -> " + remainingHp + "/" + maxHp);
@@ -168,7 +170,8 @@ public void section(String title) {
     }
 
     public void showDefeat(int enemiesRemaining, int rounds) {
-        section("DEFEATED");
+        print(" ");
+        section("        DEFEATED");
 
         print("You fought bravely..");
         System.out.println("Enemies left standing -> " + enemiesRemaining);
