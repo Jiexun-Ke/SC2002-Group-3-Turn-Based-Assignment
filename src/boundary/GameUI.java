@@ -50,13 +50,13 @@ public void section(String title) {
         divider();
         print("1. Start New Game");
         print("2. Exit");
-        divider();
 
-        return validator.getIntInRange("Select an option: ", 1, 2);
+        return validator.getIntInRange("-> Select an option: ", 1, 2);
     }
 
     public int promptDifficultySelection() {
         pause(200);
+        print(" ");
         section("ENEMY TYPES");
 
         print("Goblin");
@@ -66,27 +66,26 @@ public void section(String title) {
 
         pause(200);
         print(" ");
-        print("--- SELECT DIFFICULTY ---");
+        section("        SELECT DIFFICULTY");
         print("1. Easy   -> 3 Goblins");
         print("2. Medium -> 1 Goblin, 1 Wolf (Backup: 2 Wolves)");
         print("3. Hard   -> 2 Goblins (Backup: 1 Goblin, 2 Wolves)");
 
-        divider();
         return validator.getIntInRange("-> Enter choice (1-3): ", 1, 3);
     }
 
     public int promptStartingItemSelection(int itemNumber) {
-        section("SELECT ITEM " + itemNumber);
+        print(" ");
+        section("         SELECT ITEM " + itemNumber + "/2");
 
         print("1. Potion      -> Heal");
         print("2. Power Stone -> Boost Attack");
         print("3. Smoke Bomb  -> Escape utility");
-
-        divider();
-        return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
+        return validator.getIntInRange("-> Enter choice (1-3): ", 1, 3);
     }
 
     public int promptPlayerSelection(){
+        print(" ");
         section("WELCOME TO TURN-BASED COMBAT ARENA");
 
         print("--- SELECT YOUR CHAMPION ---");
@@ -127,6 +126,7 @@ public void section(String title) {
     }
 
     public int promptItemSelection(Item[] inventory){
+        print(" ");
         section("INVENTORY");
 
         
@@ -177,7 +177,6 @@ public void section(String title) {
     }
 
     public void displayRoundInfo(int round, Player player, Enemy[] enemies) {
-        section("ROUND" + round);
 
         System.out.println("Player HP -> " + player.getCurrentHP() + "/" + player.getMaxHP());
         print("Enemies");
@@ -202,6 +201,7 @@ public void section(String title) {
 
     public void showRoundHeader(int roundNumber) {
         pause(200);
+        print(" ");
     section("ROUND " + roundNumber);
 }
 
