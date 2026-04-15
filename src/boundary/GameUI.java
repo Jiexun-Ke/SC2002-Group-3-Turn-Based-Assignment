@@ -62,10 +62,10 @@ public class GameUI {
         print("--- SELECT YOUR CHAMPION ---");
         print("1. Warrior");
         print("   STATS: HP: 260, ATK: 40, DEF: 20, SPD: 30");
-        print("   ABILITY: Shield Bash: Stun enemy for 2 rounds");
+        print("   ABILITY: Shield Bash: Deal BasicAttack damage to selected enemy. Selected enemy is unable to take actions for the current turn and the next turn.");
         print("2. Wizard");
         print("   STATS: HP: 200, ATK: 50, DEF: 10, SPD: 20");
-        print("   ABILITY: Arcane Blast: Enemy defeated add atk");
+        print("   ABILITY: Arcane Blast: Deal BasicAttack damage to all enemies currently in combat. Each enemy defeated by Arcane Blast adds 10 to the Wizard's Attack, lasting until the end of the level.");
 
         return validator.getIntInRange("Enter choice (1-2): ", 1, 2);
     }
