@@ -10,7 +10,7 @@ public class Wizard extends Player {
         this.setAttack(this.getAttack() + 10);
     }
 
-    public void resetAttack(){ //Likely redundant but just in case we want to reset the attack back to base value after a battle
+    public void resetAttack(){ //probably redundant but just in case we want to reset the attack back to base value after a battle
         this.setAttack(50);
     }
 
@@ -46,4 +46,8 @@ public class Wizard extends Player {
         }
     }
 
+    @Override
+    public boolean specialSkillTargetsAllEnemies() {
+        return true;
+    }
 }

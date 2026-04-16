@@ -16,4 +16,7 @@ public abstract class Item {
 
     public abstract String getDescription();
 
+    public abstract boolean targetsPlayer();
+
+    public abstract boolean usesSpecialSkillTargets();
 }

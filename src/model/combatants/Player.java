@@ -61,6 +61,9 @@ public abstract class Player extends Combatant{
         }
     }
 
+    // New methods to be used in control
     public abstract boolean useSpecialSkill(Combatant[] targets);
+
+    public abstract boolean specialSkillTargetsAllEnemies();
 }
 

@@ -1,6 +1,9 @@
 package boundary;
 
 import java.util.List;
+
+import model.actions.ArcaneBlastAction;
+import model.actions.ShieldBashAction;
 import model.combatants.*;
 import model.items.*;
 
@@ -51,7 +54,35 @@ public void section(String title) {
         print("1. Start New Game");
         print("2. Exit");
 
-        return validator.getIntInRange("-> Select an option: ", 1, 2);
+        return validator.getIntInRange("Select an option: ", 1, 2);
+    }
+
+    public int promptPlayerSelection(){
+        print(" ");
+        section("WELCOME TO TURN-BASED COMBAT ARENA");
+
+        print("--- SELECT YOUR CHAMPION ---");
+        print("1. Warrior");
+        print("   STATS: HP: 260  ATK: 40  DEF: 20  SPD: 30");
+        print("   ABILITY -> Shield Bash: " + new ShieldBashAction().getDescription());
+        print(" ");
+        print("2. Wizard");
+        print("   STATS: HP: 200  ATK: 50  DEF: 10  SPD: 20");
+        print("   ABILITY ->  Arcane Blast: " + new ArcaneBlastAction().getDescription());
+        print(" ");
+
+        return validator.getIntInRange("Choose your champion (1-2): ", 1, 2);
+    }
+
+    
+    public int promptStartingItemSelection(int itemNumber) {
+        print(" ");
+        section("         SELECT ITEM " + itemNumber + "/2");
+        print("1. Potion      -> " + new Potion().getDescription());
+        print("2. Power Stone -> " + new PowerStone().getDescription());
+        print("3. Smoke Bomb  -> " + new SmokeBomb().getDescription());
+        print(" ");
+        return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
     }
 
     public int promptDifficultySelection() {
@@ -71,32 +102,8 @@ public void section(String title) {
         print("2. Medium -> 1 Goblin, 1 Wolf (Backup: 2 Wolves)");
         print("3. Hard   -> 2 Goblins (Backup: 1 Goblin, 2 Wolves)");
 
-        return validator.getIntInRange("-> Enter choice (1-3): ", 1, 3);
-    }
-
-    public int promptStartingItemSelection(int itemNumber) {
         print(" ");
-        section("         SELECT ITEM " + itemNumber + "/2");
-
-        print("1. Potion      -> Heal");
-        print("2. Power Stone -> Boost Attack");
-        print("3. Smoke Bomb  -> Escape utility");
-        return validator.getIntInRange("-> Enter choice (1-3): ", 1, 3);
-    }
-
-    public int promptPlayerSelection(){
-        print(" ");
-        section("WELCOME TO TURN-BASED COMBAT ARENA");
-
-        print("--- SELECT YOUR CHAMPION ---");
-        print("1. Warrior");
-        print("   STATS: HP: 260  ATK: 40  DEF: 20  SPD: 30");
-        print("   ABILITY -> Shield Bash: Stun enemy chosen. Last for 2 rounds.");
-        print("2. Wizard");
-        print("   STATS: HP: 200  ATK: 50  DEF: 10  SPD: 20");
-        print("   ABILITY ->  Arcane Blast: AOE. Scaling ATK with enemies defeated.");
-
-        return validator.getIntInRange("-> Choose your champion (1-2): ", 1, 2);
+        return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
     }
 
     public int promptPlayerAction(Player player){
@@ -107,7 +114,8 @@ public void section(String title) {
         print("3. Use Skill");
         print("4. Use Item");
 
-        return validator.getIntInRange("-> Choose action (1-4): ",1, 4 );
+        print(" ");
+        return validator.getIntInRange("Choose action (1-4): ",1, 4 );
     }
 
     public int promptEnemyTargetSelection(List<Enemy> enemies){
@@ -123,6 +131,7 @@ public void section(String title) {
         }
 
         divider();
+        print(" ");
         return validator.getIntInRange("Choose target: ", 1, enemies.size());
     }
 
@@ -147,7 +156,8 @@ public void section(String title) {
         System.out.println((availItems + 1) + ". Cancel");
         divider();
 
-        int choice = validator.getIntInRange("-> Choose item: ", 1, availItems + 1);
+        print("");
+        int choice = validator.getIntInRange("Choose item: ", 1, availItems + 1);
 
         if (choice == availItems + 1){
             return -1; // Cancel
@@ -173,7 +183,7 @@ public void section(String title) {
         print(" ");
         section("        DEFEATED");
 
-        print("You fought bravely..");
+        print("Don't give up! Learn from this defeat and try again.");
         System.out.println("Enemies left standing -> " + enemiesRemaining);
         System.out.println("Rounds Survived -> " + rounds);
         divider();
@@ -207,8 +217,8 @@ public void section(String title) {
     section("ROUND " + roundNumber);
 }
 
-// call when exit game
-public void closeUI(){
-    validator.closeScanner();
-}
+    // call when exit game
+    public void closeUI(){
+        validator.closeScanner();
+    }
 }

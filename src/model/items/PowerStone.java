@@ -12,6 +12,16 @@ public class PowerStone extends Item{
     }
 
     @Override
+    public boolean targetsPlayer() {
+        return false;
+    }
+
+    @Override
+    public boolean usesSpecialSkillTargets() {
+        return true;
+    }
+
+    @Override
     public void use(Player user, Combatant[] targets){
         int initial_cooldown = user.getSpecialSkillCooldown();
 

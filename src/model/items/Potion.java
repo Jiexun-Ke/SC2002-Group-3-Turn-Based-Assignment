@@ -12,6 +12,16 @@ public class Potion extends Item {
     }
 
     @Override
+    public boolean targetsPlayer(){
+        return true;
+    }
+    
+    @Override
+    public boolean usesSpecialSkillTargets(){
+        return false;
+    }
+
+    @Override
     public void use(Player user, Combatant[] targets){
         for(int i=0; i < targets.length; i++){
             targets[i].heal(100);

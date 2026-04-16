@@ -26,4 +26,9 @@ public class Warrior extends Player {
 
         }
     }
+
+    @Override
+    public boolean specialSkillTargetsAllEnemies(){
+        return false;
+    }
 }
