@@ -35,22 +35,25 @@ public class InputValidator {
         return input;
     }
 
-    public int getIntInRange(String prompt, int min, int max){
-        int input = 0;
-        boolean isValid = false;
-
-        while (!isValid){
-            input = getInt(prompt);
-
-            if (input >= min && input <= max) {
-                isValid = true;
-            }
-            else {
-                System.out.println("Out of bounds! Please enter a number between " + min + " and " + max + ".");
-            }
+    public int getIntInRange(String prompt, int min, int max) {
+    while (true) {
+        if (prompt != null && !prompt.isEmpty()) {
+            System.out.println(prompt);
         }
-        return input;
+
+        try {
+            int value = Integer.parseInt(scanner.nextLine().trim());
+
+            if (value >= min && value <= max) {
+                return value;
+            }
+
+            System.out.println("Please enter a number from " + min + " to " + max + ".");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+        }
     }
+}
 
     public String getString(String prompt){
         System.out.println(prompt);

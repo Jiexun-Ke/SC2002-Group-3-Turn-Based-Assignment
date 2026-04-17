@@ -211,12 +211,14 @@ public class GameController {
     }
     //---------------------------------------------------------------
     private void applyStartOfTurnEffects(Combatant combatant) {
-        combatant.updateStatusEffects();
+        
     }
 
     //------------------------------------------------------------------
 
     private void updatePerTurnState(Combatant combatant) {
+        combatant.updateStatusEffects();
+        
         if (combatant instanceof Player p) {
             p.updateSpecialSkillCooldown();
         }

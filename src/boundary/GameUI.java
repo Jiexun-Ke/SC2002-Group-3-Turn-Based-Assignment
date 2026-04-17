@@ -69,7 +69,7 @@ public void section(String title) {
         print("   STATS: HP: 200  ATK: 50  DEF: 10  SPD: 20");
         print("   ABILITY ->  Arcane Blast: " + new ArcaneBlastAction().getDescription());
         print(" ");
-
+        
         return validator.getIntInRange("Choose your champion (1-2): ", 1, 2);
     }
 
