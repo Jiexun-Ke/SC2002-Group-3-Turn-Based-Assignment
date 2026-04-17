@@ -56,7 +56,18 @@ public class SetupController {
         ui.showMessage("Battle setup complete. Prepare for combat!");
         ui.showMessage(" ");
 
-        return new GameController(player, enemies, remainingWaves, strategy, ui);
+        TargetSelector targetSelector = new TargetSelector();
+        BattleContext context = new BattleContext(player, enemies, ui);
+        PlayerActionSelector playerActionSelector = new PlayerActionSelector(targetSelector);
+
+        return new GameController(
+            player, 
+            enemies, 
+            remainingWaves, 
+            strategy, 
+            ui,
+            context, 
+            playerActionSelector);
     }
 
 
