@@ -2,7 +2,7 @@ package model.actions;
 import model.combatants.*;
 
 public abstract class Action {
-    private String name;
+    private final String name;
 
     public Action(String name){
         this.name = name;

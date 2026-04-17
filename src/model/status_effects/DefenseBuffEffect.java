@@ -2,7 +2,7 @@ package model.status_effects;
 import model.combatants.*;
 
 public class DefenseBuffEffect extends StatusEffect {
-    private int buffAmount = 10;
+    private final int buffAmount = 10;
 
     public DefenseBuffEffect(){
         super("Defense Buff Effect", 2);

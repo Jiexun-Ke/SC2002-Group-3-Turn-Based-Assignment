@@ -2,7 +2,7 @@ package model.status_effects;
 import model.combatants.*;
 
 public abstract class StatusEffect {
-    private String name;
+    private final String name;
     private int remainingTurns;
 
     public StatusEffect(String name, int remainingTurns){

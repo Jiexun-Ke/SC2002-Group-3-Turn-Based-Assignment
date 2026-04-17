@@ -3,7 +3,7 @@ import model.combatants.*;
 import model.items.*;
 
 public class UseItemAction extends Action{
-    private Item item;
+    private final Item item;
 
     public UseItemAction(Item item){
         super("UseItemAction");

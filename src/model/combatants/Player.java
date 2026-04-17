@@ -3,7 +3,7 @@ import model.actions.*;
 import model.items.Item;
 
 public abstract class Player extends Combatant{
-    private Item[] inventory;
+    private final Item[] inventory;
     private int specialSkillCooldown;
 
     public Player(String name, int maxHP, int attack, int defense, int speed){

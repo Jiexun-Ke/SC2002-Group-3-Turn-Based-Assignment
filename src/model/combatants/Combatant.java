@@ -2,13 +2,13 @@ package model.combatants;
 import model.status_effects.*;
 
 public abstract class Combatant{
-    private String name;
-    private int maxHP;
+    private final String name;
+    private final int maxHP;
     private int currentHP;
     private int attack;
     private int defense;
-    private int speed;
-    private StatusEffect[] activeEffects;
+    private final int speed;
+    private final StatusEffect[] activeEffects;
 
     public Combatant(String name, int maxHP, int attack, int defense, int speed){
         this.name = name;
@@ -67,7 +67,7 @@ public abstract class Combatant{
     }
 
     public boolean canAct(){
-        for(int i = 0; i < activeEffects.length; i++){
+        for (int i = 0; i < activeEffects.length; i++){
             if(activeEffects[i] != null && activeEffects[i] instanceof StunEffect){
                 return false;
             }
@@ -76,7 +76,7 @@ public abstract class Combatant{
     }
 
     public boolean addStatusEffect(StatusEffect effect){
-        for(int i = 0; i < activeEffects.length; i++){
+        for (int i = 0; i < activeEffects.length; i++){
             if(activeEffects[i] == null){
                 activeEffects[i] = effect;
                 effect.apply(this);
