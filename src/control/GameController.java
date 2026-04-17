@@ -214,8 +214,8 @@ public class GameController {
             return false;
         }
 
-        Item chosenItem = inventory[itemIndex];
-        Combatant[] targets;
+        Action useItemAction = new UseItemAction(chosenItem);
+        useItemAction.execute(player, targets);
         
         if (chosenItem instanceof PowerStone) {
         List<Enemy> aliveEnemies = getAliveEnemies();
