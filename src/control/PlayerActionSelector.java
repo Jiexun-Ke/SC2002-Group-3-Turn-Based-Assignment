@@ -52,6 +52,17 @@ public class PlayerActionSelector {
     }
 
     private PlayerActionChoice createSpecialSkillChoice(Player player, BattleContext context) {
+        if (player.getSpecialSkillCooldown() > 0) {
+        context.getUi().showMessage(
+            "Skill is on cooldown for "
+            + player.getSpecialSkillCooldown()
+            + " more turn(s). Please choose another action."
+        );
+        return null;
+        }
+
+
+
         Combatant[] targets = targetSelector.selectSpecialSkillTargets(player, context);
 
         if (targets == null) {

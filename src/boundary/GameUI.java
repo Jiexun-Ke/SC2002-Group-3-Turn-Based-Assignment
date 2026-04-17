@@ -1,7 +1,6 @@
 package boundary;
 
 import java.util.List;
-
 import model.actions.ArcaneBlastAction;
 import model.actions.ShieldBashAction;
 import model.combatants.*;
@@ -109,12 +108,13 @@ public void section(String title) {
     public int promptPlayerAction(Player player){
         print("");
         section("YOUR TURN");
+        slowPrint(" ", 8);
         print("1. Attack");
         print("2. Defend");
         print("3. Use Skill");
         print("4. Use Item");
+        slowPrint(" ", 8);
 
-        print(" ");
         return validator.getIntInRange("Choose action (1-4): ",1, 4 );
     }
 
@@ -122,8 +122,11 @@ public void section(String title) {
         print(" ");
         section("SELECT TARGET");
 
+        System.out.println("0. Back");
+
         for (int i = 0; i < enemies.size(); i++){
             Enemy e = enemies.get(i);
+
             if (e.isAlive()){
                 System.out.println((i + 1) + ". " + e.getName() + " HP: " 
                 + e.getCurrentHP() + "/" + e.getMaxHP());
@@ -131,8 +134,28 @@ public void section(String title) {
         }
 
         divider();
-        print(" ");
-        return validator.getIntInRange("Choose target: ", 1, enemies.size());
+        print("");
+
+        while (true) {
+
+            int choice = validator.getInt("Choose target (0 to go back): ");
+
+            if (choice == 0) {
+                return 0;
+            }
+
+            if (choice >= 1 && choice <= enemies.size()) {
+                Enemy selectedEnemy = enemies.get(choice - 1);
+
+                if (selectedEnemy.isAlive()) {
+                    return choice;
+                }
+            }
+
+            System.out.println("Invalid target choice. Please try again.");
+        }
+
+        
     }
 
     public int promptItemSelection(Item[] inventory){
@@ -208,7 +231,8 @@ public void section(String title) {
     }
 
     public void showMessage(String message) {
-    slowPrint(message, 8);
+        slowPrint(message, 8);
+        slowPrint(" ", 8);
     }
 
     public void showRoundHeader(int roundNumber) {

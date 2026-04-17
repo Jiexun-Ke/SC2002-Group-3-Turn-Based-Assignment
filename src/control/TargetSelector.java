@@ -15,7 +15,14 @@ public class TargetSelector {
             return null;
         }
 
-        int targetIndex = context.getUi().promptEnemyTargetSelection(aliveEnemies) - 1;
+        int targetChoice = context.getUi().promptEnemyTargetSelection(aliveEnemies) - 1;
+
+        if (targetChoice == 0) {
+            context.getUi().showMessage("Action cancelled.");
+            return null;
+        }
+
+        int targetIndex = targetChoice - 1;
 
         if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
             context.getUi().showMessage("Invalid target choice.");
