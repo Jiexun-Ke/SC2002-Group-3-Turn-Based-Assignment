@@ -205,6 +205,10 @@ public class GameController {
                 break;
             }
         }
+
+        if (player.isAlive()) {
+            player.updateStatusEffects();
+        }
     }
     //---------------------------------------------------------------
     private void applyStartOfTurnEffects(Combatant combatant) {
@@ -214,10 +218,10 @@ public class GameController {
     //------------------------------------------------------------------
 
     private void updatePerTurnState(Combatant combatant) {
-        combatant.updateStatusEffects();
-        
         if (combatant instanceof Player p) {
             p.updateSpecialSkillCooldown();
+        } else {
+            combatant.updateStatusEffects();
         }
     }
 }
