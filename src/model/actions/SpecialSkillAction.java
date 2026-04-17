@@ -16,13 +16,7 @@ public class SpecialSkillAction extends Action {
     @Override
     public void execute(Combatant user, Combatant[] targets) {
         if (user instanceof Player player) {
-            boolean used = player.useSpecialSkill(targets);
-
-            if (!used) {
-                System.out.println("Skill is on cooldown for "
-                        + player.getSpecialSkillCooldown()
-                        + " more turn(s).");
-            }
+            player.useSpecialSkill(targets);
         }
     }
 }

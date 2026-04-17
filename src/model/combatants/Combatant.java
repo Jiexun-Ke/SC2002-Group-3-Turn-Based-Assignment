@@ -85,8 +85,6 @@ public abstract class Combatant{
             }
         }
 
-        System.out.println(name + " cannot receive " + effect.getName()
-                + " because the status effect list is full.");
         return false;
     }
 
