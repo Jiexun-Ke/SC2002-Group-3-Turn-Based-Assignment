@@ -1,15 +1,12 @@
 package model.items;
+
 import model.combatants.*;
 import model.status_effects.*;
+import model.targeting.AllEnemiesTargetingStrategy;
 
 public class SmokeBomb extends Item {
     public SmokeBomb(){
-        super("Smoke Bomb");
-    }
-
-    @Override
-    public Combatant[] selectTargets(Player user, BattleContext context, TargetSelector targetSelector) {
-        return targetSelector.selectAllEnemies(context);
+        super("Smoke Bomb", new AllEnemiesTargetingStrategy());
     }
 
     @Override
@@ -18,19 +15,11 @@ public class SmokeBomb extends Item {
     }
 
     @Override
-    public boolean targetsPlayer(){
-        return true;
-    }
-
-    @Override
-    public boolean usesSpecialSkillTargets(){
-        return false;
-    }
-
-    @Override
     public void use(Player user, Combatant[] targets){
         for(Combatant target : targets){
-            target.addStatusEffect(new SmokeBombEffect());
+            if (target instanceof Enemy enemy) {
+            enemy.addStatusEffect(new SmokeBombEffect());
+            }
         }
     }
 }

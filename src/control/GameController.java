@@ -25,13 +25,18 @@ public class GameController {
         List<Enemy> enemies,
         Queue<List<Enemy>> remainingWaves,
         TurnOrderStrategy strategy,
-        GameUI ui
+        GameUI ui,
+        BattleContext context,
+        PlayerActionSelector playerActionSelector
+
     ) {
         this.player = player;
         this.enemies = enemies;
         this.remainingWaves = remainingWaves;
         this.strategy = strategy;
         this.rounds = 0;
+        this.context = context;
+        this.playerActionSelector = playerActionSelector;
         this.ui = ui;
 
         TargetSelector targetSelector = new TargetSelector();

@@ -1,15 +1,12 @@
 package model.items;
 import model.combatants.*;
+import model.targeting.SelfTargetingStrategy;
 
 public class Potion extends Item {
     public Potion(){
-        super("Potion");
+        super("Potion", new SelfTargetingStrategy());
     }
 
-    @Override
-    public Combatant[] selectTargets(Player user, BattleContext context, TargetSelector targetSelector) {
-        return targetSelector.selectPlayer(context);
-    }
 
     @Override
     public String getDescription(){
@@ -17,20 +14,9 @@ public class Potion extends Item {
     }
 
     @Override
-    public boolean targetsPlayer(){
-        return true;
-    }
-    
-    @Override
-    public boolean usesSpecialSkillTargets(){
-        return false;
-    }
-
-    @Override
     public void use(Player user, Combatant[] targets){
-        for(int i=0; i < targets.length; i++){
-            targets[i].heal(100);
+            user.heal(100);
         }
-    }
-
 }
+
+
