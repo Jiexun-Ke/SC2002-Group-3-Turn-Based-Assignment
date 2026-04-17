@@ -29,6 +29,10 @@ public abstract class StatusEffect {
         return this.remainingTurns <= 0;
     }
 
+    public boolean preventsAction() {
+        return false;
+    }
+
     public abstract void apply(Combatant target);
 
     public abstract void remove(Combatant target);

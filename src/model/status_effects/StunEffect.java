@@ -15,4 +15,9 @@ public class StunEffect extends StatusEffect {
     public void remove(Combatant target){
         // No removal action needed for stun
     }
+
+    @Override
+    public boolean preventsAction() {
+        return true;
+    }
 }

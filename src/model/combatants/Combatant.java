@@ -1,7 +1,6 @@
 package model.combatants;
 import model.combat.DamageResult;
 import model.status_effects.StatusEffect;
-import model.status_effects.StunEffect;
 
 public abstract class Combatant{
     private final String name;
@@ -68,9 +67,9 @@ public abstract class Combatant{
         return (this.currentHP>0);
     }
 
-    public boolean canAct(){
-        for (int i = 0; i < activeEffects.length; i++){
-            if(activeEffects[i] != null && activeEffects[i] instanceof StunEffect){
+    public boolean canAct() {
+        for (StatusEffect effect : activeEffects) {
+            if (effect != null && effect.preventsAction()) {
                 return false;
             }
         }
