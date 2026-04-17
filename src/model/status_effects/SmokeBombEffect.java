@@ -4,7 +4,7 @@ import model.combatants.Combatant;
 
 public class SmokeBombEffect extends StatusEffect {
     public SmokeBombEffect(){
-        super("Smoke Bomb Effect", 2);
+        super("Smoke Bomb Effect", 3);
     }
 
     @Override

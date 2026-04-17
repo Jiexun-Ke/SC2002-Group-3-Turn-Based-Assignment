@@ -20,7 +20,7 @@ public abstract class StatusEffect {
     }
 
     public boolean isExpired(){
-        return this.remainingTurns == 0;
+        return this.remainingTurns <= 0;
     }
 
     public abstract void apply(Combatant target);

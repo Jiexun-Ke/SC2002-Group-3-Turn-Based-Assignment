@@ -64,7 +64,7 @@ public class GameController {
             }
 
         } else if (combatant instanceof Enemy enemy) {
-            if(hasStatusEffect(player, SmokeBombEffect.class)){
+            if(hasStatusEffect(enemy, SmokeBombEffect.class)){
                 ui.showMessage(enemy.getName() + " attacks " + player.getName() + ", but Smoke Bomb is active! No damage is dealt.");
             } 
             else {
@@ -235,12 +235,23 @@ public class GameController {
                     return false;
                 }
 
-            Enemy target = aliveEnemies.get(targetIndex);
-            targets = new Combatant[]{target};
+                Enemy target = aliveEnemies.get(targetIndex);
+                targets = new Combatant[]{target};
 
             }
+        } else if (chosenItem instanceof SmokeBomb) {
+            List<Enemy> aliveEnemies = getAliveEnemies();
+
+            if (aliveEnemies.isEmpty()) {
+                ui.showMessage("There are no enemies affected by Smoke Bomb.");
+                return false;
+            }
+            
+            targets = aliveEnemies.toArray(new Combatant[0]);
         } else {
             targets = new Combatant[]{player};
+        }
+            
         }
 
         chosenItem.use(player, targets);
