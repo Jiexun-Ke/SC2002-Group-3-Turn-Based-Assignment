@@ -2,11 +2,11 @@ package model.items;
 
 import model.combatants.*;
 import model.status_effects.*;
-import model.targeting.AllEnemiesTargetingStrategy;
+import model.targeting.SelfTargetingStrategy;
 
 public class SmokeBomb extends Item {
     public SmokeBomb(){
-        super("Smoke Bomb", new AllEnemiesTargetingStrategy());
+        super("Smoke Bomb", new SelfTargetingStrategy());
     }
 
     @Override
@@ -16,10 +16,6 @@ public class SmokeBomb extends Item {
 
     @Override
     public void use(Player user, Combatant[] targets){
-        for(Combatant target : targets){
-            if (target instanceof Enemy enemy) {
-            enemy.addStatusEffect(new SmokeBombEffect());
-            }
-        }
+        user.addStatusEffect(new SmokeBombEffect());
     }
 }

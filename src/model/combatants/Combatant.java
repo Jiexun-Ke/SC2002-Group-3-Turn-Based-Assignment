@@ -75,7 +75,7 @@ public abstract class Combatant{
         return true;
     }
 
-    public void addStatusEffect(StatusEffect effect){
+    public boolean addStatusEffect(StatusEffect effect){
         for(int i = 0; i < activeEffects.length; i++){
             if(activeEffects[i] == null){
                 activeEffects[i] = effect;

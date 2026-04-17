@@ -15,6 +15,13 @@ public class Warrior extends Player {
     }
 
     @Override
+    public boolean useSpecialSkillWithoutCooldown(Combatant[] targets) {
+        new ShieldBashAction().execute(this, targets);
+        return true;
+    }
+
+
+    @Override
     public boolean useSpecialSkill(Combatant[] target){
         boolean skillused = true;
 

@@ -16,7 +16,7 @@ public class GameController {
     private final Queue<List<Enemy>> remainingWaves;
     private final TurnOrderStrategy strategy;
     private final GameUI ui;
-    private final int rounds;
+    private int rounds;
     private final BattleContext context;
     private final PlayerActionSelector playerActionSelector;
     
@@ -25,18 +25,13 @@ public class GameController {
         List<Enemy> enemies,
         Queue<List<Enemy>> remainingWaves,
         TurnOrderStrategy strategy,
-        GameUI ui,
-        BattleContext context,
-        PlayerActionSelector playerActionSelector
-
+        GameUI ui
     ) {
         this.player = player;
         this.enemies = enemies;
         this.remainingWaves = remainingWaves;
         this.strategy = strategy;
         this.rounds = 0;
-        this.context = context;
-        this.playerActionSelector = playerActionSelector;
         this.ui = ui;
 
         TargetSelector targetSelector = new TargetSelector();
@@ -72,7 +67,7 @@ public class GameController {
         Action enemyAction = enemy.chooseAction();
         enemyAction.execute(enemy, new Combatant[] { player });
     }
-}
+
 
 // ------------------------------------------------------------------------------------------------------------
 
@@ -95,7 +90,7 @@ public class GameController {
         return true;
     }
 
-    return enemies.stream().noneMatch(Enemy::isAlive);
+    return enemies.stream().noneMatch(Enemy::isAlive) && remainingWaves.isEmpty();
 }
 
     // just displays victory or defeat screen based on ui.showDefeat() or ui.showVictory() in GameUI.

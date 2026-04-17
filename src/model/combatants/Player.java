@@ -67,5 +67,7 @@ public abstract class Player extends Combatant{
     public abstract boolean useSpecialSkill(Combatant[] targets);
 
     public abstract boolean specialSkillTargetsAllEnemies();
+
+    public abstract boolean useSpecialSkillWithoutCooldown(Combatant[] targets);
 }
 

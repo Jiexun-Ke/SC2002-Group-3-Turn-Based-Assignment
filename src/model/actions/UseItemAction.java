@@ -2,7 +2,7 @@ package model.actions;
 import model.combatants.*;
 import model.items.*;
 
-public class UseItemAction implements Action{
+public class UseItemAction extends Action{
     private Item item;
 
     public UseItemAction(Item item){
@@ -21,7 +21,12 @@ public class UseItemAction implements Action{
     @Override
     public void execute(Combatant user, Combatant[] targets){
         if(item != null){
-            item.use(user, targets);
+            return;
+        }
+
+        if (user instanceof Player player) {
+            item.use(player, targets);
+            player.removeItem(item);
         }
     }
 

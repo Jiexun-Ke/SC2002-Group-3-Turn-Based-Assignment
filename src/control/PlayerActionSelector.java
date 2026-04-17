@@ -58,7 +58,7 @@ public class PlayerActionSelector {
             return null;
         }
 
-        return new PlayerActionChoice(player.createSpecialSkillAction(), targets);
+        return new PlayerActionChoice(new createSpecialSkillAction(), targets);
     }
 
     private PlayerActionChoice createItemChoice(Player player, BattleContext context) {

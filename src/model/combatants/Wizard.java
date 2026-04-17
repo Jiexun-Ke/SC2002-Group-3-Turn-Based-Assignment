@@ -15,6 +15,26 @@ public class Wizard extends Player {
     }
 
     @Override
+    public boolean useSpecialSkillWithoutCooldown(Combatant[] targets) {
+        boolean[] wasAlive = new boolean[targets.length];
+
+        for (int i = 0; i < targets.length; i++) {
+            wasAlive[i] = targets[i].isAlive();
+        }
+
+        new ArcaneBlastAction().execute(this, targets);
+
+        for (int i = 0; i < targets.length; i++) {
+            if (wasAlive[i] && !targets[i].isAlive()) {
+                this.increaseAttack();
+            }
+        }
+
+        return true;
+    }
+
+
+    @Override
     public String getSpecialSkillName() {
         return "Arcane Blast";
     }
