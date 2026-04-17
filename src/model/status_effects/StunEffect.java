@@ -8,7 +8,7 @@ public class StunEffect extends StatusEffect {
 
     @Override
     public void apply(Combatant target){
-        target.addStatusEffect(new StunEffect());
+        // No direct stat change is needed
     }
 
     @Override
