@@ -75,18 +75,18 @@ public void section(String title) {
 
     
     public int promptStartingItemSelection(int itemNumber) {
-        print(" ");
+        slowPrint(" ", 8);
         section("         SELECT ITEM " + itemNumber + "/2");
         print("1. Potion      -> " + new Potion().getDescription());
         print("2. Power Stone -> " + new PowerStone().getDescription());
         print("3. Smoke Bomb  -> " + new SmokeBomb().getDescription());
-        print(" ");
+        slowPrint(" ", 8);
         return validator.getIntInRange("Enter choice (1-3): ", 1, 3);
     }
 
     public int promptDifficultySelection() {
         pause(200);
-        print(" ");
+        slowPrint(" ", 8);
         section("           ENEMY TYPES");
 
         print("Goblin");
@@ -119,7 +119,7 @@ public void section(String title) {
     }
 
     public int promptEnemyTargetSelection(List<Enemy> enemies){
-        print(" ");
+        slowPrint(" ", 8);
         section("SELECT TARGET");
 
         System.out.println("0. Back");
@@ -159,7 +159,7 @@ public void section(String title) {
     }
 
     public int promptItemSelection(Item[] inventory){
-        print(" ");
+        slowPrint(" ", 8);
         section("INVENTORY");
 
         
@@ -193,7 +193,7 @@ public void section(String title) {
     // DISPLAY OUTPUTS (DATA COLLECTED FROM CONTROL)
 
     public void showVictory(int remainingHp, int maxHp, int rounds) {
-        print(" ");
+        slowPrint(" ", 8);
         section("        VICTORY");
 
         print("Congratulations, you have defeated all your enemies.");
@@ -203,7 +203,7 @@ public void section(String title) {
     }
 
     public void showDefeat(int enemiesRemaining, int rounds) {
-        print(" ");
+        slowPrint(" ", 8);
         section("        DEFEATED");
 
         print("Don't give up! Learn from this defeat and try again.");

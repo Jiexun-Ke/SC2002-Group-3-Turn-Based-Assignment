@@ -19,8 +19,10 @@ public class BasicAttackAction extends Action{
         }
 
         int damage = Math.max(0, user.getAttack() - target.getDefense());
+
         damage = target.modifyIncomingDamage(user, damage);
-        target.takeDamage(damage);
+        
+        target.takeRawDamage(damage);
     }
     }
 }

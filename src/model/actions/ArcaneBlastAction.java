@@ -12,9 +12,21 @@ public class ArcaneBlastAction extends Action{
     }
 
     @Override
-    public void execute(Combatant user, Combatant[] targets){
-        for (int i=0; i < targets.length; i++){
-            targets[i].takeDamage(user.getAttack());
+    public void execute(Combatant user, Combatant[] targets) {
+        if (targets == null || targets.length == 0) {
+            return;
+        }
+
+        for (Combatant target : targets) {
+            if (target == null || !target.isAlive()) {
+                continue;
+            }
+
+            int damage = Math.max(0, user.getAttack() - target.getDefense());
+
+            damage = target.modifyIncomingDamage(user, damage);
+
+            target.takeRawDamage(damage);
         }
     }
 }

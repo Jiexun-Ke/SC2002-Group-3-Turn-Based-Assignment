@@ -130,6 +130,11 @@ public abstract class Combatant{
         return damage;
     }
 
+
+    public void takeRawDamage(int damage) {
+        this.currentHP = Math.max(0, this.currentHP - damage);
+    }
+    
     public void takeDamage(int amount){
         int finalDamage = Math.max(0, (amount - this.defense));
         this.currentHP = Math.max(0, currentHP - finalDamage);

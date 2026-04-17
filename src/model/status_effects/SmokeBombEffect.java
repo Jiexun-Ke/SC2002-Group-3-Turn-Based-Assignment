@@ -23,12 +23,7 @@ public class SmokeBombEffect extends StatusEffect {
 
     @Override
     public int modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
-        if (remainingBlockedAttacks > 0) {
-            remainingBlockedAttacks--;
             return 0;
-        }
-
-        return damage;
     }
 
     @Override
