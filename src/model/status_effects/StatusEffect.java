@@ -1,5 +1,6 @@
 package model.status_effects;
-import model.combatants.*;
+import model.combat.DamageResult;
+import model.combatants.Combatant;
 
 public abstract class StatusEffect {
     private final String name;
@@ -10,9 +11,11 @@ public abstract class StatusEffect {
         this.remainingTurns = remainingTurns;
     }
 
-    public int modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
-        return damage;
+    public DamageResult modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
+        return new DamageResult(damage, false, null);
     }
+
+    
     
     public String getName(){
         return this.name;

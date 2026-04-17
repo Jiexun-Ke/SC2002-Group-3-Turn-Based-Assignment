@@ -1,5 +1,7 @@
 package model.combatants;
-import model.status_effects.*;
+import model.combat.DamageResult;
+import model.status_effects.StatusEffect;
+import model.status_effects.StunEffect;
 
 public abstract class Combatant{
     private final String name;
@@ -112,12 +114,22 @@ public abstract class Combatant{
         }
     }
 
-    public int modifyIncomingDamage(Combatant attacker, int damage) {
+    public DamageResult modifyIncomingDamage(Combatant attacker, int damage) {
+        boolean prevented = false;
+        String reason = null;
+
         for (int i = 0; i < activeEffects.length; i++) {
             StatusEffect effect = activeEffects[i];
 
             if (effect != null) {
-                damage = effect.modifyIncomingDamage(attacker, this, damage);
+                DamageResult result = effect.modifyIncomingDamage(attacker, this, damage);
+
+                damage = result.getDamage();
+
+                if (result.isPrevented()) {
+                    prevented = true;
+                    reason = result.getReason();
+                }
 
                 if (effect.isExpired()) {
                     effect.remove(this);
@@ -127,7 +139,8 @@ public abstract class Combatant{
         }
 
         removeExpiredEffects();
-        return damage;
+
+        return new DamageResult(damage, prevented, reason);
     }
 
 

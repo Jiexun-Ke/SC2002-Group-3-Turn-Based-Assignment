@@ -1,4 +1,5 @@
 package model.actions;
+import model.combat.DamageResult;
 import model.combatants.*;
 
 public class ArcaneBlastAction extends Action{
@@ -13,20 +14,37 @@ public class ArcaneBlastAction extends Action{
 
     @Override
     public void execute(Combatant user, Combatant[] targets) {
+        lastResult = null;
+
         if (targets == null || targets.length == 0) {
             return;
         }
+
+        int totalDamage = 0;
+        boolean prevented = false;
+        String reason = null;
 
         for (Combatant target : targets) {
             if (target == null || !target.isAlive()) {
                 continue;
             }
 
-            int damage = Math.max(0, user.getAttack() - target.getDefense());
+            int baseDamage = Math.max(0, user.getAttack() - target.getDefense());
 
-            damage = target.modifyIncomingDamage(user, damage);
+            DamageResult damageResult = target.modifyIncomingDamage(user, baseDamage);
 
-            target.takeRawDamage(damage);
+            int finalDamage = damageResult.getDamage();
+
+            target.takeRawDamage(finalDamage);
+
+            totalDamage += finalDamage;
+
+            if (damageResult.isPrevented()) {
+                prevented = true;
+                reason = damageResult.getReason();
+            }
         }
+
+        lastResult = new ActionResult(totalDamage, prevented, reason);
     }
 }

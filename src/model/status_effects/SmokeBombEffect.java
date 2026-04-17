@@ -1,5 +1,6 @@
 package model.status_effects;
 
+import model.combat.DamageResult;
 import model.combatants.Combatant;
 
 public class SmokeBombEffect extends StatusEffect {
@@ -22,8 +23,13 @@ public class SmokeBombEffect extends StatusEffect {
     }
 
     @Override
-    public int modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
-            return 0;
+    public DamageResult modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
+        if (remainingBlockedAttacks > 0) {
+            remainingBlockedAttacks--;
+            return new DamageResult(0, true, "Smoke Bomb");
+        }
+
+        return new DamageResult(damage, false, null);
     }
 
     @Override

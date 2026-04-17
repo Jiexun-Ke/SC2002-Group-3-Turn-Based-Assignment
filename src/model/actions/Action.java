@@ -1,8 +1,13 @@
 package model.actions;
-import model.combatants.*;
+import model.combatants.Combatant;
 
 public abstract class Action {
     private final String name;
+    protected ActionResult lastResult;
+
+    public ActionResult getLastResult() {
+        return lastResult;
+    }
 
     public Action(String name){
         this.name = name;

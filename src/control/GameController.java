@@ -4,6 +4,7 @@ import boundary.GameUI;
 import java.util.List;
 import java.util.Queue;
 import model.actions.Action;
+import model.actions.ActionResult;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
 import model.combatants.Player;
@@ -64,16 +65,20 @@ public class GameController {
     }
 
     private void processEnemyTurn(Enemy enemy) {
-        int hpBefore = player.getCurrentHP();
-
         Action enemyAction = enemy.chooseAction();
         enemyAction.execute(enemy, new Combatant[] { player });
 
-        int damageDealt = hpBefore - player.getCurrentHP();
+        ActionResult result = enemyAction.getLastResult();
 
-        if (damageDealt > 0) {
+        if (result != null && result.isPrevented()) {
+            ui.showMessage(enemy.getName() + " could not damage "
+                    + player.getName() + " because of " + result.getReason() + "!");
+            return;
+        }
+
+        if (result != null && result.getDamageDealt() > 0) {
             ui.showMessage(enemy.getName() + " attacked " + player.getName()
-                    + " for " + damageDealt + " damage! "
+                    + " for " + result.getDamageDealt() + " damage! "
                     + player.getName() + " HP: "
                     + player.getCurrentHP() + "/" + player.getMaxHP());
         } else {
