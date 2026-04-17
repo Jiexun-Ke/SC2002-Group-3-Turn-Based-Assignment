@@ -1,30 +1,32 @@
 package control;
 
 import boundary.GameUI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import model.actions.Action;
-import model.actions.BasicAttackAction;
-import model.actions.DefendAction;
 import model.combatants.Combatant;
 import model.combatants.Enemy;
 import model.combatants.Player;
-import model.combatants.Wizard;
-import model.items.*;
-import model.status_effects.SmokeBombEffect;
 import model.turn_order.TurnOrderStrategy;
-//test
+
 
 public class GameController {
     private final Player player;
     private final List<Enemy> enemies;
     private final Queue<List<Enemy>> remainingWaves;
     private final TurnOrderStrategy strategy;
-    private int rounds;
     private final GameUI ui;
+    private final int rounds;
+    private final BattleContext context;
+    private final PlayerActionSelector playerActionSelector;
     
-    public GameController(Player player, List<Enemy> enemies, Queue<List<Enemy>> remainingWaves, TurnOrderStrategy strategy, GameUI ui) {
+    public GameController(
+        Player player,
+        List<Enemy> enemies,
+        Queue<List<Enemy>> remainingWaves,
+        TurnOrderStrategy strategy,
+        GameUI ui
+    ) {
         this.player = player;
         this.enemies = enemies;
         this.remainingWaves = remainingWaves;
@@ -32,241 +34,40 @@ public class GameController {
         this.rounds = 0;
         this.ui = ui;
 
-    }
+        TargetSelector targetSelector = new TargetSelector();
+        this.context = new BattleContext(player, enemies, ui);
+        this.playerActionSelector = new PlayerActionSelector(targetSelector);
+
+    }   
+
+    
 
     private void processTurn(Combatant combatant) { 
         if (combatant instanceof Player playerCombatant) {
-            
             boolean validActionChosen = false;
+
             while (!validActionChosen) {
+                PlayerActionChoice choice =
+                    playerActionSelector.selectAction(playerCombatant, context);
 
-            int choice = ui.promptPlayerAction(playerCombatant);
-
-                switch (choice) {
-                    case 1: // Attack
-                        validActionChosen = handlePlayerAttack(playerCombatant);
-                        break;
-
-                    case 2: // Defend
-                        validActionChosen = handlePlayerDefend(playerCombatant);
-                        break;
-
-                    case 3: // Use Skill
-                        validActionChosen = handlePlayerSkill(playerCombatant);
-                        break;
-
-                    case 4: // Use Item
-                        validActionChosen = handlePlayerItem(playerCombatant);
-                        break;
-                        
-                    default: ui.showMessage("Invalid choice.");
+                if (choice == null) {
+                    continue;
                 }
+
+                choice.getAction().execute(playerCombatant, choice.getTargets());
+                validActionChosen = true;
             }
 
         } else if (combatant instanceof Enemy enemy) {
-            if(hasStatusEffect(enemy, SmokeBombEffect.class)){
-                ui.showMessage(enemy.getName() + " attacks " + player.getName() + ", but Smoke Bomb is active! No damage is dealt.");
-            } 
-            else {
-                int hpBefore = player.getCurrentHP();
-
-                Action enemyAction = enemy.chooseAction();
-                enemyAction.execute(enemy, new Combatant[]{player}); 
-
-                int damageDealt = hpBefore - player.getCurrentHP();
-            
-                if (damageDealt > 0) {
-                    ui.showMessage(enemy.getName() + " attacked " + player.getName()
-                    + " for " + damageDealt + " damage! "
-                    + player.getName() + " HP: " + player.getCurrentHP() + "/" + player.getMaxHP());
-                } else {
-                    ui.showMessage(enemy.getName() + " attacked " + player.getName()
-                        + ", but dealt 0 damage.");
-                }
-            }
-        }
+            processEnemyTurn(enemy);
+        } 
     }
 
-    // hasStatusEffect helper method to check if enemy/player has a specific status effect active, used for things like smoke bomb nullifying enemy attacks.
-    private boolean hasStatusEffect(Combatant combatant, Class<? extends model.status_effects.StatusEffect> effectType) {
-    for (model.status_effects.StatusEffect effect : combatant.getStatusEffects()) {
-        if (effect != null && effectType.isInstance(effect)) {
-            return true;
-        }
+    private void processEnemyTurn(Enemy enemy) {
+        Action enemyAction = enemy.chooseAction();
+        enemyAction.execute(enemy, new Combatant[] { player });
     }
-    return false;
 }
-
-    // Handles player attack --------------------------------------------------------------------------------
-    private List<Enemy> getAliveEnemies() {
-        List<Enemy> aliveEnemies = new ArrayList<>();
-        for (Enemy enemy : enemies) {
-            if (enemy.isAlive()) {
-                aliveEnemies.add(enemy);
-            }
-        }
-        return aliveEnemies;
-    }
-    private boolean handlePlayerAttack(Player player) {
-        List<Enemy> aliveEnemies = getAliveEnemies();
-
-        if (aliveEnemies.isEmpty()) {
-        ui.showMessage("There are no enemies to attack.");
-        return false;
-    }
-
-        int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
-
-        if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
-            ui.showMessage("Invalid target choice.");
-            return false;
-        }
-        
-        Enemy target = aliveEnemies.get(targetIndex);
-        int hpBefore = target.getCurrentHP();
-
-        new BasicAttackAction().execute(player, new Combatant[]{target});
-
-        int damageDealt = hpBefore - target.getCurrentHP();
-
-        if (damageDealt > 0) {
-        ui.showMessage(player.getName() + " attacked " + target.getName()
-                + " for " + damageDealt + " damage! "
-                + target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
-        } else {
-        ui.showMessage(player.getName() + " attacked " + target.getName()
-                + ", but dealt 0 damage.");
-        }
-        return true;
-    }
-
-    // Handles player defense -----------------------------------------------------------------------------
-
-    private boolean handlePlayerDefend(Player player) {
-        new DefendAction().execute(player, new Combatant[0]);
-        ui.showMessage(player.getName() + " takes a defensive stance!");
-        return true;
-    }
-
-    // Handles player skill ---- -----------------------------------------------------------------------------
-
-    private boolean handlePlayerSkill(Player player) {
-        List<Enemy> aliveEnemies = getAliveEnemies();
-        
-        
-
-        if (aliveEnemies.isEmpty()) {
-            ui.showMessage("No enemies to target with a skill.");
-            return false;
-        }
-
-        boolean skillUsed;
-
-        if (player instanceof Wizard) {
-            @SuppressWarnings("CollectionsToArray")
-            Combatant[] targets = aliveEnemies.toArray(new Combatant[aliveEnemies.size()]);
-            skillUsed = player.useSpecialSkill(targets);
-
-            if (!skillUsed) {
-                ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
-                return false;
-            }
-
-            ui.showMessage(player.getName() + " used " + player.getSpecialSkillName() + " on all enemies!");
-            return true;
-        }
-
-        int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
-
-        if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
-            ui.showMessage("Invalid target choice.");
-            return false;
-        }
-       
-
-        Enemy target = aliveEnemies.get(targetIndex);
-
-        skillUsed = player.useSpecialSkill(new Combatant[]{target});
-
-        if (!skillUsed) {
-            ui.showMessage("Skill is on cooldown for " + player.getSpecialSkillCooldown() + " more turn(s).");
-            return false;
-        }
-
-        ui.showMessage(player.getName() + " used " + player.getSpecialSkillName() + " on " + target.getName() + "!");
-        return true;
-    }
-
-    // Handles player item  -------------------------------------------------------------------------------
-    private boolean handlePlayerItem(Player player) {
-        Item[] inventory = player.getInventory(); 
-        int itemChoice = ui.promptItemSelection(inventory);
-
-        if (itemChoice == -1) {
-            ui.showMessage("Item use cancelled.");
-            return false;
-        }
-
-        int itemIndex = itemChoice - 1; // Converts itemIndex to 0-based index
-
-        if (itemIndex < 0 || itemIndex >= inventory.length || inventory[itemIndex] == null) {
-            ui.showMessage("Invalid item choice.");
-            return false;
-        }
-
-        Action useItemAction = new UseItemAction(chosenItem);
-        useItemAction.execute(player, targets);
-        
-        if (chosenItem instanceof PowerStone) {
-        List<Enemy> aliveEnemies = getAliveEnemies();
-
-            if (aliveEnemies.isEmpty()) {
-                ui.showMessage("There are no enemies to target.");
-                return false;
-            }
-
-            if (player instanceof Wizard) {
-                targets = aliveEnemies.toArray(new Combatant[0]);
-            } else {
-                int targetIndex = ui.promptEnemyTargetSelection(aliveEnemies) - 1;
-
-                if (targetIndex < 0 || targetIndex >= aliveEnemies.size()) {
-                    ui.showMessage("Invalid target choice.");
-                    return false;
-                }
-
-                Enemy target = aliveEnemies.get(targetIndex);
-                targets = new Combatant[]{target};
-
-            }
-        } else if (chosenItem instanceof SmokeBomb) {
-            List<Enemy> aliveEnemies = getAliveEnemies();
-
-            if (aliveEnemies.isEmpty()) {
-                ui.showMessage("There are no enemies affected by Smoke Bomb.");
-                return false;
-            }
-            
-            targets = aliveEnemies.toArray(new Combatant[0]);
-        } else {
-            targets = new Combatant[]{player};
-        }
-            
-        }
-
-        chosenItem.use(player, targets);
-        player.removeItem(chosenItem);
-        ui.showMessage(player.getName() + " used " + chosenItem.getName() + "!");
-        return true;
-    }
-
-// ------------------------------------------------------------------------------------------------------------
-
-    // Applies start of turn effects
-    private void applyStartOfTurnEffects(Combatant combatant) {
-        
-        combatant.updateStatusEffects();
-    }
 
 // ------------------------------------------------------------------------------------------------------------
 
@@ -281,7 +82,7 @@ public class GameController {
             ui.showNewWave(nextWave.size());
             ui.showMessage("Backup spawn has triggered!"); 
         }
-     }
+    }
 
     // returns true or false if battle is over based on if player is dead/enemies are all dead
     private boolean isBattleOver() { 
@@ -289,30 +90,24 @@ public class GameController {
         return true;
     }
 
-        for (Enemy enemy : enemies) {
-            if (enemy.isAlive()) {
-                return false;
-            }
-        }
-
-        return true; 
-    }
+    return enemies.stream().noneMatch(Enemy::isAlive);
+}
 
     // just displays victory or defeat screen based on ui.showDefeat() or ui.showVictory() in GameUI.
     private void displayResult() {
-    int enemiesRemaining = 0;
-    for (Enemy enemy : enemies) {
-        if (enemy.isAlive()) {
-            enemiesRemaining++;
-        }
-    }
+        int enemiesRemaining = 0;
 
-    if (player.isAlive()) {
-        ui.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
-        } 
-        
-        else {
-        ui.showDefeat(enemiesRemaining, rounds);
+        for (Enemy enemy : enemies) {
+            if (enemy.isAlive()) {
+                enemiesRemaining++;
+            }
+        }
+
+        if (player.isAlive()) {
+            ui.showVictory(player.getCurrentHP(), player.getMaxHP(), rounds);
+            
+        } else {
+            ui.showDefeat(enemiesRemaining, rounds);
         }
     }
 
@@ -329,6 +124,7 @@ public class GameController {
 
     private Combatant[] buildCombatantsArray() {
         int aliveEnemies = 0;
+
         for (Enemy enemy : enemies) {
             if (enemy.isAlive()) {
                 aliveEnemies++;
@@ -343,13 +139,13 @@ public class GameController {
             if (enemy.isAlive()) {
                 combatants[index] = enemy;
                 index++;
-                }
             }
+        }
 
         return combatants;
         }
 
-    // runs through a full round of combat. 
+    // runs through a full round of combat. -----------------------------------------------------------
     private void runRound() {
         Combatant[] combatants = buildCombatantsArray();
         Combatant[] turnOrder = strategy.determineTurnOrder(combatants);
@@ -366,12 +162,13 @@ public class GameController {
                 
             
 
-            if (isBattleOver()) {
-                break;
-            }
-            continue; 
+                if (isBattleOver()) {
+                    break;
+                }
+
+                continue; 
             
-        }
+            }
 
             applyStartOfTurnEffects(combatant);
 
@@ -388,11 +185,17 @@ public class GameController {
         }
 
             if (enemies.stream().noneMatch(Enemy::isAlive)) {
-            checkBackupSpawn();
-            break;
+                checkBackupSpawn();
+                break;
             }
         }
     }
+    //---------------------------------------------------------------
+    private void applyStartOfTurnEffects(Combatant combatant) {
+        combatant.updateStatusEffects();
+    }
+
+    //------------------------------------------------------------------
 
     private void updatePerTurnState(Combatant combatant) {
         if (combatant instanceof Player p) {

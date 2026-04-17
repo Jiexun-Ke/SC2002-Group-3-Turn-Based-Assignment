@@ -6,6 +6,9 @@ public class Warrior extends Player {
         super("Warrior", 260, 40, 20, 30);
     }
 
+    
+
+    
     @Override
     public String getSpecialSkillName() {
         return "Shield Bash";
@@ -25,6 +28,11 @@ public class Warrior extends Player {
             return skillused;
 
         }
+    }
+
+    @Override
+    public Action createSpecialSkillAction() {
+        return new ShieldBashAction();
     }
 
     //override new method

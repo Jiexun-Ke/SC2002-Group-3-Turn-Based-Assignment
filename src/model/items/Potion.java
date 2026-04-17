@@ -7,6 +7,11 @@ public class Potion extends Item {
     }
 
     @Override
+    public Combatant[] selectTargets(Player user, BattleContext context, TargetSelector targetSelector) {
+        return targetSelector.selectPlayer(context);
+    }
+
+    @Override
     public String getDescription(){
         return "A potion that heals 100 HP when used.";
     }

@@ -8,6 +8,11 @@ public class SmokeBomb extends Item {
     }
 
     @Override
+    public Combatant[] selectTargets(Player user, BattleContext context, TargetSelector targetSelector) {
+        return targetSelector.selectAllEnemies(context);
+    }
+
+    @Override
     public String getDescription() {
         return "When used, Enemy attacks do 0 damage to the user in the current turn and the next turn";
     }

@@ -47,6 +47,11 @@ public class Wizard extends Player {
     }
 
     @Override
+    public Action createSpecialSkillAction() {
+        return new ArcaneBlastAction();
+    }
+
+    @Override
     public boolean specialSkillTargetsAllEnemies() {
         return true;
     }

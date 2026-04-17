@@ -7,6 +7,11 @@ public class PowerStone extends Item{
     }
 
     @Override
+    public Combatant[] selectTargets(Player user, BattleContext context, TargetSelector targetSelector) {
+        return targetSelector.selectSpecialSkillTargets(user, context);
+    }
+    
+    @Override
     public String getDescription(){
         return "Trigger the special skill effect once when used, but does not start or change the skill's cooldown timer. In short, free extra use of the skill";
     }

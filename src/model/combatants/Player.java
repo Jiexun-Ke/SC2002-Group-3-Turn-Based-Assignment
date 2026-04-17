@@ -14,6 +14,8 @@ public abstract class Player extends Combatant{
 
     /// GETTERS AND SETTERS ///
     
+    public abstract Action createSpecialSkillAction();
+    
     public abstract String getSpecialSkillName();
     
     public int getSpecialSkillCooldown(){

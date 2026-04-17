@@ -16,7 +16,9 @@ public abstract class Item {
 
     public abstract String getDescription();
 
-    public abstract boolean targetsPlayer();
-
-    public abstract boolean usesSpecialSkillTargets();
+    public abstract Combatant[] selectTargets(
+        Player user,
+        BattleContext context,
+        TargetSelector targetSelector
+    );
 }
