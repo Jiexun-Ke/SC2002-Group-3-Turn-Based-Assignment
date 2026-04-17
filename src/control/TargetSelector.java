@@ -15,7 +15,7 @@ public class TargetSelector {
             return null;
         }
 
-        int targetChoice = context.getUi().promptEnemyTargetSelection(aliveEnemies) - 1;
+        int targetChoice = context.getUi().promptEnemyTargetSelection(aliveEnemies);
 
         if (targetChoice == 0) {
             context.getUi().showMessage("Action cancelled.");

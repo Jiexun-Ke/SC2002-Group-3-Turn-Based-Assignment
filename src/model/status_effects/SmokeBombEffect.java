@@ -3,8 +3,12 @@ package model.status_effects;
 import model.combatants.Combatant;
 
 public class SmokeBombEffect extends StatusEffect {
+    private int remainingBlockedAttacks;
+
+
     public SmokeBombEffect(){
-        super("Smoke Bomb Effect", 2);
+        super("Smoke Bomb Effect", 999);
+        this.remainingBlockedAttacks = 2;
     }
 
     @Override
@@ -15,5 +19,20 @@ public class SmokeBombEffect extends StatusEffect {
     @Override
     public void remove(Combatant target){
         // target.setDefense(target.getDefense() - 1000); // Revert the defense buff
+    }
+
+    @Override
+    public int modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
+        if (remainingBlockedAttacks > 0) {
+            remainingBlockedAttacks--;
+            return 0;
+        }
+
+        return damage;
+    }
+
+    @Override
+    public boolean isExpired() {
+        return remainingBlockedAttacks <= 0;
     }
 }

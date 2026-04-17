@@ -112,7 +112,23 @@ public abstract class Combatant{
         }
     }
 
-    
+    public int modifyIncomingDamage(Combatant attacker, int damage) {
+        for (int i = 0; i < activeEffects.length; i++) {
+            StatusEffect effect = activeEffects[i];
+
+            if (effect != null) {
+                damage = effect.modifyIncomingDamage(attacker, this, damage);
+
+                if (effect.isExpired()) {
+                    effect.remove(this);
+                    activeEffects[i] = null;
+                }
+            }
+        }
+
+        removeExpiredEffects();
+        return damage;
+    }
 
     public void takeDamage(int amount){
         int finalDamage = Math.max(0, (amount - this.defense));

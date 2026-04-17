@@ -10,6 +10,9 @@ public abstract class StatusEffect {
         this.remainingTurns = remainingTurns;
     }
 
+    public int modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
+        return damage;
+    }
     
     public String getName(){
         return this.name;
