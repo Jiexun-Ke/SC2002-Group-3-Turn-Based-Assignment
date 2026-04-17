@@ -4,11 +4,12 @@ import model.combat.DamageResult;
 import model.combatants.Combatant;
 
 public class SmokeBombEffect extends StatusEffect {
-    
+    private int remainingBlockedAttacks;
 
 
-    public SmokeBombEffect(){
-        super("Smoke Bomb Effect", 2);
+    public SmokeBombEffect() {
+        super("Smoke Bomb Effect", 999);
+        this.remainingBlockedAttacks = 3;
     }
 
     @Override
@@ -23,7 +24,17 @@ public class SmokeBombEffect extends StatusEffect {
 
     @Override
     public DamageResult modifyIncomingDamage(Combatant attacker, Combatant target, int damage) {
+        if (remainingBlockedAttacks > 0) {
+            remainingBlockedAttacks--;
             return new DamageResult(0, true, "Smoke Bomb");
+        }
+
+        return new DamageResult(damage, false, null);
+    }
+
+    @Override
+    public boolean isExpired() {
+        return remainingBlockedAttacks <= 0;
     }
 
 }

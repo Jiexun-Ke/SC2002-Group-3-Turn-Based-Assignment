@@ -176,11 +176,8 @@ public class GameController {
 
             if (!combatant.canAct()) {
                 ui.showMessage(combatant.getName() + " is stunned and cannot act!");
-                combatant.updateStatusEffects(); // Update status effects to reduce stun duration
                 updatePerTurnState(combatant);
                 
-            
-
                 if (isBattleOver()) {
                     break;
                 }
