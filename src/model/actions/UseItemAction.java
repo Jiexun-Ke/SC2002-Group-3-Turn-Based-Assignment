@@ -20,7 +20,7 @@ public class UseItemAction extends Action{
 
     @Override
     public void execute(Combatant user, Combatant[] targets){
-        if(item != null){
+        if(item == null){
             return;
         }
 

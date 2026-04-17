@@ -64,8 +64,22 @@ public class GameController {
     }
 
     private void processEnemyTurn(Enemy enemy) {
+        int hpBefore = player.getCurrentHP();
+
         Action enemyAction = enemy.chooseAction();
         enemyAction.execute(enemy, new Combatant[] { player });
+
+        int damageDealt = hpBefore - player.getCurrentHP();
+
+        if (damageDealt > 0) {
+            ui.showMessage(enemy.getName() + " attacked " + player.getName()
+                    + " for " + damageDealt + " damage! "
+                    + player.getName() + " HP: "
+                    + player.getCurrentHP() + "/" + player.getMaxHP());
+        } else {
+            ui.showMessage(enemy.getName() + " attacked " + player.getName()
+                    + ", but dealt 0 damage!");
+        }
     }
 
 

@@ -1,8 +1,8 @@
 package control;
 
-
 import model.actions.BasicAttackAction;
 import model.actions.DefendAction;
+import model.actions.SpecialSkillAction;
 import model.actions.UseItemAction;
 import model.combatants.Combatant;
 import model.combatants.Player;
@@ -58,7 +58,7 @@ public class PlayerActionSelector {
             return null;
         }
 
-        return new PlayerActionChoice(player.createSpecialSkillAction(), targets);
+        return new PlayerActionChoice(new SpecialSkillAction(), targets);
     }
 
     private PlayerActionChoice createItemChoice(Player player, BattleContext context) {
