@@ -39,8 +39,8 @@ public class PowerStone extends Item{
             getName(),
             0,
             0,
-            false,
-            null,
+            true,
+            "Triggered Free Special Skill",
             targetSummaries,
             false,
             ""

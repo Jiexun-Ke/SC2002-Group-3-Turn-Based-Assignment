@@ -16,20 +16,7 @@ public class Wizard extends Player {
 
     @Override
     public boolean useSpecialSkillWithoutCooldown(Combatant[] targets) {
-        boolean[] wasAlive = new boolean[targets.length];
-
-        for (int i = 0; i < targets.length; i++) {
-            wasAlive[i] = targets[i].isAlive();
-        }
-
         new ArcaneBlastAction().execute(this, targets);
-
-        for (int i = 0; i < targets.length; i++) {
-            if (wasAlive[i] && !targets[i].isAlive()) {
-                this.increaseAttack();
-            }
-        }
-
         return true;
     }
 
@@ -40,30 +27,14 @@ public class Wizard extends Player {
     }
 
     @Override
-    public boolean useSpecialSkill(Combatant[] targets){
-        boolean skillused = true;
-
-        if(this.getSpecialSkillCooldown() != 0){
-            return !skillused;
+    public boolean useSpecialSkill(Combatant[] targets) {
+        if (this.getSpecialSkillCooldown() != 0) {
+            return false;
         }
-        
-        else{
-            this.setSpecialSkillCooldown(3);
-            boolean[] wasAlive = new boolean[targets.length];
 
-            for(int i = 0; i < targets.length; i++){
-                wasAlive[i] = targets[i].isAlive(); //Register Enemies that were alive before ArcaneBlast
-            }
-
-            new ArcaneBlastAction().execute(this, targets);
-
-            for(int i = 0; i < targets.length; i++){
-                if(wasAlive[i] && !targets[i].isAlive()){ // if was killed by ArcaneBlast then increase ATK
-                    this.increaseAttack();
-                }
-            }
-            return skillused;
-        }
+        this.setSpecialSkillCooldown(3);
+        new ArcaneBlastAction().execute(this, targets);
+        return true;
     }
 
     @Override

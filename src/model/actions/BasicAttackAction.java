@@ -1,4 +1,5 @@
 package model.actions;
+import model.combat.DamageResult;
 import model.combatants.Combatant;
 
 public class BasicAttackAction extends Action{
@@ -18,21 +19,24 @@ public class BasicAttackAction extends Action{
     @Override
     public void execute(Combatant user, Combatant[] targets) {
         Combatant target = targets[0];
-        int damage = Math.max(0, user.getAttack() - target.getDefense());
-        target.takeDamage(damage);
+        int rawDamage = Math.max(0, user.getAttack() - target.getDefense());
+        
+
+        DamageResult damageResult = target.modifyIncomingDamage(user, rawDamage);
+        target.takeRawDamage(damageResult.getDamage());
 
         java.util.List<String> targetSummaries = new java.util.ArrayList<>();
         targetSummaries.add(target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
 
         lastResult = new ActionResult(
             getName(),
-            damage,
+            damageResult.getDamage(),
             0,
             false,
             null,
             targetSummaries,
-            false,
-            ""
+            damageResult.isPrevented(),
+            damageResult.getReason()
         );
 }
 }
