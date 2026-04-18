@@ -49,8 +49,8 @@ public class BasicAttackAction extends Action{
         int rawDamage = Math.max(0, user.getAttack() - target.getDefense());
 
         DamageResult damageResult = target.modifyIncomingDamage(user, rawDamage);
-        int finalDamage = damageResult.getDamage();
 
+        int finalDamage = Math.max(0, damageResult.getDamage());
         target.takeRawDamage(finalDamage);
 
         List<String> targetSummaries = new ArrayList<>();

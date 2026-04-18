@@ -57,17 +57,16 @@ public class ShieldBashAction extends Action{
         target.takeRawDamage(finalDamage);
 
         boolean stunned = false;
-        String reason = damageResult.getReason();
+        boolean actionPrevented = damageResult.isPrevented();
+        String finalReason = damageResult.getReason();
 
         if (target.isAlive()) {
             if (target.hasStatusEffect(StunEffect.class)) {
-                if (reason == null || reason.isEmpty()) {
-                    reason = "Target is already stunned";
-                }
+                finalReason = "Target is already stunned";
             } else {
                 stunned = target.addStatusEffect(new StunEffect());
-                if (!stunned && (reason == null || reason.isEmpty())) {
-                    reason = "Cannot apply more status effects";
+                if (!stunned) {
+                    finalReason = "Cannot apply more status effects";
                 }
             }
         }
@@ -85,12 +84,9 @@ public class ShieldBashAction extends Action{
             stunned,
             stunned ? "Stun" : null,
             targetSummaries,
-            damageResult.isPrevented() || (!stunned && reason != null && !reason.isEmpty()),
-            reason == null ? "" : reason
+            actionPrevented,
+            finalReason == null ? "" : finalReason
         );
     }
-
-
-
-    
+ 
 }
