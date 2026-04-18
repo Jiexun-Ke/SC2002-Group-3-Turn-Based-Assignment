@@ -714,6 +714,38 @@
           <mxGeometry relative="1" width="160" as="geometry" />
         </mxCell>
 
+        <!-- ===== EDGE CASE NOTES ===== -->
+
+        <!-- Note: Combatant HP clamping -->
+        <mxCell id="EC_comb" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=10;spacingLeft=4;spacingTop=4;" value="&lt;b&gt;Edge Cases (Combatant):&lt;/b&gt;&lt;div&gt;• takeDamage(): HP = Math.max(0, HP − dmg) → floored at 0&lt;/div&gt;&lt;div&gt;• heal(): HP = Math.min(maxHP, HP + amt) → capped at maxHP&lt;/div&gt;&lt;div&gt;• addStatusEffect(): null effect is ignored&lt;/div&gt;" vertex="1">
+          <mxGeometry x="-294" y="110" width="310" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Note: Action damage floor + ArcaneBlast dead-target skip -->
+        <mxCell id="EC_action" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=10;spacingLeft=4;spacingTop=4;" value="&lt;b&gt;Edge Cases (Actions):&lt;/b&gt;&lt;div&gt;• BasicAttack / ShieldBash / ArcaneBlast:&lt;/div&gt;&lt;div&gt;&amp;nbsp;&amp;nbsp;damage = Math.max(0, ATK − DEF) → floored at 0&lt;/div&gt;&lt;div&gt;• ArcaneBlastAction: skips null or already-dead targets&lt;/div&gt;&lt;div&gt;• UseItemAction.execute(): returns immediately if item is null&lt;/div&gt;" vertex="1">
+          <mxGeometry x="-1900" y="-780" width="340" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Note: Player cooldown floor -->
+        <mxCell id="EC_player" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=10;spacingLeft=4;spacingTop=4;" value="&lt;b&gt;Edge Cases (Player):&lt;/b&gt;&lt;div&gt;• updateSpecialSkillCooldown():&lt;/div&gt;&lt;div&gt;&amp;nbsp;&amp;nbsp;Math.max(0, cooldown−1) → cooldown floored at 0&lt;/div&gt;" vertex="1">
+          <mxGeometry x="-1360" y="643" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Note: PlayerActionSelector null/cooldown handling -->
+        <mxCell id="EC_pas" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=10;spacingLeft=4;spacingTop=4;" value="&lt;b&gt;Edge Cases (PlayerActionSelector):&lt;/b&gt;&lt;div&gt;• Cooldown &gt; 0: shows message, returns null&lt;/div&gt;&lt;div&gt;• Invalid/null item index: returns null&lt;/div&gt;&lt;div&gt;• Null target selection: cancels and returns null&lt;/div&gt;" vertex="1">
+          <mxGeometry x="1150" y="390" width="350" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Note: InputValidator loop + exception -->
+        <mxCell id="EC_iv" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=10;spacingLeft=4;spacingTop=4;" value="&lt;b&gt;Edge Cases (InputValidator):&lt;/b&gt;&lt;div&gt;• getInt(): catches NumberFormatException, loops until valid integer&lt;/div&gt;&lt;div&gt;• getIntInRange(): additionally rejects values outside [min, max]&lt;/div&gt;&lt;div&gt;• skips printing prompt if null or empty&lt;/div&gt;" vertex="1">
+          <mxGeometry x="1450" y="850" width="380" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Note: SetupController invalid difficulty -->
+        <mxCell id="EC_sc" parent="1" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;fillColor=#fff2cc;fontSize=10;spacingLeft=4;spacingTop=4;" value="&lt;b&gt;Edge Cases (SetupController):&lt;/b&gt;&lt;div&gt;• createEnemies() / createBackupWaves():&lt;/div&gt;&lt;div&gt;&amp;nbsp;&amp;nbsp;throws IllegalArgumentException for invalid difficulty&lt;/div&gt;" vertex="1">
+          <mxGeometry x="900" y="852" width="370" height="70" as="geometry" />
+        </mxCell>
+
       </root>
     </mxGraphModel>
   </diagram>
