@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import model.actions.ArcaneBlastAction;
+import model.actions.ShieldBashAction;
 import model.combatants.Enemy;
 import model.combatants.Goblin;
 import model.combatants.Player;
 import model.combatants.Warrior;
 import model.combatants.Wizard;
 import model.combatants.Wolf;
+import model.items.Item;
 import model.items.Potion;
 import model.items.PowerStone;
 import model.items.SmokeBomb;
@@ -100,7 +103,10 @@ public class SetupController {
     }
 
     private Player choosePlayer() {
-        int choice = ui.promptPlayerSelection();
+        String warriorSkillDesc = new ShieldBashAction().getDescription();
+        String wizardSkillDesc = new ArcaneBlastAction().getDescription();
+
+        int choice = ui.promptPlayerSelection(warriorSkillDesc, wizardSkillDesc);
 
         switch (choice) {
             case 1:
@@ -115,7 +121,14 @@ public class SetupController {
 
     private void chooseStartingItems(Player player) {
         for (int i = 1; i <= 2; i++) {
-            int choice = ui.promptStartingItemSelection(i);
+            List<ItemOption> itemOptions = new ArrayList<>();
+
+            itemOptions.add(new ItemOption(new Potion()));
+            itemOptions.add(new ItemOption(new PowerStone()));
+            itemOptions.add(new ItemOption(new SmokeBomb()));
+
+            int choice = ui.promptStartingItemSelection(i, itemOptions);
+            Item chosenItem = itemOptions.get(choice - 1).getItem();
 
             switch (choice) {
                 case 1:
