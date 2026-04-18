@@ -17,9 +17,9 @@
           <mxGeometry height="62" width="330" y="78" as="geometry" />
         </mxCell>
         <mxCell id="U5S1rHiEBo68ZTB1LaXd-9" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Wizard" vertex="1">
-          <mxGeometry height="198" width="330" x="-1050" y="983.36" as="geometry" />
+          <mxGeometry height="172" width="330" x="-1050" y="983.36" as="geometry" />
         </mxCell>
-        <mxCell id="U5S1rHiEBo68ZTB1LaXd-10" parent="U5S1rHiEBo68ZTB1LaXd-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- bonusAttack: int" vertex="1">
+        <mxCell id="U5S1rHiEBo68ZTB1LaXd-10" parent="U5S1rHiEBo68ZTB1LaXd-9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="-" vertex="1">
           <mxGeometry height="26" width="330" y="26" as="geometry" />
         </mxCell>
         <mxCell id="U5S1rHiEBo68ZTB1LaXd-11" parent="U5S1rHiEBo68ZTB1LaXd-9" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
@@ -483,7 +483,7 @@
         <mxCell id="GUI_3" parent="GUI_1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="450" y="52" as="geometry" />
         </mxCell>
-        <mxCell id="GUI_4" parent="GUI_1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ GameUI()&lt;div&gt;+ slowPrint(text: String, delay: int): void&lt;/div&gt;&lt;div&gt;+ print(text: String): void&lt;/div&gt;&lt;div&gt;+ pause(ms: int): void&lt;/div&gt;&lt;div&gt;+ divider(): void&lt;/div&gt;&lt;div&gt;+ section(title: String): void&lt;/div&gt;&lt;div&gt;+ showMainMenu(): int&lt;/div&gt;&lt;div&gt;+ promptPlayerSelection(): int&lt;/div&gt;&lt;div&gt;+ promptStartingItemSelection(itemNumber: int): int&lt;/div&gt;&lt;div&gt;+ promptDifficultySelection(): int&lt;/div&gt;&lt;div&gt;+ promptPlayerAction(player: Player): int&lt;/div&gt;&lt;div&gt;+ promptEnemyTargetSelection(enemies: List&lt;Enemy&gt;): int&lt;/div&gt;&lt;div&gt;+ promptItemSelection(inventory: Item[]): int&lt;/div&gt;&lt;div&gt;+ showVictory(remainingHp: int, maxHp: int, rounds: int): void&lt;/div&gt;&lt;div&gt;+ showDefeat(enemiesRemaining: int, rounds: int): void&lt;/div&gt;&lt;div&gt;+ displayRoundInfo(round: int, player: Player, enemies: Enemy[]): void&lt;/div&gt;&lt;div&gt;+ showNewWave(enemyCount: int): void&lt;/div&gt;&lt;div&gt;+ showMessage(message: String): void&lt;/div&gt;&lt;div&gt;+ showRoundHeader(roundNumber: int): void&lt;/div&gt;&lt;div&gt;+ closeUI(): void&lt;/div&gt;" vertex="1">
+        <mxCell id="GUI_4" parent="GUI_1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ GameUI()&lt;div&gt;+ slowPrint(text: String, delay: int): void&lt;/div&gt;&lt;div&gt;+ print(text: String): void&lt;/div&gt;&lt;div&gt;+ pause(ms: int): void&lt;/div&gt;&lt;div&gt;+ divider(): void&lt;/div&gt;&lt;div&gt;+ section(title: String): void&lt;/div&gt;&lt;div&gt;+ showMainMenu(): int&lt;/div&gt;&lt;div&gt;+ promptPlayerSelection(warriorSkillDesc: String, wizardSkillDesc: String): int&lt;/div&gt;&lt;div&gt;+ promptStartingItemSelection(itemNumber: int, itemOptions: List&lt;ItemOption&gt;): int&lt;/div&gt;&lt;div&gt;+ promptDifficultySelection(): int&lt;/div&gt;&lt;div&gt;+ promptPlayerAction(player: Player): int&lt;/div&gt;&lt;div&gt;+ promptEnemyTargetSelection(enemies: List&lt;Enemy&gt;): int&lt;/div&gt;&lt;div&gt;+ promptItemSelection(inventory: Item[]): int&lt;/div&gt;&lt;div&gt;+ showVictory(remainingHp: int, maxHp: int, rounds: int): void&lt;/div&gt;&lt;div&gt;+ showDefeat(enemiesRemaining: int, rounds: int): void&lt;/div&gt;&lt;div&gt;+ displayRoundInfo(round: int, player: Player, enemies: Enemy[]): void&lt;/div&gt;&lt;div&gt;+ showNewWave(enemyCount: int): void&lt;/div&gt;&lt;div&gt;+ showMessage(message: String): void&lt;/div&gt;&lt;div&gt;+ showRoundHeader(roundNumber: int): void&lt;/div&gt;&lt;div&gt;+ closeUI(): void&lt;/div&gt;" vertex="1">
           <mxGeometry height="492" width="450" y="60" as="geometry" />
         </mxCell>
         <mxCell id="IV_1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="InputValidator" vertex="1">
@@ -693,6 +693,24 @@
 
         <!-- PAS → TargetSelector association -->
         <mxCell id="PAS_TS_edge" edge="1" parent="1" source="PAS_1" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;" target="TS_1" value="">
+          <mxGeometry relative="1" width="160" as="geometry" />
+        </mxCell>
+
+        <!-- ===== ItemOption ===== -->
+        <mxCell id="IO_1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="ItemOption" vertex="1">
+          <mxGeometry height="148" width="340" x="670" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="IO_2" parent="IO_1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- item: Item" vertex="1">
+          <mxGeometry height="26" width="340" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IO_3" parent="IO_1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="340" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="IO_4" parent="IO_1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ ItemOption(item: Item)&lt;div&gt;+ getName(): String&lt;/div&gt;&lt;div&gt;+ getDescription(): String&lt;/div&gt;&lt;div&gt;+ getItem(): Item&lt;/div&gt;" vertex="1">
+          <mxGeometry height="88" width="340" y="60" as="geometry" />
+        </mxCell>
+        <!-- ItemOption → Item association -->
+        <mxCell id="IO_Item_edge" edge="1" parent="1" source="IO_1" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;dashed=1;" target="U5S1rHiEBo68ZTB1LaXd-83" value="">
           <mxGeometry relative="1" width="160" as="geometry" />
         </mxCell>
 
