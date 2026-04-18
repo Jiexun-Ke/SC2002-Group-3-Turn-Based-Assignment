@@ -230,7 +230,7 @@
         <!-- TURN 4: Player's Turn — Warrior executes Shield Bash on Goblin   -->
         <!-- ================================================================ -->
         <mxCell id="t4_box" value="Turn 4: Player&#39;s Turn — Warrior executes Shield Bash on Goblin, stunning it" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;strokeWidth=2;fontSize=10;fontStyle=1;align=left;verticalAlign=top;spacingLeft=5;spacingTop=3;" vertex="1" parent="1">
-          <mxGeometry x="10" y="825" width="1980" height="282" as="geometry"/>
+          <mxGeometry x="10" y="825" width="1980" height="246" as="geometry"/>
         </mxCell>
 
         <!-- GameController → Warrior: updateStatusEffects() [DefenseBuffEffect ticks] -->
@@ -253,33 +253,25 @@
         <mxCell id="t4_d2" value="promptPlayerAction(warrior) [return: 3 = Special Skill]" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1720" y="930" as="sourcePoint"/><mxPoint x="270" y="930" as="targetPoint"/></mxGeometry>
         </mxCell>
-        <!-- PlayerActionSelector → GameController: return PlayerActionChoice(SpecialSkillAction, [goblin]) -->
-        <mxCell id="t4_d3" value="return PlayerActionChoice(SpecialSkillAction, [goblin])" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
+        <!-- PlayerActionSelector → GameController: return PlayerActionChoice(ShieldBashAction, [goblin]) -->
+        <mxCell id="t4_d3" value="return PlayerActionChoice(ShieldBashAction, [goblin])" style="endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="1720" y="946" as="sourcePoint"/><mxPoint x="100" y="946" as="targetPoint"/></mxGeometry>
         </mxCell>
-        <!-- GameController → SpecialSkillAction: execute(warrior, [goblin]) -->
+        <!-- GameController → ShieldBashAction: execute(warrior, [goblin]) -->
         <mxCell id="t4_e" value="execute(warrior, [goblin])" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="962" as="sourcePoint"/><mxPoint x="1350" y="962" as="targetPoint"/></mxGeometry>
         </mxCell>
-        <!-- SpecialSkillAction → Warrior: useSpecialSkill([goblin]) -->
-        <mxCell id="t4_e2" value="useSpecialSkill([goblin])" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="978" as="sourcePoint"/><mxPoint x="430" y="978" as="targetPoint"/></mxGeometry>
-        </mxCell>
-        <!-- Warrior → ShieldBashAction: execute(warrior, [goblin]) -->
-        <mxCell id="t4_f" value="execute(warrior, [goblin])" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="430" y="994" as="sourcePoint"/><mxPoint x="1350" y="994" as="targetPoint"/></mxGeometry>
-        </mxCell>
         <!-- ShieldBashAction → Goblin: takeDamage(warrior.getAttack()) -->
         <mxCell id="t4_g" value="takeDamage(warrior.getAttack()) [Goblin HP: 55→15]" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="1010" as="sourcePoint"/><mxPoint x="590" y="1010" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="978" as="sourcePoint"/><mxPoint x="590" y="978" as="targetPoint"/></mxGeometry>
         </mxCell>
         <!-- ShieldBashAction → Goblin: addStatusEffect(new StunEffect()) -->
         <mxCell id="t4_h" value="addStatusEffect(new StunEffect()) [Goblin stunned for 2 turns]" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="1026" as="sourcePoint"/><mxPoint x="590" y="1026" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="994" as="sourcePoint"/><mxPoint x="590" y="994" as="targetPoint"/></mxGeometry>
         </mxCell>
         <!-- GameController → GameUI: showActionResult(warrior, action) -->
         <mxCell id="t4_i" value="showActionResult(warrior, action)" style="endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="1048" as="sourcePoint"/><mxPoint x="270" y="1048" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="100" y="1012" as="sourcePoint"/><mxPoint x="270" y="1012" as="targetPoint"/></mxGeometry>
         </mxCell>
 
         <!-- ================================================================ -->
