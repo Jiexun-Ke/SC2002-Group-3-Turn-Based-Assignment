@@ -23,6 +23,9 @@ public class Main {
             ui.showMessage("Some parts of the game are not fully implemented yet.");
             ui.showMessage("Error details: " + e.getMessage());
 
+        } catch (Exception e) {
+            ui.showMessage("An unexpected error occurred.");
+            ui.showMessage("Error details: " + e.getMessage());
         }
 
         ui.closeUI();

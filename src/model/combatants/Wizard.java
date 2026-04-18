@@ -14,11 +14,7 @@ public class Wizard extends Player {
         this.setAttack(50);
     }
 
-    @Override
-    public boolean useSpecialSkillWithoutCooldown(Combatant[] targets) {
-        new ArcaneBlastAction().execute(this, targets);
-        return true;
-    }
+    
 
 
     @Override
@@ -26,16 +22,7 @@ public class Wizard extends Player {
         return "Arcane Blast";
     }
 
-    @Override
-    public boolean useSpecialSkill(Combatant[] targets) {
-        if (this.getSpecialSkillCooldown() != 0) {
-            return false;
-        }
-
-        this.setSpecialSkillCooldown(3);
-        new ArcaneBlastAction().execute(this, targets);
-        return true;
-    }
+    
 
     @Override
     public Action createSpecialSkillAction() {
