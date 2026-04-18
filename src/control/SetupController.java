@@ -14,7 +14,6 @@ import model.combatants.Player;
 import model.combatants.Warrior;
 import model.combatants.Wizard;
 import model.combatants.Wolf;
-import model.items.Item;
 import model.items.Potion;
 import model.items.PowerStone;
 import model.items.SmokeBomb;
@@ -128,7 +127,6 @@ public class SetupController {
             itemOptions.add(new ItemOption(new SmokeBomb()));
 
             int choice = ui.promptStartingItemSelection(i, itemOptions);
-            Item chosenItem = itemOptions.get(choice - 1).getItem();
 
             switch (choice) {
                 case 1:
