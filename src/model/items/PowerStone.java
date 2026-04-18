@@ -1,12 +1,15 @@
 package model.items;
 
 import java.util.ArrayList;
-import java.util.List;
+import model.actions.Action;
 import model.actions.ActionResult;
 import model.combatants.*;
 import model.targeting.SpecialSkillTargetingStrategy;
 
 public class PowerStone extends Item{
+
+    private ActionResult triggeredSkillResult;
+
     public PowerStone(){
         super("Power Stone", new SpecialSkillTargetingStrategy());
     }
@@ -20,30 +23,36 @@ public class PowerStone extends Item{
 
     @Override
     public void use(Player user, Combatant[] targets){
-        user.useSpecialSkillWithoutCooldown(targets);
+        triggeredSkillResult = null;
+        Action skillAction = user.createSpecialSkillAction();
+        skillAction.execute(user, targets);
+        triggeredSkillResult = skillAction.getLastResult();
     }
 
     @Override
     public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp) {
-        List<String> targetSummaries = new ArrayList<>();
-
-        if (targets != null) {
-            for (Combatant target : targets) {
-                if (target != null) {
-                    targetSummaries.add(target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
-                }
-            }
+        if (triggeredSkillResult == null) {
+            return new ActionResult(
+                getName(),
+                0,
+                0,
+                true,
+                "Triggered Free Special Skill",
+                new ArrayList<>(),
+                false,
+                ""
+            );
         }
 
         return new ActionResult(
             getName(),
-            0,
-            0,
-            true,
-            "Triggered Free Special Skill",
-            targetSummaries,
-            false,
-            ""
+            triggeredSkillResult.getDamageDealt(),
+            triggeredSkillResult.getHealingDone(),
+            triggeredSkillResult.isAppliedStatusEffect(),
+            triggeredSkillResult.getStatusEffectName(),
+            triggeredSkillResult.getTargetSummaries(),
+            triggeredSkillResult.isPrevented(),
+            triggeredSkillResult.getReason()
         );
     }
 }
