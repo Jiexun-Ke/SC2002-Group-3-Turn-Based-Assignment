@@ -61,11 +61,16 @@ public class GameController {
                     continue;
                 }
 
-                if (playerCombatant.isSpecialSkillAction(action)) {
+                action.execute(playerCombatant, choice.getTargets());
+
+                ActionResult result = action.getLastResult();
+
+                if (playerCombatant.isSpecialSkillAction(action) 
+                        && result != null
+                        && !result.isPrevented()) {
                     playerCombatant.setSpecialSkillCooldown(3);
                 }
 
-                action.execute(playerCombatant, choice.getTargets());
                 ui.showActionResult(playerCombatant, action);
                 validActionChosen = true;
             }

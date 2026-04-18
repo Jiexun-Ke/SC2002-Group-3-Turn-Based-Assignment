@@ -1,4 +1,7 @@
 package model.actions;
+
+import java.util.ArrayList;
+import java.util.List;
 import model.combat.DamageResult;
 import model.combatants.Combatant;
 
@@ -12,23 +15,49 @@ public class BasicAttackAction extends Action{
         return "Performs a basic attack on the selected target.";
     }
     
-    
-
-
-
     @Override
     public void execute(Combatant user, Combatant[] targets) {
+        if (user == null) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "No valid attacker"
+            );
+            return;
+        }
+
+        if (targets == null || targets.length == 0 || targets[0] == null) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "No valid target selected"
+            );
+            return;
+        }
+
         Combatant target = targets[0];
         int rawDamage = Math.max(0, user.getAttack() - target.getDefense());
-        
 
         DamageResult damageResult = target.modifyIncomingDamage(user, rawDamage);
         int finalDamage = damageResult.getDamage();
 
-        target.takeRawDamage(damageResult.getDamage());
+        target.takeRawDamage(finalDamage);
 
-        java.util.List<String> targetSummaries = new java.util.ArrayList<>();
-        targetSummaries.add(target.getName() + " took " + finalDamage + " damage. HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
+        List<String> targetSummaries = new ArrayList<>();
+        targetSummaries.add(
+            target.getName() + " took " + finalDamage + " damage. HP: "
+            + target.getCurrentHP() + "/" + target.getMaxHP()
+        );
 
         lastResult = new ActionResult(
             getName(),
@@ -40,6 +69,7 @@ public class BasicAttackAction extends Action{
             damageResult.isPrevented(),
             damageResult.getReason()
         );
+
     }
 }
 

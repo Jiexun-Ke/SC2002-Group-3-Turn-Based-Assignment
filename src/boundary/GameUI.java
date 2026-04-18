@@ -183,9 +183,9 @@ public class GameUI {
 
         
         int availItems = 0;
-        for (int i = 0; i < inventory.length; i++){
-            if (inventory[i] != null){
-                print((availItems +1) +". " + inventory[i].getName() + " -> " + inventory[i].getDescription());
+        for (Item item : inventory){
+            if (item != null){
+                print((availItems + 1) + ". " + item.getName() + " -> " + item.getDescription());
                 availItems++;
             }
         }

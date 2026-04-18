@@ -1,7 +1,10 @@
 package model.actions;
+
 import java.util.ArrayList;
-import model.combatants.*;
-import model.items.*;
+import model.combatants.Combatant;
+import model.combatants.Player;
+import model.items.Item;
+
 
 public class UseItemAction extends Action{
     private final Item item;
@@ -37,17 +40,29 @@ public class UseItemAction extends Action{
             return;
         }
 
-        if (user instanceof Player player) {
-            int oldHp = player.getCurrentHP();
-
-            boolean success = item.use(player, targets);
-
-            if (success) {
-                player.removeItem(item);
-            }
-
-            lastResult = item.createActionResult(player, targets, oldHp, success);
+        if (!(user instanceof Player player)) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "Only players can use items"
+            );
+            return;
         }
+
+
+        int oldHp = player.getCurrentHP();
+        boolean success = item.use(player, targets);
+
+        if (success) {
+            player.removeItem(item);
+        }
+
+        lastResult = item.createActionResult(player, targets, oldHp, success);
     }
 
     @Override

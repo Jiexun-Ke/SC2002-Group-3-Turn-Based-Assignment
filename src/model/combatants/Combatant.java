@@ -31,7 +31,7 @@ public abstract class Combatant{
     }
 
     public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
+        this.currentHP = Math.max(0, Math.min(currentHP, this.maxHP));
     }
 
     public int getAttack() {
@@ -39,7 +39,7 @@ public abstract class Combatant{
     }
 
     public void setAttack(int attack) {
-        this.attack = attack;
+        this.attack = Math.max(0, attack);
     }
 
     public int getDefense() {
@@ -47,7 +47,7 @@ public abstract class Combatant{
     }
 
     public void setDefense(int defense) {
-        this.defense = defense;
+        this.defense = Math.max(0, defense);
     }
 
     public int getSpeed(){
@@ -147,7 +147,7 @@ public abstract class Combatant{
 
     public void takeDamage(int damage) {
         DamageResult result = modifyIncomingDamage(null, damage);
-        takeRawDamage(result.getDamage());
+        takeRawDamage(Math.max(0, result.getDamage()));
     }
         
     public void heal(int amount){

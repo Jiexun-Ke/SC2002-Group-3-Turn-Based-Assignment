@@ -1,6 +1,7 @@
 package model.actions;
 import java.util.ArrayList;
 import java.util.List;
+import model.combat.DamageResult;
 import model.combatants.*;
 
 public class ArcaneBlastAction extends Action{
@@ -18,50 +19,110 @@ public class ArcaneBlastAction extends Action{
 
     @Override
     public void execute(Combatant user, Combatant[] targets) {
+        if (user == null) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "No valid attacker"
+            );
+            return;
+        }
+
+        if (!(user instanceof Wizard wizard)) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "Only Wizard can use Arcane Blast"
+            );
+            return;
+        }
+
+        if (targets == null || targets.length == 0) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "No valid targets selected"
+            );
+            return;
+        }
+
         int totalDamage = 0;
-        int kills = 0;
+        int killCount = 0;
         List<String> targetSummaries = new ArrayList<>();
+        List<String> issues = new ArrayList<>();
 
         for (Combatant target : targets) {
-            if (target == null || !target.isAlive()) {
+            if (target == null) {
+                issues.add("Skipped a null target");
                 continue;
             }
 
-            
-
-            int damage = Math.max(0, user.getAttack() - target.getDefense());
-            target.takeDamage(damage);
-            totalDamage += damage;
-
             if (!target.isAlive()) {
-                kills++;
+                targetSummaries.add(target.getName() + " is already defeated.");
+                continue;
             }
 
-            targetSummaries.add(
-                target.getName() + " took " + damage + " damage. HP: " + target.getCurrentHP() + "/" + target.getMaxHP()
-            );
-        }
-        
-        if (user instanceof Wizard wizard) {
-            for (int i = 0; i < kills; i++) {
-                wizard.increaseAttack();
+            int hpBefore = target.getCurrentHP();
+            int rawDamage = Math.max(0, wizard.getAttack() - target.getDefense());
+
+            DamageResult damageResult = target.modifyIncomingDamage(wizard, rawDamage);
+            int finalDamage = Math.max(0, damageResult.getDamage());
+
+            target.takeRawDamage(finalDamage);
+            totalDamage += finalDamage;
+
+            StringBuilder summary = new StringBuilder();
+            summary.append(target.getName())
+                   .append(" took ")
+                   .append(finalDamage)
+                   .append(" damage. HP: ")
+                   .append(target.getCurrentHP())
+                   .append("/")
+                   .append(target.getMaxHP());
+
+            if (damageResult.isPrevented() && damageResult.getReason() != null && !damageResult.getReason().isEmpty()) {
+                summary.append(" (").append(damageResult.getReason()).append(")");
             }
 
-            if (kills > 0) {
-                targetSummaries.add("Wizard ATK: " + wizard.getAttack());
+            if (hpBefore > 0 && !target.isAlive()) {
+                killCount++;
+                wizard.increaseAttack(10);
+                summary.append(" | Eliminated! Wizard ATK +10");
             }
+
+            targetSummaries.add(summary.toString());
         }
+
+        boolean boosted = killCount > 0;
+        String effectName = boosted ? "ATK +" + (killCount * 10) : null;
+
+        String errorMessage = String.join("; ", issues);
+        boolean prevented = !issues.isEmpty();
 
         lastResult = new ActionResult(
             getName(),
             totalDamage,
             0,
-            false,
-            null,
+            boosted,
+            effectName,
             targetSummaries,
-            false,
-            ""
+            prevented,
+            errorMessage
         );
-
     }
 }

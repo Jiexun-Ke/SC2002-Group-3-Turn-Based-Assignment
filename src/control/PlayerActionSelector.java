@@ -78,14 +78,26 @@ public class PlayerActionSelector {
             return null;
         }
 
-        int itemIndex = itemChoice - 1;
 
-        if (itemIndex < 0 || itemIndex >= inventory.length || inventory[itemIndex] == null) {
+        int displayedIndex = 0;
+        int actualIndex = -1;
+
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
+                displayedIndex++;
+                if (displayedIndex == itemChoice) {
+                    actualIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (actualIndex == -1 || inventory[actualIndex] == null) {
             context.getUi().showMessage("Invalid item choice.");
             return null;
         }
 
-        Item chosenItem = inventory[itemIndex];
+        Item chosenItem = inventory[actualIndex];
         Combatant[] targets = chosenItem.selectTargets(player, context, targetSelector);
 
         if (targets == null) {

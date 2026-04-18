@@ -7,6 +7,8 @@ import model.status_effects.*;
 import model.targeting.SelfTargetingStrategy;
 
 public class SmokeBomb extends Item {
+    private String failureReason = "";
+
     public SmokeBomb(){
         super("Smoke Bomb", new SelfTargetingStrategy());
     }
@@ -19,8 +21,16 @@ public class SmokeBomb extends Item {
     @Override
     public boolean use(Player user, Combatant[] targets){
         if (user.hasStatusEffect(SmokeBombEffect.class)) {
+            failureReason = "Smoke Bomb is already active";
             return false;
         }
+        
+        if (user.isStatusEffectSlotsFull()) {
+            failureReason = "Cannot apply more status effects";
+            return false;
+        }
+
+        failureReason = "";
         return user.addStatusEffect(new SmokeBombEffect());
     }
 
@@ -35,7 +45,7 @@ public class SmokeBomb extends Item {
             null,
             new ArrayList<>(),
             true,
-            "Smoke Bomb is already active"
+            failureReason
         );
     }
 
