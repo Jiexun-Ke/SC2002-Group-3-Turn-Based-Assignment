@@ -13,6 +13,7 @@ public class SpecialSkillAction extends Action {
         return "Uses the player's class-specific special skill.";
     }
 
+    
     @Override
     public void execute(Combatant user, Combatant[] targets) {
         if (user instanceof Player player) {

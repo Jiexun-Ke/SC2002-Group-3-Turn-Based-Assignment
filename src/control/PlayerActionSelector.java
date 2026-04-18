@@ -2,7 +2,6 @@ package control;
 
 import model.actions.BasicAttackAction;
 import model.actions.DefendAction;
-import model.actions.SpecialSkillAction;
 import model.actions.UseItemAction;
 import model.combatants.Combatant;
 import model.combatants.Player;
@@ -53,15 +52,13 @@ public class PlayerActionSelector {
 
     private PlayerActionChoice createSpecialSkillChoice(Player player, BattleContext context) {
         if (player.getSpecialSkillCooldown() > 0) {
-        context.getUi().showMessage(
-            "Skill is on cooldown for "
-            + player.getSpecialSkillCooldown()
-            + " more turn(s). Please choose another action."
-        );
-        return null;
+            context.getUi().showMessage(
+                "Skill is on cooldown for "
+                + player.getSpecialSkillCooldown()
+                + " more turn(s). Please choose another action."
+            );
+            return null;
         }
-
-
 
         Combatant[] targets = targetSelector.selectSpecialSkillTargets(player, context);
 
@@ -69,7 +66,7 @@ public class PlayerActionSelector {
             return null;
         }
 
-        return new PlayerActionChoice(new SpecialSkillAction(), targets);
+        return new PlayerActionChoice(player.createSpecialSkillAction(), targets);
     }
 
     private PlayerActionChoice createItemChoice(Player player, BattleContext context) {

@@ -1,5 +1,6 @@
 package model.actions;
-import model.combat.DamageResult;
+import java.util.ArrayList;
+import java.util.List;
 import model.combatants.*;
 
 public class ArcaneBlastAction extends Action{
@@ -12,39 +13,39 @@ public class ArcaneBlastAction extends Action{
         return "Deal BasicAttack damage to all enemies currently in combat. Each enemy defeated by Arcane Blast adds 10 to the Wizard's Attack, lasting until the end of the level.";
     }
 
+    
+
+
     @Override
     public void execute(Combatant user, Combatant[] targets) {
-        lastResult = null;
-
-        if (targets == null || targets.length == 0) {
-            return;
-        }
-
         int totalDamage = 0;
-        boolean prevented = false;
-        String reason = null;
+        List<String> targetSummaries = new ArrayList<>();
 
         for (Combatant target : targets) {
             if (target == null || !target.isAlive()) {
                 continue;
             }
 
-            int baseDamage = Math.max(0, user.getAttack() - target.getDefense());
+            int damage = Math.max(0, user.getAttack() - target.getDefense());
+            target.takeDamage(damage);
+            totalDamage += damage;
 
-            DamageResult damageResult = target.modifyIncomingDamage(user, baseDamage);
+            targetSummaries.add(
+                target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP()
+            );
+    }
+        
 
-            int finalDamage = damageResult.getDamage();
+        lastResult = new ActionResult(
+            getName(),
+            totalDamage,
+            0,
+            false,
+            null,
+            targetSummaries,
+            false,
+            ""
+        );
 
-            target.takeRawDamage(finalDamage);
-
-            totalDamage += finalDamage;
-
-            if (damageResult.isPrevented()) {
-                prevented = true;
-                reason = damageResult.getReason();
-            }
-        }
-
-        lastResult = new ActionResult(totalDamage, prevented, reason);
     }
 }

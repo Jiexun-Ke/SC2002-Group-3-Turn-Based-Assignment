@@ -43,6 +43,10 @@ public abstract class Player extends Combatant{
         }
     }
 
+    public boolean isSpecialSkillAction(Action action) {
+        return action != null && action.getClass().equals(createSpecialSkillAction().getClass());
+    }
+
     
     /////////////////////
 

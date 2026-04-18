@@ -12,6 +12,8 @@ public class DefendAction extends Action{
         return "Increases defense by 10 for the current round and the next round";
     }
 
+    
+
     @Override
     public void execute(Combatant user, Combatant[] targets){
         user.addStatusEffect(new DefenseBuffEffect());

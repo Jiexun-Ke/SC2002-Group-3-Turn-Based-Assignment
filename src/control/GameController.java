@@ -55,7 +55,18 @@ public class GameController {
                     continue;
                 }
 
-                choice.getAction().execute(playerCombatant, choice.getTargets());
+                Action action = choice.getAction();
+
+                if (action == null) {
+                    continue;
+                }
+
+                if (playerCombatant.isSpecialSkillAction(action)) {
+                    playerCombatant.setSpecialSkillCooldown(3);
+                }
+
+                action.execute(playerCombatant, choice.getTargets());
+                ui.showActionResult(playerCombatant, action);
                 validActionChosen = true;
             }
 
@@ -87,6 +98,7 @@ public class GameController {
         }
     }
 
+    
 
 // ------------------------------------------------------------------------------------------------------------
 

@@ -2,6 +2,8 @@ package boundary;
 
 import control.ItemOption;
 import java.util.List;
+import model.actions.Action;
+import model.actions.ActionResult;
 import model.combatants.*;
 import model.items.*;
 
@@ -42,16 +44,16 @@ public class GameUI {
         }
     }
 
-public void divider(){
-    System.out.println("══════════════════════════════════════");
-}
+    public void divider(){
+        System.out.println("══════════════════════════════════════");
+    }
 
-public void section(String title) {
-    pause(SECTION_PAUSE);
-    divider();
-    print(" " + title);
-    divider();
-}
+    public void section(String title) {
+        pause(SECTION_PAUSE);
+        divider();
+        print(" " + title);
+        divider();
+    }
 
     //MENUS & INPUTS (RETURNING DATA TO CONTROL)
 
@@ -258,8 +260,63 @@ public void section(String title) {
     section("ROUND " + roundNumber);
 }
 
+    public void showActionResult(Combatant user, Action action) {
+        ActionResult result = action.getLastResult();
+
+        if (result == null) {
+            showMessage(user.getName() + " used " + action.getName() + ".");
+            return;
+        }
+
+        if (result.isPrevented()) {
+            showMessage(user.getName() + " could not use " + result.getActionName()
+                    + ": " + result.getReason());
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(user.getName()).append(" used ").append(result.getActionName());
+
+        boolean hasExtraInfo = false;
+
+        if (result.getDamageDealt() > 0) {
+            sb.append(" and dealt ").append(result.getDamageDealt()).append(" damage");
+            hasExtraInfo = true;
+        }
+
+        if (result.getHealingDone() > 0) {
+            if (hasExtraInfo) {
+                sb.append(",");
+            } else {
+                sb.append(" and");
+            }
+            sb.append(" healed ").append(result.getHealingDone()).append(" HP");
+            hasExtraInfo = true;
+        }
+
+        sb.append("!");
+
+        if (result.isAppliedStatusEffect() && result.getStatusEffectName() != null) {
+            sb.append(" Applied ").append(result.getStatusEffectName()).append(".");
+        }
+
+        List<String> targetSummaries = result.getTargetSummaries();
+        if (targetSummaries != null && !targetSummaries.isEmpty()) {
+            sb.append(" ");
+            for (int i = 0; i < targetSummaries.size(); i++) {
+                sb.append(targetSummaries.get(i));
+                if (i < targetSummaries.size() - 1) {
+                    sb.append(" | ");
+                }
+            }
+        }
+
+        showMessage(sb.toString());
+    }
+
     // call when exit game
     public void closeUI(){
         validator.closeScanner();
     }
+
 }

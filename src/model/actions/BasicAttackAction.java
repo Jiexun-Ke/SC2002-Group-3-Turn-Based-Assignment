@@ -1,5 +1,4 @@
 package model.actions;
-import model.combat.DamageResult;
 import model.combatants.Combatant;
 
 public class BasicAttackAction extends Action{
@@ -12,32 +11,30 @@ public class BasicAttackAction extends Action{
         return "Performs a basic attack on the selected target.";
     }
     
+    
+
+
+
     @Override
     public void execute(Combatant user, Combatant[] targets) {
-        lastResult = null;
-
-        if (targets == null || targets.length == 0) {
-            return;
-        }
-
         Combatant target = targets[0];
+        int damage = Math.max(0, user.getAttack() - target.getDefense());
+        target.takeDamage(damage);
 
-        if (target == null || !target.isAlive()) {
-            return;
-        }
-
-        int baseDamage = Math.max(0, user.getAttack() - target.getDefense());
-
-        DamageResult damageResult = target.modifyIncomingDamage(user, baseDamage);
-
-        target.takeRawDamage(damageResult.getDamage());
+        java.util.List<String> targetSummaries = new java.util.ArrayList<>();
+        targetSummaries.add(target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
 
         lastResult = new ActionResult(
-                damageResult.getDamage(),
-                damageResult.isPrevented(),
-                damageResult.getReason()
+            getName(),
+            damage,
+            0,
+            false,
+            null,
+            targetSummaries,
+            false,
+            ""
         );
-    }
+}
 }
 
 

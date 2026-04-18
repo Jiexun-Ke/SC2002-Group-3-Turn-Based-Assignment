@@ -20,4 +20,6 @@ public abstract class Action {
     public abstract String getDescription();
 
     public abstract void execute(Combatant user, Combatant[] targets);
+
+    
 }
