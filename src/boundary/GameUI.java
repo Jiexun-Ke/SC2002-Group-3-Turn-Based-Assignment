@@ -143,39 +143,49 @@ public class GameUI {
 
         print("0. Back");
 
-        for (int i = 0; i < enemies.size(); i++){
-            Enemy e = enemies.get(i);
+        int displayedIndex = 0;
 
+        for (Enemy e : enemies){
             if (e.isAlive()){
-                print((i + 1) + ". " + e.getName() + " HP: " 
-                + e.getCurrentHP() + "/" + e.getMaxHP());
+                displayedIndex++;
+                print(displayedIndex + ". " + e.getName() + " HP: "
+                        + e.getCurrentHP() + "/" + e.getMaxHP());
             }
+        }
+
+        if (displayedIndex == 0) {
+            print("No valid targets available.");
+            return 0;
         }
 
         divider();
         print("");
 
         while (true) {
-
             int choice = validator.getInt("Choose target (0 to go back): ");
 
             if (choice == 0) {
                 return 0;
             }
 
-            if (choice >= 1 && choice <= enemies.size()) {
-                Enemy selectedEnemy = enemies.get(choice - 1);
+            if (choice >= 1 && choice <= displayedIndex) {
+                int aliveCounter = 0;
 
-                if (selectedEnemy.isAlive()) {
-                    return choice;
+                for (int i = 0; i < enemies.size(); i++) {
+                    Enemy enemy = enemies.get(i);
+
+                    if (enemy.isAlive()) {
+                        aliveCounter++;
+                        if (aliveCounter == choice) {
+                            return i + 1;
+                        }
+                    }
                 }
             }
 
             print("Invalid target choice. Please try again.");
         }
-
-        
-    }
+}
 
     public int promptItemSelection(Item[] inventory){
         print(" ");
@@ -269,8 +279,13 @@ public class GameUI {
         }
 
         if (result.isPrevented()) {
+            String reason = result.getReason();
+            if (reason == null || reason.isEmpty()) {
+                reason = "unknown reason";
+            }
+
             showMessage(user.getName() + " could not use " + result.getActionName()
-                    + ": " + result.getReason());
+                    + ": " + reason);
             return;
         }
 
@@ -312,6 +327,13 @@ public class GameUI {
                 if (i < targetSummaries.size() - 1) {
                     sb.append(" | ");
                 }
+            }
+        }
+        
+        if (!result.isPrevented()) {
+            String reason = result.getReason();
+            if (reason != null && !reason.isEmpty()) {
+                sb.append(" Note: ").append(reason).append(".");
             }
         }
 
