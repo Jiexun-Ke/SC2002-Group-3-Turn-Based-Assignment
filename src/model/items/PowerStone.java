@@ -24,10 +24,20 @@ public class PowerStone extends Item{
     @Override
     public boolean use(Player user, Combatant[] targets){
         triggeredSkillResult = null;
+        
+        if (user == null) {
+        return false;
+    }
+
         Action skillAction = user.createSpecialSkillAction();
+        if (skillAction == null) {
+            return false;
+        }
+
         skillAction.execute(user, targets);
         triggeredSkillResult = skillAction.getLastResult();
-        return true;
+
+        return triggeredSkillResult != null && !triggeredSkillResult.isPrevented();
     }
 
     @Override
@@ -37,11 +47,11 @@ public class PowerStone extends Item{
                 getName(),
                 0,
                 0,
-                true,
-                "Triggered Free Special Skill",
-                new ArrayList<>(),
                 false,
-                ""
+                null,
+                new ArrayList<>(),
+                true,
+                "Power Stone failed to trigger the special skill!"
             );
         }
 

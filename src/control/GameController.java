@@ -86,13 +86,18 @@ public class GameController {
 
         ActionResult result = enemyAction.getLastResult();
 
-        if (result != null && result.isPrevented()) {
+        String reason = result.getReason();
+            if (reason == null || reason.isEmpty()) {
+                reason = "an active effect";
+        }
+
+        if (result.isPrevented()) {
             ui.showMessage(enemy.getName() + " could not damage "
-                    + player.getName() + " because of " + result.getReason() + "!");
+                    + player.getName() + " because of " + reason + "!");
             return;
         }
 
-        if (result != null && result.getDamageDealt() > 0) {
+        if (result.getDamageDealt() > 0) {
             ui.showMessage(enemy.getName() + " attacked " + player.getName()
                     + " for " + result.getDamageDealt() + " damage! "
                     + player.getName() + " HP: "

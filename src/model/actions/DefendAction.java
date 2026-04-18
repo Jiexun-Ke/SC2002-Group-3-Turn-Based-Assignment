@@ -17,6 +17,20 @@ public class DefendAction extends Action{
 
     @Override
     public void execute(Combatant user, Combatant[] targets){
+        if (user == null) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "No valid user"
+            );
+            return;
+        }
+        
         if (user.hasStatusEffect(DefenseBuffEffect.class)) {
             lastResult = new ActionResult(
                 getName(),
