@@ -27,9 +27,15 @@ public class ArcaneBlastAction extends Action{
                 continue;
             }
 
+            
+
             int damage = Math.max(0, user.getAttack() - target.getDefense());
             target.takeDamage(damage);
             totalDamage += damage;
+
+            if (!target.isAlive()) {
+                kills++;
+            }
 
             targetSummaries.add(
                 target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP()

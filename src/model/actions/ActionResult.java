@@ -11,7 +11,7 @@ public class ActionResult {
     private final String statusEffectName;
     private final List<String> targetSummaries;
     private final boolean prevented;
-    private String reason;
+    private final String reason;
 
     public ActionResult(String actionName, int damageDealt, int healingDone,
                         boolean appliedStatusEffect, String statusEffectName,
