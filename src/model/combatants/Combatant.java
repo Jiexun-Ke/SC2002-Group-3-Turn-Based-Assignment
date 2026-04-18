@@ -153,5 +153,23 @@ public abstract class Combatant{
     public void heal(int amount){
         this.currentHP = Math.min(this.maxHP, currentHP + amount);
     }
+
+    public boolean hasStatusEffect(Class<? extends StatusEffect> effectType) {
+        for (StatusEffect effect : activeEffects) {
+            if (effect != null && effectType.isInstance(effect)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isStatusEffectSlotsFull() {
+        for (StatusEffect effect : activeEffects) {
+            if (effect == null) {
+                return false;
+            }
+        }
+        return true;
+    }
     
 }       

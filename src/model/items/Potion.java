@@ -17,12 +17,13 @@ public class Potion extends Item {
     }
 
     @Override
-    public void use(Player user, Combatant[] targets){
+    public boolean use(Player user, Combatant[] targets){
             user.heal(100);
+            return true;
         }
 
     @Override
-    public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp) {
+    public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp, boolean success) {
         int healed = user.getCurrentHP() - oldHp;
         List<String> targetSummaries = new ArrayList<>();
         targetSummaries.add(user.getName() + " HP: " + user.getCurrentHP() + "/" + user.getMaxHP());

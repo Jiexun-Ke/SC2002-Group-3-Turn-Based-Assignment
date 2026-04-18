@@ -22,15 +22,16 @@ public class PowerStone extends Item{
     
 
     @Override
-    public void use(Player user, Combatant[] targets){
+    public boolean use(Player user, Combatant[] targets){
         triggeredSkillResult = null;
         Action skillAction = user.createSpecialSkillAction();
         skillAction.execute(user, targets);
         triggeredSkillResult = skillAction.getLastResult();
+        return true;
     }
 
     @Override
-    public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp) {
+    public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp, boolean success) {
         if (triggeredSkillResult == null) {
             return new ActionResult(
                 getName(),

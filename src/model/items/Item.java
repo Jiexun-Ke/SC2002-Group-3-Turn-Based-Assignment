@@ -32,10 +32,10 @@ public abstract class Item {
         return targetingStrategy.selectTargets(user, context, targetSelector);
     }
 
-    public abstract void use(Player user, Combatant[] targets);
+    public abstract boolean use(Player user, Combatant[] targets);
 
     public abstract String getDescription();
 
-    public abstract ActionResult createActionResult(Player user, Combatant[] targets, int oldHp);
+    public abstract ActionResult createActionResult(Player user, Combatant[] targets, int oldHp, boolean success);
 }
 

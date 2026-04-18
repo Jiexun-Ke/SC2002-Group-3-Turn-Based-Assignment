@@ -17,12 +17,28 @@ public class SmokeBomb extends Item {
     }
 
     @Override
-    public void use(Player user, Combatant[] targets){
-        user.addStatusEffect(new SmokeBombEffect());
+    public boolean use(Player user, Combatant[] targets){
+        if (user.hasStatusEffect(SmokeBombEffect.class)) {
+            return false;
+        }
+        return user.addStatusEffect(new SmokeBombEffect());
     }
 
     @Override
-    public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp) {
+    public ActionResult createActionResult(Player user, Combatant[] targets, int oldHp, boolean success) {
+        if (!success) {
+        return new ActionResult(
+            getName(),
+            0,
+            0,
+            false,
+            null,
+            new ArrayList<>(),
+            true,
+            "Smoke Bomb is already active"
+        );
+    }
+
         return new ActionResult(
             getName(),
             0,

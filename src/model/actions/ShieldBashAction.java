@@ -23,13 +23,22 @@ public class ShieldBashAction extends Action{
         target.takeDamage(damage);
 
         boolean stunned = false;
+        String reason = "";
+
         if (target.isAlive()) {
-            target.addStatusEffect(new StunEffect());
-            stunned = true;
+            if (target.hasStatusEffect(StunEffect.class)) {
+                reason = "Target is already stunned";
+            } else {
+                stunned = target.addStatusEffect(new StunEffect());
+                if (!stunned) {
+                    reason = "Cannot apply more status effects";
+                }
+            }
         }
 
         List<String> targetSummaries = new ArrayList<>();
-        targetSummaries.add(target.getName() + " took " + damage + " damage. HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
+        targetSummaries.add(target.getName() + " took " + damage + " damage. HP: " 
+            + target.getCurrentHP() + "/" + target.getMaxHP());
 
         lastResult = new ActionResult(
             getName(),
@@ -38,10 +47,11 @@ public class ShieldBashAction extends Action{
             stunned,
             stunned ? "Stun" : null,
             targetSummaries,
-            false,
-            ""
+            !stunned && !reason.isEmpty(),
+            reason
         );
     }
+
 
 
     

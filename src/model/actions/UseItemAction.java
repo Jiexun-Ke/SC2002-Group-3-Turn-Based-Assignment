@@ -40,10 +40,13 @@ public class UseItemAction extends Action{
         if (user instanceof Player player) {
             int oldHp = player.getCurrentHP();
 
-            item.use(player, targets);
-            player.removeItem(item);
+            boolean success = item.use(player, targets);
 
-            lastResult = item.createActionResult(player, targets, oldHp);
+            if (success) {
+                player.removeItem(item);
+            }
+
+            lastResult = item.createActionResult(player, targets, oldHp, success);
         }
     }
 

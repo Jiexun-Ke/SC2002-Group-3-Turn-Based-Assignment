@@ -17,18 +17,31 @@ public class DefendAction extends Action{
 
     @Override
     public void execute(Combatant user, Combatant[] targets){
-        user.addStatusEffect(new DefenseBuffEffect());
+        if (user.hasStatusEffect(DefenseBuffEffect.class)) {
+            lastResult = new ActionResult(
+                getName(),
+                0,
+                0,
+                false,
+                null,
+                new ArrayList<>(),
+                true,
+                "Defense buff is already active"
+            );
+            return;
+        }
 
+        boolean applied = user.addStatusEffect(new DefenseBuffEffect());
 
         lastResult = new ActionResult(
             getName(),
             0,
             0,
-            true,
-            "Defense +10",
+            applied,
+            applied ? "Defense +10" : null,
             new ArrayList<>(),
-            false,
-            ""
+            !applied,
+            applied ? "" : "Cannot apply more status effects"
         );
     }
 }
