@@ -186,7 +186,7 @@ public class GameController {
             
             }
 
-            applyStartOfTurnEffects(combatant);
+            
 
             if (!combatant.isAlive()) {
                 updatePerTurnState(combatant);
@@ -210,11 +210,6 @@ public class GameController {
             player.updateStatusEffects();
         }
     }
-    //---------------------------------------------------------------
-    private void applyStartOfTurnEffects(Combatant combatant) {
-        
-    }
-
     //------------------------------------------------------------------
 
     private void updatePerTurnState(Combatant combatant) {
