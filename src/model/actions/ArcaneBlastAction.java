@@ -5,7 +5,7 @@ import model.combatants.*;
 
 public class ArcaneBlastAction extends Action{
     public ArcaneBlastAction(){
-        super("ArcaneBlastAction");
+        super("Arcane Blast");
     }
 
     @Override
@@ -19,6 +19,7 @@ public class ArcaneBlastAction extends Action{
     @Override
     public void execute(Combatant user, Combatant[] targets) {
         int totalDamage = 0;
+        int kills = 0;
         List<String> targetSummaries = new ArrayList<>();
 
         for (Combatant target : targets) {
@@ -33,8 +34,17 @@ public class ArcaneBlastAction extends Action{
             targetSummaries.add(
                 target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP()
             );
-    }
+        }
         
+        if (user instanceof Wizard wizard) {
+            for (int i = 0; i < kills; i++) {
+                wizard.increaseAttack();
+            }
+
+            if (kills > 0) {
+                targetSummaries.add("Wizard ATK: " + wizard.getAttack());
+            }
+        }
 
         lastResult = new ActionResult(
             getName(),

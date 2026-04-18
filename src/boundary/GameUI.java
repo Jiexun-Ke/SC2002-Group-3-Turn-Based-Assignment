@@ -294,7 +294,11 @@ public class GameUI {
             hasExtraInfo = true;
         }
 
+        if (!hasExtraInfo) {
+            sb.append(".");
+        } else {
         sb.append("!");
+        }
 
         if (result.isAppliedStatusEffect() && result.getStatusEffectName() != null) {
             sb.append(" Applied ").append(result.getStatusEffectName()).append(".");

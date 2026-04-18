@@ -6,7 +6,7 @@ import model.status_effects.StunEffect;
 
 public class ShieldBashAction extends Action{
     public ShieldBashAction(){
-        super("ShieldBashAction");
+        super("Shield Bash");
     }
 
     @Override

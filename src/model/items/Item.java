@@ -2,6 +2,7 @@ package model.items;
 
 import control.BattleContext;
 import control.TargetSelector;
+import model.actions.ActionResult;
 import model.combatants.Combatant;
 import model.combatants.Player;
 import model.targeting.TargetingStrategy;
@@ -34,4 +35,7 @@ public abstract class Item {
     public abstract void use(Player user, Combatant[] targets);
 
     public abstract String getDescription();
+
+    public abstract ActionResult createActionResult(Player user, Combatant[] targets, int oldHp);
 }
+

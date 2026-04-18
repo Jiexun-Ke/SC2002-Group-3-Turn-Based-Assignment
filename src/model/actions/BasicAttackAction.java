@@ -3,7 +3,7 @@ import model.combatants.Combatant;
 
 public class BasicAttackAction extends Action{
     public BasicAttackAction(){
-        super("BasicAttackAction");
+        super("Basic Attack");
     }
 
     @Override
