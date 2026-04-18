@@ -23,14 +23,16 @@ public class BasicAttackAction extends Action{
         
 
         DamageResult damageResult = target.modifyIncomingDamage(user, rawDamage);
+        int finalDamage = damageResult.getDamage();
+
         target.takeRawDamage(damageResult.getDamage());
 
         java.util.List<String> targetSummaries = new java.util.ArrayList<>();
-        targetSummaries.add(target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
+        targetSummaries.add(target.getName() + " took " + finalDamage + " damage. HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
 
         lastResult = new ActionResult(
             getName(),
-            damageResult.getDamage(),
+            finalDamage,
             0,
             false,
             null,
@@ -38,7 +40,7 @@ public class BasicAttackAction extends Action{
             damageResult.isPrevented(),
             damageResult.getReason()
         );
-}
+    }
 }
 
 

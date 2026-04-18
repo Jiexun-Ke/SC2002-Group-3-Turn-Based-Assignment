@@ -29,7 +29,7 @@ public class ShieldBashAction extends Action{
         }
 
         List<String> targetSummaries = new ArrayList<>();
-        targetSummaries.add(target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
+        targetSummaries.add(target.getName() + " took " + damage + " damage. HP: " + target.getCurrentHP() + "/" + target.getMaxHP());
 
         lastResult = new ActionResult(
             getName(),

@@ -38,7 +38,7 @@ public class ArcaneBlastAction extends Action{
             }
 
             targetSummaries.add(
-                target.getName() + " HP: " + target.getCurrentHP() + "/" + target.getMaxHP()
+                target.getName() + " took " + damage + " damage. HP: " + target.getCurrentHP() + "/" + target.getMaxHP()
             );
         }
         
