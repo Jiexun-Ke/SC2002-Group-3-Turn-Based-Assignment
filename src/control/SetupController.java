@@ -19,7 +19,7 @@ import model.items.PowerStone;
 import model.items.SmokeBomb;
 import model.turn_order.SpeedBasedTurnStrategy;
 import model.turn_order.TurnOrderStrategy;
-//test
+
 
 public class SetupController {
     private final GameUI ui;

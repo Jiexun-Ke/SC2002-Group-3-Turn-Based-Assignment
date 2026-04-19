@@ -8,12 +8,12 @@ public class StunEffect extends StatusEffect {
 
     @Override
     public void apply(Combatant target){
-        // No direct stat change is needed
+        
     }
 
     @Override
     public void remove(Combatant target){
-        // No removal action needed for stun
+        
     }
 
     @Override

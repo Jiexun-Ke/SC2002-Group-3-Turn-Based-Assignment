@@ -15,17 +15,15 @@ public abstract class StatusEffect {
         return new DamageResult(damage, false, null);
     }
 
-    
-    
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public void reduceDuration(){
+    public void reduceDuration() {
         this.remainingTurns -= 1;
     }
 
-    public boolean isExpired(){
+    public boolean isExpired() {
         return this.remainingTurns <= 0;
     }
 

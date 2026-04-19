@@ -14,11 +14,6 @@ public class Warrior extends Player {
         return "Shield Bash";
     }
 
-    
-
-
-    
-
     @Override
     public Action createSpecialSkillAction() {
         return new ShieldBashAction();

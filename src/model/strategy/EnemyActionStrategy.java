@@ -1,5 +1,5 @@
 package model.strategy;
-import model.actions.*;
+import model.actions.Action;
 import model.combatants.Enemy;
 
 public interface EnemyActionStrategy {

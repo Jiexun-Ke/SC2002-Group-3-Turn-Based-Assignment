@@ -44,7 +44,7 @@ public class TargetSelector {
     }
 
     public Combatant[] selectPlayer(BattleContext context) {
-        return new Combatant[] { context.getPlayer() };
+        return new Combatant[] {context.getPlayer() };
     }
 
     public Combatant[] selectNoTargets() {

@@ -63,7 +63,7 @@ public abstract class Combatant{
     }
     ////////////////////
     
-    public boolean isAlive(){
+    public boolean isAlive() {
         return (this.currentHP>0);
     }
 
@@ -76,7 +76,7 @@ public abstract class Combatant{
         return true;
     }
 
-    public boolean addStatusEffect(StatusEffect effect){
+    public boolean addStatusEffect(StatusEffect effect) {
         for (int i = 0; i < activeEffects.length; i++){
             if(activeEffects[i] == null){
                 activeEffects[i] = effect;
@@ -97,7 +97,7 @@ public abstract class Combatant{
     removeExpiredEffects();
     }
 
-    public void removeExpiredEffects(){
+    public void removeExpiredEffects() {
         for(int i = 0; i < activeEffects.length; i++){
             if (activeEffects[i] != null && activeEffects[i].isExpired()){
                 activeEffects[i].remove(this);
@@ -150,7 +150,7 @@ public abstract class Combatant{
         takeRawDamage(Math.max(0, result.getDamage()));
     }
         
-    public void heal(int amount){
+    public void heal(int amount) {
         this.currentHP = Math.min(this.maxHP, currentHP + amount);
     }
 

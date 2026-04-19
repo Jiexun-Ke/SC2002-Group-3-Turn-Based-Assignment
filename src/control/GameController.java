@@ -233,6 +233,8 @@ public class GameController {
             player.updateStatusEffects();
         }
     }
+
+    
     //------------------------------------------------------------------
 
     private void updatePerTurnState(Combatant combatant) {
