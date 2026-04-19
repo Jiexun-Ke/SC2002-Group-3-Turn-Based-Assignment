@@ -108,6 +108,10 @@ public class GameController {
                     + " for " + result.getDamageDealt() + " damage! "
                     + player.getName() + " HP: "
                     + player.getCurrentHP() + "/" + player.getMaxHP());
+                    
+            if (!player.isAlive()) {
+                ui.showMessage(player.getName() + " has been defeated!");
+            }
         } else {
             ui.showMessage(enemy.getName() + " attacked " + player.getName()
                     + ", but dealt 0 damage!");
