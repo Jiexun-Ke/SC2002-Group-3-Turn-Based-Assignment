@@ -251,6 +251,7 @@ public class GameUI {
                 print("- " + enemy.getName() + " HP: " + enemy.getCurrentHP() + "/" + enemy.getMaxHP());
             }
         }
+        print(" ");
     }
 
     public void showNewWave(int enemyCount) {

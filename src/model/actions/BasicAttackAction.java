@@ -54,11 +54,16 @@ public class BasicAttackAction extends Action{
         target.takeRawDamage(finalDamage);
 
         List<String> targetSummaries = new ArrayList<>();
-        targetSummaries.add(
-            target.getName() + " took " + finalDamage + " damage. HP: "
-            + target.getCurrentHP() + "/" + target.getMaxHP()
-        );
 
+        if (!target.isAlive()) {
+            targetSummaries.add(target.getName() + " was defeated!");
+        } else {
+            targetSummaries.add(
+                target.getName() + " took " + finalDamage + " damage. HP: "
+                + target.getCurrentHP() + "/" + target.getMaxHP()
+            );
+        }
+        
         lastResult = new ActionResult(
             getName(),
             finalDamage,

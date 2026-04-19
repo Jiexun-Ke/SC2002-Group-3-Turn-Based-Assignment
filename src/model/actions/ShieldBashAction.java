@@ -72,10 +72,15 @@ public class ShieldBashAction extends Action{
         }
 
         List<String> targetSummaries = new ArrayList<>();
-        targetSummaries.add(
-            target.getName() + " took " + finalDamage + " damage. HP: "
+
+        if (!target.isAlive()) {
+            targetSummaries.add(target.getName() + " was defeated!");
+        } else {
+            targetSummaries.add(
+                target.getName() + " took " + finalDamage + " damage. HP: "
                 + target.getCurrentHP() + "/" + target.getMaxHP()
-        );
+            );
+        }
 
         lastResult = new ActionResult(
             getName(),
