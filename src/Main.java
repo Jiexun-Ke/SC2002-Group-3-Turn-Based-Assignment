@@ -5,29 +5,31 @@ import control.SetupController;
 public class Main {
     public static void main(String[] args){
         GameUI ui = new GameUI();
-
-        int choice = ui.showMainMenu();
-        if(choice == 2){
-            ui.showMessage("Exiting the Arena. Goodbye!");
-            ui.closeUI();
-            return;
-        }
-
-        SetupController setup = new SetupController(ui);
         
         try {
-            GameController game = setup.createGame();
-            game.startBattle();
+            int choice = ui.showMainMenu();
+
+            if(choice == GameUI.EXIT){
+            ui.showMessage("Exiting the Arena. Goodbye!");
+            return;
+            }
+
+        SetupController setup = new SetupController(ui);
+        GameController game = setup.createGame();
+        game.startBattle();
+
         }
+
         catch (UnsupportedOperationException e){
-            ui.showMessage("Some parts of the game are not fully implemented yet.");
-            ui.showMessage("Error details: " + e.getMessage());
+            ui.showMessage("Feature not implemented: " + e.getMessage());
 
         } catch (Exception e) {
             ui.showMessage("An unexpected error occurred.");
             ui.showMessage("Error details: " + e.getMessage());
         }
-
-        ui.closeUI();
+        finally {
+            ui.closeUI();
+        }
+        
     }
 }
