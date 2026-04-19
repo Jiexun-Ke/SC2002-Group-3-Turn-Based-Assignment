@@ -9,7 +9,7 @@ public class Main {
         try {
             int choice = ui.showMainMenu();
 
-            if(choice == GameUI.EXIT){
+            if (choice == GameUI.EXIT){
             ui.showMessage("Exiting the Arena. Goodbye!");
             return;
             }
