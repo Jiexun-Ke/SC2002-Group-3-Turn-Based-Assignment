@@ -11,7 +11,7 @@ public class ArcaneBlastAction extends Action{
 
     @Override
     public String getDescription(){
-        return "Deal BasicAttack damage to all enemies currently in combat. Each enemy defeated by Arcane Blast adds 10 to the Wizard's Attack, lasting until the end of the level.";
+        return "Deal Basic Attack damage to all enemies currently in combat. Each enemy defeated by Arcane Blast adds 10 to the Wizard's Attack, lasting until the end of the level.";
     }
 
     

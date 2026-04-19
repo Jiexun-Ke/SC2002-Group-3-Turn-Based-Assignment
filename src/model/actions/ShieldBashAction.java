@@ -13,7 +13,7 @@ public class ShieldBashAction extends Action{
 
     @Override
     public String getDescription(){
-        return "Deal BasicAttack damage to selected enemy. Selected enemy is unable to take actions for the current turn and the next turn.";
+        return "Deal Basic Attack damage to selected enemy. Selected enemy is unable to take actions for the current turn and the next turn.";
     }
 
 

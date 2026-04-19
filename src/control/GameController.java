@@ -198,7 +198,7 @@ public class GameController {
             }
 
             if (!combatant.canAct()) {
-                ui.showMessage(combatant.getName() + " is stunned and cannot act!\n");
+                ui.showMessage(combatant.getName() + " is stunned and cannot act!");
                 updatePerTurnState(combatant);
                 
                 if (isBattleOver()) {
