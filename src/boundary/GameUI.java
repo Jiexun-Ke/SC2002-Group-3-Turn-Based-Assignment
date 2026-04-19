@@ -216,6 +216,7 @@ public class GameUI {
             return -1; // Cancel
         }
         
+        print(" ");
         return choice;
     }
    
