@@ -65,6 +65,12 @@ public class GameController {
 
                 ActionResult result = action.getLastResult();
 
+                if (result != null && result.isPrevented()) {
+                    ui.showActionResult(playerCombatant, action);
+                    continue;
+                }
+
+
                 if (playerCombatant.isSpecialSkillAction(action) 
                         && result != null
                         && !result.isPrevented()) {
