@@ -8,6 +8,7 @@ import model.combatants.*;
 import model.items.*;
 
 public class GameUI {
+    public static final int EXIT = 2;
     private final InputValidator validator;
 
     

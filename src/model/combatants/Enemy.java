@@ -1,6 +1,6 @@
 package model.combatants;
-import model.strategy.*;
 import model.actions.*;
+import model.strategy.*;
 
 public abstract class Enemy extends Combatant{
     private EnemyActionStrategy actionStrategy;
@@ -11,6 +11,6 @@ public abstract class Enemy extends Combatant{
     }
     
     public Action chooseAction(){
-        return actionStrategy.chooseAction(this); //basically returns new BasicAttackAction
+        return actionStrategy.chooseAction(this); //returns new BasicAttackAction
     }
 }
